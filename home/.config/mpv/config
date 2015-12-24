@@ -1,0 +1,30 @@
+[default]
+# Write your default config options here!
+#subcp = "utf8"
+#ao = alsa
+#mixer-channel = Master
+#alang = ru,rus
+#nomouseinput = yes
+cache = 32000
+cache-initial = 3200
+softvol = yes
+softvol-max = 500
+vo = opengl
+no-ytdl
+
+[save]
+write-filename-in-watch-later-config = yes
+
+[hw]
+vo = vdpau
+vd = ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,
+
+[pulse]
+af = format=format=s16:srate=44100:channels=2
+ao = pulse:192.168.0.40:1:buffer=500
+softvol = no
+volume = 20
+autosync = 550
+
+[hdmi]
+ao = alsa:device=[plughw:0,3]
