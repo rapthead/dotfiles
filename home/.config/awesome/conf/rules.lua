@@ -16,8 +16,6 @@ awful.rules.rules = {
                      raise = true,
                      keys = bindings.clientkeys,
                      buttons = bindings.clientbuttons } },
-    { rule = { class = "gvim" },
-      properties = { tag = layout.tags[1][3] } },
     { rule = { role = "browser" },
       properties = { tag = layout.tags[1][1] } },
     { rule_any = { class = { "MPlayer", "mpv", "Steam", "feh", "gimp" } },

@@ -68,7 +68,12 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "x",     function () luaprompt() end),
 
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end)
+    awful.key({ modkey }, "p", function() menubar.show() end),
+
+    -- Custom
+    awful.key({ modkey, "Control" }, "l",     function () awful.util.spawn_with_shell("dm-tool lock") end),
+    awful.key({ modkey,           }, "s", function () awful.util.spawn(apps.screenshot) end),
+    awful.key({ modkey, "Control" }, "s", function () awful.util.spawn(apps.screenshot_and_edit) end)
 )
 
 -- Bind all key numbers to tags.

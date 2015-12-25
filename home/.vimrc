@@ -11,15 +11,22 @@ Plugin '2072/PHP-Indenting-for-VIm'
 Plugin 'insanum/votl'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'vim-scripts/mru.vim'
-Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'groenewege/vim-less'
 Plugin 'mgrabovsky/vim-cuesheet'
 Plugin 'vim-perl/vim-perl'
+Plugin 'jlanzarotta/bufexplorer'
+Plugin 'sjl/gundo.vim'
 Plugin 'klen/python-mode'
-Plugin 'tpope/vim-surround'
+Plugin 'mhinz/vim-startify'
+Plugin 'airblade/vim-rooter'
 
 Bundle 'pydave/AsyncCommand'
 call vundle#end()
+
+set noea
+
+set undofile
 
 set encoding=utf-8
 
@@ -86,6 +93,8 @@ set fileencodings=utf-8,cp1251,cp866,koi8-r,utf-16le
 
 set title
 "включение изменения заголовка окна
+
+set history=1000
 
 set mouse=
 nmap <ScrollWheelUp> <nop>
@@ -191,24 +200,25 @@ map <F8> :emenu Encoding.<TAB>
 let g:proj_flags='imstg'
 let g:solarized_italic=0
 let g:PHP_BracesAtCodeLevel = 1
-set wildignore+=*/static_root/*,*/.git/*,*/.svn/*,*/bower_components/*,*/node_modules/*,*.pyc
+set wildignore+=*/.git/*,*/.svn/*,*/bower_components/*,*/node_modules/*,*.pyc
 colorscheme solarized
 
 if has("win32")
     set dir=~/_vimfiles/swaps/
+    set undodir=~/_vimfiles/undos/
     lan mes en
 else
     set dir=~/.vim/swaps/
+    set undodir=~/.vim/undos/
     set t_Co=256
 endif
 
 set background=dark
 if has("gui_running")
+    set background=light
     set guioptions-=T
     set guioptions-=m
-    set background=light
     if has("gui_gtk2")
-        "set guifont=LiberationMono\ 11
         set guifont=Source\ Code\ Pro\ Medium\ 10
     elseif has("gui_macvim")
         set guifont=Menlo\ Regular:h14

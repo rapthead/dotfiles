@@ -1,17 +1,24 @@
 # Path to your oh-my-zsh installation.
+export LC_ALL=en_US.utf8
+export LANG=en_US.utf8
+export LANGUAGE=en
 export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-#ZSH_THEME="bureau"
+ZSH_THEME="bureau"
 
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias vr="gvim --remote"
+alias wo="workon"
+
 alias cpr="rsync --progress"
 alias gmc="export EDITOR='gvimremote'; mc"
+
+ssh() { /usr/bin/ssh $* -t "env HGUSER='pgribanov <pgribanov@prural.ru>' bash -l" }
 
 PLAYER=$(which mpv)
 if [ -z $PLAYER ]; then
@@ -72,7 +79,7 @@ alias feh='feh --scale-down'
 # DISABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -91,7 +98,7 @@ alias feh='feh --scale-down'
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 #plugins=(git catimg)
-plugins=(catimg git bower common-aliases rsync django virtualenv virtualenvwrapper)
+plugins=(catimg git bower common-aliases rsync django mercurial fabric virtualenv virtualenvwrapper)
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
@@ -119,5 +126,32 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
+# function hg_get_branch_name() {
+#   if [ $(in_hg) ]; then
+#      hg prompt --angle-brackets "\
+# < on %{$fg[magenta]%}<branch>%{$reset_color%}>\
+# < at %{$fg[yellow]%}<tags|%{$reset_color%}, %{$fg[yellow]%}>%{$reset_color%}>\
+# %{$fg[green]%}<status|modified|unknown><update>%{$reset_color%}<
+# patches: <patches|join( → )|pre_applied(%{$fg[yellow]%})|post_applied(%{$reset_color%})|pre_unapplied(%{$fg_bold[black]%})|post_unapplied(%{$reset_color%})>>" 2>/dev/null
+#     # echo $(hg branch)
+#   fi
+# }
+function hg_get_branch_name() {
+    if [ $(in_hg) ]; then
+        hg_branch="< on %{$fg[magenta]%}<branch>%{$reset_color%}>"
+        hg_tags="< at %{$fg[yellow]%}<tags|%{$reset_color%}, %{$fg[yellow]%}>%{$reset_color%}>"
+        hg_bookmarks="< %{$fg[green]%}<bookmark>%{$reset_color%}>"
+        hg_status="%{$fg[green]%}<status|modified|unknown><update>%{$reset_color%}<"
+        hg_patches="patches: <patches|join( → )|pre_applied(%{$fg[yellow]%})|post_applied(%{$reset_color%})|pre_unapplied(%{$fg_bold[black]%})|post_unapplied(%{$reset_color%})>>"
+
+        hg prompt --angle-brackets "$hg_branch$hg_bookmarks$hg_status$hg_pathces" 2>/dev/null
+    fi
+}
+RPROMPT=$RPROMPT'$(hg_prompt_info)'
+
 autoload select-word-style
 select-word-style shell
+
+export WORKON_HOME=~/.virtualenvs
+export PROJECT_HOME=$HOME/Docs/django/projects
+export VIRTUAL_ENV_DISABLE_PROMPT=1

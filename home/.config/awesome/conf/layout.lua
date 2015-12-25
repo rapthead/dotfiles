@@ -1,4 +1,3 @@
-local math = require("math")
 local awful = require("awful")
 awful.layout    = require("awful.layout")
 awful.util      = require("awful.util")
@@ -13,38 +12,12 @@ local naughty = require("naughty")
 local beautiful         = require("conf.beautiful")
 local keybindings       = require("conf.keybindings")
 
--- Battery
-local lain = require("lain")
-bat_icon = {
-    {icon="", color=beautiful.fg_red},-- 0
-    {icon="", color=beautiful.fg_yellow},-- 20
-    {icon="", color=beautiful.fg_blu},-- 40
-    {icon="", color=beautiful.fg_blue},-- 60
-    {icon="", color=beautiful.fg_green}, -- 80
-    {icon="", color=beautiful.fg_green}
-}
-baticon = wibox.widget.textbox('')
-baticon:set_align('center')
-batwidget = lain.widgets.bat({
-    settings = function()
-        if bat_now.perc == "N/A" then
-            perc = "AC "
-        else
-            if bat_now.status == "Charging" or bat_now.status == "Full"
-            then
-                icon = bat_icon[6]
-            elseif bat_now.status == "Discharging"
-            then
-                icon_index = math.floor(bat_now.perc/20)
-                icon = bat_icon[icon_index]
-            end
-
-            baticon:set_markup(string.format('<span color="%s">%s</span>', icon.color, icon.icon))
-            perc = bat_now.perc .. "% "
-        end
-        widget:set_markup(perc)
-    end
-})
+-- Default modkey.
+-- Usually, Mod4 is the key with a logo between Control and Alt.
+-- If you do not like this or do not have such a key,
+-- I suggest you to remap Mod4 to another key using xmodmap or other tools.
+-- However, you can use another modifier like Mod1, but it may interact with others.
+modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
@@ -165,11 +138,7 @@ for s = 1, screen.count() do
     first_layout:add(mytaglist[s])
 
     -- Widgets that are aligned to the right
-    if s == 1 then 
-        last_layout:add(baticon) 
-        last_layout:add(batwidget) 
-        last_layout:add(wibox.widget.systray()) 
-    end
+    if s == 1 then last_layout:add(wibox.widget.systray()) end
     -- last_layout:add(zipicon)
     last_layout:add(mytextclock)
     last_layout:add(mylayoutbox[s])
@@ -179,7 +148,7 @@ for s = 1, screen.count() do
         layout:set_top(first_layout)
         layout:set_middle(mytasklist[s])
         layout:set_bottom(last_layout)
-        mywibox[s] = awful.wibox({ position = "left", screen = s, width = 30 })
+        mywibox[s] = awful.wibox({ position = "left", screen = s, width = 35 })
     else
         layout:set_left(first_layout)
         layout:set_middle(mytasklist[s])

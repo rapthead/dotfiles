@@ -25,7 +25,7 @@
 #
 ##### connection settings #####
 #
-mpd_host = "192.168.0.40"
+#mpd_host = "192.168.0.40"
 #
 #mpd_port = 6600
 #

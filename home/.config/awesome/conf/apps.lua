@@ -14,5 +14,7 @@ local apps = {
 
     midnightcommander           = terminal .. " -e mc ",
     ncmpcpp                     = terminal .. " -e ncmpcpp ",
+    screenshot                  = 'scrot -u "%Y-%m-%d-%H%M%S.png"',
+    screenshot_and_edit         = 'scrot -u "%Y-%m-%d-%H%M%S.png" -e "gimp $f"',
 }
 return apps
