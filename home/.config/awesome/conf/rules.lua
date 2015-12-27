@@ -18,6 +18,12 @@ awful.rules.rules = {
                      buttons = bindings.clientbuttons } },
     { rule = { role = "browser" },
       properties = { tag = layout.tags[1][1] } },
+    { rule = { role = "pop-up" },
+      properties = { floating = true },
+      callback = function (c)
+        awful.placement.centered(c,nil)
+      end
+    },
     { rule_any = { class = { "MPlayer", "mpv", "Steam", "feh", "gimp" } },
       properties = { floating = true, tag = layout.tags[1][4], switchtotag = layout.tags[1][4], focus = true } },
 }
