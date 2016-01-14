@@ -26,24 +26,24 @@ bat_icon = {
 baticon = wibox.widget.textbox('')
 baticon:set_align('center')
 batwidget = lain.widgets.bat({
-    settings = function()
-        if bat_now.perc == "N/A" then
-            perc = "AC "
-        else
-            if bat_now.status == "Charging" or bat_now.status == "Full"
-            then
-                icon = bat_icon[6]
-            elseif bat_now.status == "Discharging"
-            then
-                icon_index = math.floor(bat_now.perc/20)
-                icon = bat_icon[icon_index]
-            end
+    -- settings = function()
+    --     if bat_now.perc == "N/A" then
+    --         perc = "AC "
+    --     else
+    --         if bat_now.status == "Charging" or bat_now.status == "Full"
+    --         then
+    --             icon = bat_icon[6]
+    --         elseif bat_now.status == "Discharging"
+    --         then
+    --             icon_index = math.ceil(bat_now.perc/20)
+    --             icon = bat_icon[icon_index]
+    --         end
 
-            baticon:set_markup(string.format('<span color="%s">%s</span>', icon.color, icon.icon))
-            perc = bat_now.perc .. "% "
-        end
-        widget:set_markup(perc)
-    end
+    --         baticon:set_markup(string.format('<span color="%s">%s</span>', icon.color, icon.icon))
+    --         perc = bat_now.perc .. "% "
+    --     end
+    --     widget:set_markup(perc)
+    -- end
 })
 
 -- Table of layouts to cover with awful.layout.inc, order matters.

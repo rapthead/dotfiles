@@ -1,100 +1,136 @@
-set rtp+=~/.vim/bundle/Vundle.vim
-filetype off
+" ----------------------------------------------------------------------------
+"   Common Settings
+" ----------------------------------------------------------------------------
+
 set nocompatible
-
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
-
-Plugin 'itchyny/calendar.vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin '2072/PHP-Indenting-for-VIm'
-Plugin 'insanum/votl'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'vim-scripts/mru.vim'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'groenewege/vim-less'
-Plugin 'mgrabovsky/vim-cuesheet'
-Plugin 'vim-perl/vim-perl'
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'sjl/gundo.vim'
-Plugin 'klen/python-mode'
-Plugin 'mhinz/vim-startify'
-Plugin 'airblade/vim-rooter'
-
-Bundle 'pydave/AsyncCommand'
-call vundle#end()
-
 set noea
-
 set undofile
-
 set encoding=utf-8
+set showbreak=-> "визуально показывать перенос длинных строк перенесенные строки будит начинаться с '-->'
+set hlsearch incsearch ignorecase " поиск - подсветка, немедленное отображение, без учета регистра
+set magic " For regular expressions turn magic on
+set showcmd "показывает подсказку при вводе длинных команд
+set showmatch "показывает парные скобки
+set showmode "отображение режима
+set wildmenu wcm=<Tab> " автодополнение - улучшенный режим, кнопка автодополнения
+set helplang=ru "язык справки
+set backspace=indent,eol,start "выбор режима работы клавиши "backspace" позволяет "backspace" удалять все
+set smartindent "установка интелектуального автоматического форматирования отступов
 
-set showbreak=->
-"визуально показывать перенос длинных строк
-"перенесенные строки будит начинаться с '-->'
-
-" поиск - подсветка, немедленное отображение, без учета регистра
-set hlsearch incsearch ignorecase
-
-set showcmd
-"показывает подсказку при вводе длинных команд
-
-set showmatch
-"показывает парные скобки
-
-set showmode
-"отображение режима
-
-" автодополнение - улучшенный режим, кнопка автодополнения
-set wildmenu wcm=<Tab>
-
-set helplang=ru
-"язык справки
-
-set backspace=indent,eol,start
-"выбор режима работы клавиши "backspace"
-"позволяет "backspace" удалять все
-
-set smartindent
-"установка интелектуального автоматического форматирования отступов
-
-syntax on
-filetype indent on
-filetype plugin on
-
-set formatoptions=tcql 
-"опции форматирования по умолчанию
-
-set comments&
-"выставление стандартных опций комментария
-
-set laststatus=2
-"всегда отображать строку состояния
-
-set keymap=russian-jcukenwin
-"добавление допалнительной раскладки
-
+set formatoptions=tcql "опции форматирования по умолчанию
+set comments& "выставление стандартных опций комментария
+set laststatus=2 "всегда отображать строку состояния
+set keymap=russian-jcukenwin "добавление допалнительной раскладки
 set iminsert=0
-set imsearch=-1
-"раскладка по умолчанию - английская
-
-set statusline=%<%f\ %m[%n]\ [%H%R%Y]%=%-10.(%l,%c%V%)\ [en]\ %{&fileencoding}\ %P
-"изменения формата "statusline"
-
-set cmdheight=2
-"высота командной строки
-
-set hidden
-"не выгружать буферы из памяти при закрытии окна буфера
-
-set fileencodings=utf-8,cp1251,cp866,koi8-r,utf-16le
-"список используемых кодировок
-
-set title
-"включение изменения заголовка окна
-
+set imsearch=-1 "раскладка по умолчанию - английская
+"set statusline=%<%f\ %m[%n]\ %{virtualenv#statusline()}\ [%H%R%Y]%=%-10.(%l,%c%V%)\ [en]\ %{&fileencoding}\ %P
+set statusline=%<%f\ %m[%n]\ [%H%R%Y]%=%-10.(%l,%c%V%)\ [en]\ %{&fileencoding}\ %P "изменения формата "statusline"
+set cmdheight=2 "высота командной строки
+set hidden "не выгружать буферы из памяти при закрытии окна буфера
+set fileencodings=utf-8,cp1251,cp866,koi8-r,utf-16le "список используемых кодировок
+set title "включение изменения заголовка окна
 set history=1000
+set scrolloff=3
+set modelines=0
+set lazyredraw " Don't redraw while executing macros (good performance config)
+set foldcolumn=1
+
+" indent
+set tabstop=8
+set expandtab
+set smarttab "установка вставки пробелов в начало строки вместо символа 'tabstop'
+set shiftwidth=4 "установка размера таб-отступа
+set shiftround
+set autoindent "автоматическая табуляция. если текущая строка начинается с TAB, то и следующая тоже
+set wildignore+=*/.git/*,*/.svn/*,*/bower_components/*,*/node_modules/*,*.pyc
+
+filetype off
+syntax on
+filetype plugin indent on
+
+
+" ----------------------------------------------------------------------------
+"   Plug
+" ----------------------------------------------------------------------------
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+" Plug 'airblade/vim-rooter'
+" Plug 'idbrii/AsyncCommand'
+
+Plug 'tpope/vim-sensible'
+Plug 'altercation/vim-colors-solarized'
+Plug 'easymotion/vim-easymotion'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'sjl/gundo.vim'
+Plug 'mhinz/vim-startify'
+Plug 'mileszs/ack.vim'
+Plug 'scrooloose/syntastic'
+Plug 'majutsushi/tagbar'
+
+Plug 'groenewege/vim-less', { 'for': 'less' }
+Plug 'insanum/votl', { 'for': 'votl' }
+Plug 'mgrabovsky/vim-cuesheet', { 'for': 'cuesheet' }
+Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
+Plug 'vim-perl/vim-perl', { 'for': 'perl' }
+" Plug 'klen/python-mode', { 'for': 'python' }
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
+filetype plugin indent on                   " required!
+call plug#end()
+
+" ----------------------------------------------------------------------------
+"   Plugins Settings
+" ----------------------------------------------------------------------------
+
+" Plug 'mileszs/ack.vim'
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+" Plug 'scrooloose/syntastic'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" let g:syntastic_python_checkers = ['flake8', 'pylint']
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_pylint_args = "-j 2 --disable=missing-docstring"
+
+" Plug 'jlanzarotta/bufexplorer'
+map <Leader>b :BufExplorer<cr>
+map <Leader>c :CMiniBufExplorer<cr>
+map <Leader>u :UMiniBufExplorer<cr>
+map <Leader>t :TMiniBufExplorer<cr>
+
+let g:bufExplorerShowRelativePath=1
+let g:bufExplorerSplitOutPathName=0
+
+" Plug 'altercation/vim-colors-solarized'
+let g:solarized_italic=0
+
+" Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
+" let g:PHP_BracesAtCodeLevel = 1
+let g:PHP_outdentphpescape = 1
+
+" Plug 'easymotion/vim-easymotion'
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_smartcase = 1
+nmap s <Plug>(easymotion-s2)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
+colorscheme solarized
 
 set mouse=
 nmap <ScrollWheelUp> <nop>
@@ -135,73 +171,36 @@ vmap <S-ScrollWheelRight> <nop>
 vmap <C-ScrollWheelRight> <nop>
 "отключение мыши
 
-"""""""""""""""""
-"""""indent""""""
-"""""""""""""""""
-set tabstop=8
-set expandtab
-set smarttab
-"установка вставки пробелов в начало строки вместо символа 'tabstop'
-set shiftwidth=4
-"установка размера таб-отступа
-set shiftround
-set autoindent
-"автоматическая табуляция. если текущая строка начинается с TAB,
-"то и следующая тоже
+" исключение буферов quickfix из listed
+augroup qf
+    autocmd!
+    autocmd FileType qf set nobuflisted
+augroup END
 """"""""""""""""""""""""""""""""""
 """""клавиатурные сокращения""""""
 """"""""""""""""""""""""""""""""""
-map Q gq
 "не использовать режим Ex, использовать Q для форматирования
+map Q gq
 
+"вызов функции изменения "statusline"
 nmap <silent> <F7> :call ChLang()<cr>
 imap <silent> <F7> <Left><Right><C-O>:call ChLang()<cr>
-"вызов функции изменения "statusline"
 
-nmap <space> <C-D>
-"""""""""""""""""
-"minibufexplorer"
-"""""""""""""""""
-map <Leader>b :BufExplorer<cr>
-map <Leader>c :CMiniBufExplorer<cr>
-map <Leader>u :UMiniBufExplorer<cr>
-map <Leader>t :TMiniBufExplorer<cr>
-"""""""""""""""""
-"bufexplorer"
-"""""""""""""""""
-let g:bufExplorerShowRelativePath=1
-let g:bufExplorerSplitOutPathName=0
-"""""""""""""""""
-"pomodoro"
-"""""""""""""""""
-" Duration of a pomodoro in minutes (default: 25)
-let g:pomodoro_time_work = 25
+"переключение между открытыми файлами: <Tab>, <Shift>+<Tab>
+nmap <Tab>   :cclose<CR>:bnext<CR>
+nmap <S-Tab> :cclose<CR>:bprevious<CR>
+nmap <C-Tab> :cclose<CR>:tabnext<CR>
 
-" Duration of a break in minutes (default: 5)
-let g:pomodoro_time_slack = 5 
-
-" Log completed pomodoros, 0 = False, 1 = True (default: 0)
-let g:pomodoro_do_log = 1
-
-" Path to the pomodoro log file (default: /tmp/pomodoro.log)
-let g:pomodoro_log_file = "/tmp/pomodoro.log" 
 """"""""""""""""
 """""menus""""""
 """"""""""""""""
+"меню выбора кодировки по f8
 menu Encoding.utf-8        :e ++enc=utf-8<CR>
 menu Encoding.windows-1251 :e ++enc=cp1251<CR>
 menu Encoding.utf-16le     :e ++enc=utf-16le<CR>
 menu Encoding.koi8-r 	   :e ++enc=koi8-r<CR>
 menu Encoding.ibm-866      :e ++enc=ibm866<CR>
 map <F8> :emenu Encoding.<TAB>
-"меню выбора кодировки по f8
-
-"--*plugins*--"
-let g:proj_flags='imstg'
-let g:solarized_italic=0
-let g:PHP_BracesAtCodeLevel = 1
-set wildignore+=*/.git/*,*/.svn/*,*/bower_components/*,*/node_modules/*,*.pyc
-colorscheme solarized
 
 if has("win32")
     set dir=~/_vimfiles/swaps/
@@ -226,20 +225,6 @@ if has("gui_running")
         set guifont=Source_Code_Pro:h11:cRUSSIAN
     endif
 endif
-
-set scrolloff=3
-set modelines=0
-
-"переключение между открытыми файлами: <Tab>, <Shift>+<Tab>
-nmap <Tab>   :cclose<CR>:bnext<CR>
-nmap <S-Tab> :cclose<CR>:bprevious<CR>
-nmap <C-Tab> :cclose<CR>:tabnext<CR>
-
-"ускоренное передвижение по тексту
-nmap <C-H> 5h
-nmap <C-J> 5j
-nmap <C-K> 5k
-nmap <C-L> 5l
 
 "функция для изменения "statusline" при изменении раскладки
 function! ChLang()

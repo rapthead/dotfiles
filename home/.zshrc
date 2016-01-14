@@ -11,7 +11,7 @@ ZSH_THEME="bureau"
 # Example aliases
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vr="gvim --remote"
-alias wo="workon"
+alias wo="source ~/.oh-my-zsh/plugins/virtualenvwrapper/virtualenvwrapper.plugin.zsh; workon"
 
 alias cpr="rsync --progress"
 alias gmc="export EDITOR='gvimremote'; mc"
@@ -66,8 +66,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-#plugins=(git catimg)
-plugins=(catimg git bower common-aliases rsync django mercurial fabric virtualenv virtualenvwrapper)
+plugins=(catimg git bower common-aliases rsync django mercurial fabric virtualenv )
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 

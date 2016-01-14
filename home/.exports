@@ -1,9 +1,10 @@
 export MPD_HOST="192.168.0.40"
 export EDITOR=vim
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export WORKON_HOME=~/.virtualenvs
 export PROJECT_HOME=$HOME/doc/projects
 export VIRTUAL_ENV_DISABLE_PROMPT=1
+export VDPAU_DRIVER=va_gl
 # export LC_ALL=en_US.utf8
 # export LANG=en_US.utf8
 # export LANGUAGE=en
