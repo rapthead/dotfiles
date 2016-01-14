@@ -73,6 +73,9 @@ Plug 'mhinz/vim-startify'
 Plug 'mileszs/ack.vim'
 Plug 'scrooloose/syntastic'
 Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdcommenter'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 Plug 'groenewege/vim-less', { 'for': 'less' }
 Plug 'insanum/votl', { 'for': 'votl' }
@@ -81,13 +84,17 @@ Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
 Plug 'vim-perl/vim-perl', { 'for': 'perl' }
 " Plug 'klen/python-mode', { 'for': 'python' }
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
+Plug 'rapthead/vim-virtualenv', { 'for': 'python' }
 filetype plugin indent on                   " required!
 call plug#end()
 
 " ----------------------------------------------------------------------------
 "   Plugins Settings
 " ----------------------------------------------------------------------------
+" Plug 'SirVer/ultisnips'
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " Plug 'mileszs/ack.vim'
 if executable('ag')
@@ -104,7 +111,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 " let g:syntastic_python_checkers = ['flake8', 'pylint']
-let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 let g:syntastic_python_pylint_args = "-j 2 --disable=missing-docstring"
 
 " Plug 'jlanzarotta/bufexplorer'
@@ -268,6 +275,8 @@ if has("autocmd")
     autocmd! BufEnter *.pl compiler perl
 
     autocmd FileType php set number nowrap foldlevel=50 foldcolumn=3
+
+    autocmd FileType python setlocal colorcolumn=80
 
     " переходить к последней позиции в файле
     autocmd BufReadPost * 
