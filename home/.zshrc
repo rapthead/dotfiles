@@ -136,18 +136,28 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 #     # echo $(hg branch)
 #   fi
 # }
-function hg_get_branch_name() {
+function hg_prompt_info() {
     if [ $(in_hg) ]; then
-        hg_branch="< on %{$fg[magenta]%}<branch>%{$reset_color%}>"
+        hg_branch="< on %{$fg[red]%}<branch|quiet>%{$reset_color%}>"
         hg_tags="< at %{$fg[yellow]%}<tags|%{$reset_color%}, %{$fg[yellow]%}>%{$reset_color%}>"
         hg_bookmarks="< %{$fg[green]%}<bookmark>%{$reset_color%}>"
-        hg_status="%{$fg[green]%}<status|modified|unknown><update>%{$reset_color%}<"
-        hg_patches="patches: <patches|join( → )|pre_applied(%{$fg[yellow]%})|post_applied(%{$reset_color%})|pre_unapplied(%{$fg_bold[black]%})|post_unapplied(%{$reset_color%})>>"
+        hg_status="<%{$fg[green]%}<status|modified|unknown>>"
+        hg_patches="patches: <patches|join( → )|pre_applied(%{$fg[yellow]%})|post_applied(%{$reset_color%})|pre_unapplied(%{$fg_bold[black]%})|post_unapplied(%{$reset_color%})>"
 
         hg prompt --angle-brackets "$hg_branch$hg_bookmarks$hg_status$hg_pathces" 2>/dev/null
     fi
 }
-RPROMPT=$RPROMPT'$(hg_prompt_info)'
+function hg_branch_info() {
+    if [ $(in_hg) ]; then
+        hg_branch="< on %{$fg[red]%}<branch|quiet>%{$reset_color%}>"
+
+        hg prompt --angle-brackets "$hg_branch" 2>/dev/null
+    fi
+}
+# RPROMPT=$RPROMPT'$(hg_prompt_info)'
+PROMPT='
+$_1LEFT
+$(virtualenv_prompt_info)$(hg_prompt_info) > $_LIBERTY '
 
 autoload select-word-style
 select-word-style shell
