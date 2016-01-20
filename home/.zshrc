@@ -1,6 +1,5 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-source ~/.exports
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -12,6 +11,7 @@ ZSH_THEME="bureau"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vr="gvim --remote"
 alias wo="source ~/.oh-my-zsh/plugins/virtualenvwrapper/virtualenvwrapper.plugin.zsh; workon"
+alias homeshick="source ~/.homesick/repos/homeshick/homeshick.sh; homeshick"
 
 alias cpr="rsync --progress"
 alias gmc="export EDITOR='gvimremote'; mc"
@@ -70,28 +70,7 @@ plugins=(catimg git bower common-aliases rsync django mercurial fabric virtualen
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 function hg_get_branch_name() {
     if [ $(in_hg) ]; then
@@ -104,7 +83,47 @@ function hg_get_branch_name() {
         hg prompt --angle-brackets "$hg_branch$hg_bookmarks$hg_status$hg_pathces" 2>/dev/null
     fi
 }
-RPROMPT=$RPROMPT'$(hg_prompt_info)'
 
 autoload select-word-style
 select-word-style shell
+
+# Load required modules.
+autoload -U add-zsh-hook
+autoload -Uz vcs_info
+
+# Add hook for calling vcs_info before each command.
+# add-zsh-hook precmd vcs_info
+precmd() {
+    vcs_info
+}
+
+# Set vcs_info parameters.
+zstyle ':vcs_info:*' enable hg git
+zstyle ':vcs_info:hg*:*' get-bookmarks true
+zstyle ':vcs_info:*' check-for-changes true # Can be slow on big repos.
+zstyle ':vcs_info:*' stagedstr '%F{green}●%f'
+zstyle ':vcs_info:*' unstagedstr '%F{yellow}●%f'
+zstyle ':vcs_info:*' actionformats "%S" "%s/%b %u%c (%a)"
+zstyle ':vcs_info:*' formats "%b/%m %u%c" "%F{yellow}%s%F{reset}"
+# zstyle ':vcs_info:*' nvcsformats "%~" ""
+
++vi-hg-bookmarks() {
+    local s i
+    # The bookmarks returned by `hg' are available in
+    # the functions positional parameters.
+    for i in "$@"; do
+        echo $i
+    done
+    # tiny styling tweak when bookmark exists
+    # [[ -n $s ]] && s=/$s
+    hook_com[hg-bookmark-string]='test'
+    # ret=1
+    return 0
+}
+
+zstyle ':vcs_info:hg*+gen-hg-bookmark-string:*' hooks hg-bookmarks
+zstyle ':vcs_info:*+*:*' debug true
+
+PROMPT=$PROMPT'${vcs_info_msg_0_}'
+RPROMPT=$RPROMPT'${vcs_info_msg_1_}'
+
