@@ -22,9 +22,24 @@ PLAYER=$(which mpv)
 if [ -z $PLAYER ]; then
     PLAYER=$(which mplayer)
 fi
-alias ml=$PLAYER' -fs -ao alsa -playlist "`ls -t ~/Downloads/*.m3u | head -1`"'
-alias mp=$PLAYER' -fs -profile pulse -playlist "`ls -t ~/Downloads/*.m3u | head -1`"'
-alias mh=$PLAYER' -fs -profile hw,pulse -playlist "`ls -t ~/Downloads/*.m3u | head -1`"'
+
+last_playlist() {
+    echo `ls -t ~/Downloads/*.m3u | head -1`
+}
+ml() {
+    if [ $# -eq 0 ]; then
+        $PLAYER -fs -ao alsa -playlist "$(last_playlist)"
+    else
+        $PLAYER -fs $*
+    fi
+}
+mp() {
+    if [ $# -eq 0 ]; then
+        $PLAYER -fs --profile=pulse -playlist "$(last_playlist)"
+    else
+        $PLAYER -fs --profile=pulse $*
+    fi
+}
 alias mf=$PLAYER' -cache 1024 http://192.168.0.40:8004'
 alias mcl=$PLAYER' --playlist=http://192.168.0.40/clips/all.m3u --shuffle -fs'
 alias feh='feh --scale-down'
@@ -87,43 +102,43 @@ function hg_get_branch_name() {
 autoload select-word-style
 select-word-style shell
 
-# Load required modules.
-autoload -U add-zsh-hook
-autoload -Uz vcs_info
-
-# Add hook for calling vcs_info before each command.
-# add-zsh-hook precmd vcs_info
-precmd() {
-    vcs_info
-}
-
-# Set vcs_info parameters.
-zstyle ':vcs_info:*' enable hg git
-zstyle ':vcs_info:hg*:*' get-bookmarks true
-zstyle ':vcs_info:*' check-for-changes true # Can be slow on big repos.
-zstyle ':vcs_info:*' stagedstr '%F{green}●%f'
-zstyle ':vcs_info:*' unstagedstr '%F{yellow}●%f'
-zstyle ':vcs_info:*' actionformats "%S" "%s/%b %u%c (%a)"
-zstyle ':vcs_info:*' formats "%b/%m %u%c" "%F{yellow}%s%F{reset}"
-# zstyle ':vcs_info:*' nvcsformats "%~" ""
-
-+vi-hg-bookmarks() {
-    local s i
-    # The bookmarks returned by `hg' are available in
-    # the functions positional parameters.
-    for i in "$@"; do
-        echo $i
-    done
-    # tiny styling tweak when bookmark exists
-    # [[ -n $s ]] && s=/$s
-    hook_com[hg-bookmark-string]='test'
-    # ret=1
-    return 0
-}
-
-zstyle ':vcs_info:hg*+gen-hg-bookmark-string:*' hooks hg-bookmarks
-zstyle ':vcs_info:*+*:*' debug true
-
-PROMPT=$PROMPT'${vcs_info_msg_0_}'
-RPROMPT=$RPROMPT'${vcs_info_msg_1_}'
-
+# # Load required modules.
+# autoload -U add-zsh-hook
+# autoload -Uz vcs_info
+# 
+# # Add hook for calling vcs_info before each command.
+# # add-zsh-hook precmd vcs_info
+# precmd() {
+#     vcs_info
+# }
+# 
+# # Set vcs_info parameters.
+# zstyle ':vcs_info:*' enable hg git
+# zstyle ':vcs_info:hg*:*' get-bookmarks true
+# zstyle ':vcs_info:*' check-for-changes true # Can be slow on big repos.
+# zstyle ':vcs_info:*' stagedstr '%F{green}●%f'
+# zstyle ':vcs_info:*' unstagedstr '%F{yellow}●%f'
+# zstyle ':vcs_info:*' actionformats "%S" "%s/%b %u%c (%a)"
+# zstyle ':vcs_info:*' formats "%b/%m %u%c" "%F{yellow}%s%F{reset}"
+# # zstyle ':vcs_info:*' nvcsformats "%~" ""
+# 
+# +vi-hg-bookmarks() {
+#     local s i
+#     # The bookmarks returned by `hg' are available in
+#     # the functions positional parameters.
+#     for i in "$@"; do
+#         echo $i
+#     done
+#     # tiny styling tweak when bookmark exists
+#     # [[ -n $s ]] && s=/$s
+#     hook_com[hg-bookmark-string]='test'
+#     # ret=1
+#     return 0
+# }
+# 
+# zstyle ':vcs_info:hg*+gen-hg-bookmark-string:*' hooks hg-bookmarks
+# zstyle ':vcs_info:*+*:*' debug true
+# 
+# PROMPT=$PROMPT'${vcs_info_msg_0_}'
+# RPROMPT=$RPROMPT'${vcs_info_msg_1_}'
+# 

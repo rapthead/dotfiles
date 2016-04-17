@@ -16,8 +16,8 @@ awful.rules.rules = {
                      raise = true,
                      keys = bindings.clientkeys,
                      buttons = bindings.clientbuttons } },
-    { rule = { role = "browser" },
-      properties = { tag = layout.tags[1][1] } },
+    -- { rule = { role = "browser" },
+    --   properties = { tag = layout.tags[1][1] } },
     { rule = { role = "pop-up" },
       properties = { floating = true },
       callback = function (c)

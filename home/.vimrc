@@ -44,6 +44,8 @@ set shiftround
 set autoindent "автоматическая табуляция. если текущая строка начинается с TAB, то и следующая тоже
 set wildignore+=*/.git/*,*/.svn/*,*/bower_components/*,*/node_modules/*,*.pyc
 
+set cryptmethod=blowfish2
+
 filetype off
 syntax on
 filetype plugin indent on
@@ -69,7 +71,6 @@ Plug 'easymotion/vim-easymotion'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'sjl/gundo.vim'
-Plug 'mhinz/vim-startify'
 Plug 'mileszs/ack.vim'
 Plug 'scrooloose/syntastic'
 Plug 'majutsushi/tagbar'
@@ -85,6 +86,8 @@ Plug 'vim-perl/vim-perl', { 'for': 'perl' }
 " Plug 'klen/python-mode', { 'for': 'python' }
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'rapthead/vim-virtualenv', { 'for': 'python' }
+Plug 'fisadev/vim-isort', { 'for': 'python' }
+Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 filetype plugin indent on                   " required!
 call plug#end()
 
@@ -113,6 +116,7 @@ let g:syntastic_check_on_wq = 0
 " let g:syntastic_python_checkers = ['flake8', 'pylint']
 let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 let g:syntastic_python_pylint_args = "-j 2 --disable=missing-docstring"
+cabbrev <silent> bd <C-r>=(getcmdtype()==#':' && getcmdpos()==1 ? 'lclose\|bdelete' : 'bd')<CR>
 
 " Plug 'jlanzarotta/bufexplorer'
 map <Leader>b :BufExplorer<cr>
@@ -276,7 +280,7 @@ if has("autocmd")
 
     autocmd FileType php set number nowrap foldlevel=50 foldcolumn=3
 
-    autocmd FileType python setlocal colorcolumn=80
+    autocmd FileType python setlocal colorcolumn=120
 
     " переходить к последней позиции в файле
     autocmd BufReadPost * 

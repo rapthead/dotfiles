@@ -29,7 +29,7 @@ if [ -d "$HOME/.pip" ] ; then
 fi
 
 export XDG_CONFIG_HOME="$HOME/.config/"
-export MPD_HOST="192.168.0.40"
+export MPD_HOST="cubie"
 export EDITOR=vim
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export WORKON_HOME=~/.virtualenvs

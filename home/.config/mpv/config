@@ -22,7 +22,7 @@ write-filename-in-watch-later-config = yes
 
 [pulse]
 af = format=format=s16:srate=44100:channels=2
-ao = pulse:192.168.0.40:1:buffer=500
+ao = pulse:cubie:1:buffer=500
 softvol = no
 volume = 20
 autosync = 550
