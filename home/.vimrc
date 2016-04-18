@@ -43,6 +43,7 @@ set shiftwidth=4 "установка размера таб-отступа
 set shiftround
 set autoindent "автоматическая табуляция. если текущая строка начинается с TAB, то и следующая тоже
 set wildignore+=*/.git/*,*/.svn/*,*/bower_components/*,*/node_modules/*,*.pyc
+set fileformats+=dos
 
 filetype off
 syntax on
@@ -69,13 +70,13 @@ Plug 'easymotion/vim-easymotion'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'sjl/gundo.vim'
-Plug 'mhinz/vim-startify'
 Plug 'mileszs/ack.vim'
 Plug 'scrooloose/syntastic'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdcommenter'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'ciaranm/detectindent'
 
 Plug 'groenewege/vim-less', { 'for': 'less' }
 Plug 'insanum/votl', { 'for': 'votl' }
@@ -85,6 +86,7 @@ Plug 'vim-perl/vim-perl', { 'for': 'perl' }
 " Plug 'klen/python-mode', { 'for': 'python' }
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'rapthead/vim-virtualenv', { 'for': 'python' }
+Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 filetype plugin indent on                   " required!
 call plug#end()
 
@@ -113,6 +115,13 @@ let g:syntastic_check_on_wq = 0
 " let g:syntastic_python_checkers = ['flake8', 'pylint']
 let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 let g:syntastic_python_pylint_args = "-j 2 --disable=missing-docstring"
+let g:syntastic_loc_list_height=5
+let g:syntastic_aggregate_errors=1
+
+" Q. The error window is closed automatically when I :quit the current buffer but not when I :bdelete it?
+" A. There is no safe way to handle that situation automatically, but you can work around it:
+"nnoremap <silent> <C-d> :lclose<CR>:bdelete<CR>
+cabbrev <silent> bd <C-r>=(getcmdtype()==#':' && getcmdpos()==1 ? 'lclose\|bdelete' : 'bd')<CR>
 
 " Plug 'jlanzarotta/bufexplorer'
 map <Leader>b :BufExplorer<cr>
@@ -127,7 +136,7 @@ let g:bufExplorerSplitOutPathName=0
 let g:solarized_italic=0
 
 " Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
-" let g:PHP_BracesAtCodeLevel = 1
+let g:PHP_BracesAtCodeLevel = 0
 let g:PHP_outdentphpescape = 1
 
 " Plug 'easymotion/vim-easymotion'
@@ -276,7 +285,7 @@ if has("autocmd")
 
     autocmd FileType php set number nowrap foldlevel=50 foldcolumn=3
 
-    autocmd FileType python setlocal colorcolumn=80
+    autocmd FileType python setlocal colorcolumn=80 sw=4 ts=4 sts=4
 
     " переходить к последней позиции в файле
     autocmd BufReadPost * 

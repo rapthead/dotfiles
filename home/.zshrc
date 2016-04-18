@@ -1,7 +1,4 @@
 # Path to your oh-my-zsh installation.
-export LC_ALL=en_US.utf8
-export LANG=en_US.utf8
-export LANGUAGE=en
 export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
@@ -24,35 +21,6 @@ PLAYER=$(which mpv)
 if [ -z $PLAYER ]; then
     PLAYER=$(which mplayer)
 fi
-#function ml mp mh mf mcl () {
-#    zparseopts -E -D -A parsed_args -profile:=profile profile:=profile -playlist:=playlist playlist:=playlist
-#    MPV_ARGS=$*
-#    if [[ $0 == 'mp' || $0 == 'ml' ]] then
-#        if [[ -z $playlist ]] then
-#            playlist="--playlist" "`ls -t ~/Downloads/*.m3u | head -1`"
-#        fi
-#        MPV_ARGS+=("-fs")
-#    fi
-#
-#    if [[ $0 == 'mp' ]] then
-#        if [[ -n $profile ]] then
-#            #TODO
-#        else
-#            profile=("--profile", "pulse")
-#        fi
-#    fi
-#
-#    if [[ -n $playlist ]] then
-#        MPV_ARGS+=$playlist
-#    fi
-#
-#    if [[ -n $profile ]] then
-#        MPV_ARGS+=$profile
-#    fi
-#
-#    echo $PLAYER $MPV_ARGS
-#    $PLAYER $MPV_ARGS
-#}
 alias ml=$PLAYER' -fs -ao alsa -playlist "`ls -t ~/Downloads/*.m3u | head -1`"'
 alias mp=$PLAYER' -fs -profile pulse -playlist "`ls -t ~/Downloads/*.m3u | head -1`"'
 alias mh=$PLAYER' -fs -profile hw,pulse -playlist "`ls -t ~/Downloads/*.m3u | head -1`"'
@@ -97,7 +65,6 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-#plugins=(git catimg)
 plugins=(catimg git bower common-aliases rsync django mercurial fabric virtualenv virtualenvwrapper)
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
@@ -107,7 +74,6 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -126,16 +92,6 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
-# function hg_get_branch_name() {
-#   if [ $(in_hg) ]; then
-#      hg prompt --angle-brackets "\
-# < on %{$fg[magenta]%}<branch>%{$reset_color%}>\
-# < at %{$fg[yellow]%}<tags|%{$reset_color%}, %{$fg[yellow]%}>%{$reset_color%}>\
-# %{$fg[green]%}<status|modified|unknown><update>%{$reset_color%}<
-# patches: <patches|join( → )|pre_applied(%{$fg[yellow]%})|post_applied(%{$reset_color%})|pre_unapplied(%{$fg_bold[black]%})|post_unapplied(%{$reset_color%})>>" 2>/dev/null
-#     # echo $(hg branch)
-#   fi
-# }
 function hg_prompt_info() {
     if [ $(in_hg) ]; then
         hg_branch="< on %{$fg[red]%}<branch|quiet>%{$reset_color%}>"
@@ -147,21 +103,9 @@ function hg_prompt_info() {
         hg prompt --angle-brackets "$hg_branch$hg_bookmarks$hg_status$hg_pathces" 2>/dev/null
     fi
 }
-function hg_branch_info() {
-    if [ $(in_hg) ]; then
-        hg_branch="< on %{$fg[red]%}<branch|quiet>%{$reset_color%}>"
-
-        hg prompt --angle-brackets "$hg_branch" 2>/dev/null
-    fi
-}
-# RPROMPT=$RPROMPT'$(hg_prompt_info)'
 PROMPT='
 $_1LEFT
 $(virtualenv_prompt_info)$(hg_prompt_info) > $_LIBERTY '
 
 autoload select-word-style
 select-word-style shell
-
-export WORKON_HOME=~/.virtualenvs
-export PROJECT_HOME=$HOME/Docs/django/projects
-export VIRTUAL_ENV_DISABLE_PROMPT=1
