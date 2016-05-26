@@ -114,9 +114,15 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 " let g:syntastic_python_checkers = ['flake8', 'pylint']
 let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+let g:syntastic_sort_aggregated_errors = 0
 let g:syntastic_python_pylint_args = "-j 2 --disable=missing-docstring"
 let g:syntastic_loc_list_height=5
 let g:syntastic_aggregate_errors=1
+" let g:syntastic_quiet_messages = {
+"     \ "!level":  "errors",
+"     \ "type":    "style",
+"     \ "regex":   '\m\[C03\d\d\]',
+"     \ "file:p":  ['\m^/usr/include/', '\m\c\.h$'] }
 
 " Q. The error window is closed automatically when I :quit the current buffer but not when I :bdelete it?
 " A. There is no safe way to handle that situation automatically, but you can work around it:
