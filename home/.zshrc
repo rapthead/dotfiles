@@ -40,8 +40,8 @@ mp() {
         $PLAYER -fs --profile=pulse $*
     fi
 }
-alias mf=$PLAYER' -cache 1024 http://192.168.0.40:8004'
-alias mcl=$PLAYER' --playlist=http://192.168.0.40/clips/all.m3u --shuffle -fs'
+alias mf=$PLAYER' --cache-secs=3 http://cubie:8004'
+alias mcl=$PLAYER' --playlist=http://cubie/clips/all.m3u --shuffle -fs'
 alias feh='feh --scale-down'
 
 # Uncomment the following line to use case-sensitive completion.

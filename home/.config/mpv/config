@@ -10,7 +10,7 @@ cache-initial = 3200
 softvol = yes
 softvol-max = 500
 vo = opengl
-no-ytdl
+#no-ytdl
 hwdec = vaapi
 
 [save]

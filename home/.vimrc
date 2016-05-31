@@ -42,7 +42,7 @@ set smarttab "установка вставки пробелов в начало
 set shiftwidth=4 "установка размера таб-отступа
 set shiftround
 set autoindent "автоматическая табуляция. если текущая строка начинается с TAB, то и следующая тоже
-set wildignore+=*/.git/*,*/.svn/*,*/bower_components/*,*/node_modules/*,*.pyc
+set wildignore+=*/.git/*,*/.svn/*,*/node_modules/*,*.pyc
 
 set cryptmethod=blowfish2
 
@@ -50,6 +50,8 @@ filetype off
 syntax on
 filetype plugin indent on
 
+" без этого inotify не срабатывает
+set backupcopy=yes
 
 " ----------------------------------------------------------------------------
 "   Plug
