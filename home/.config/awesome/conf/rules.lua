@@ -16,8 +16,8 @@ awful.rules.rules = {
                      raise = true,
                      keys = bindings.clientkeys,
                      buttons = bindings.clientbuttons } },
-    { rule = { role = "browser" },
-      properties = { tag = layout.tags[1][1] } },
+    -- { rule = { role = "browser" },
+    --   properties = { tag = layout.tags[1][1] } },
     { rule_any = { class = { "MPlayer", "mpv", "Steam", "feh", "gimp" } },
       properties = { floating = true, tag = layout.tags[1][4], switchtotag = layout.tags[1][4], focus = true } },
 }

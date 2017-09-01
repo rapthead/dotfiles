@@ -23,8 +23,8 @@ set laststatus=2 "всегда отображать строку состоян�
 set keymap=russian-jcukenwin "добавление допалнительной раскладки
 set iminsert=0
 set imsearch=-1 "раскладка по умолчанию - английская
-"set statusline=%<%f\ %m[%n]\ %{virtualenv#statusline()}\ [%H%R%Y]%=%-10.(%l,%c%V%)\ [en]\ %{&fileencoding}\ %P
-set statusline=%<%f\ %m[%n]\ [%H%R%Y]%=%-10.(%l,%c%V%)\ [en]\ %{&fileencoding}\ %P "изменения формата "statusline"
+set statusline=%<%f\ %m[%n]\ %{virtualenv#statusline()}\ [%H%R%Y]%=%-10.(%l,%c%V%)\ [en]\ %{&fileencoding}\ %P
+" set statusline=%<%f\ %m[%n]\ [%H%R%Y]%=%-10.(%l,%c%V%)\ [en]\ %{&fileencoding}\ %P "изменения формата "statusline"
 set cmdheight=2 "высота командной строки
 set hidden "не выгружать буферы из памяти при закрытии окна буфера
 set fileencodings=utf-8,cp1251,cp866,koi8-r,utf-16le "список используемых кодировок
@@ -42,13 +42,17 @@ set smarttab "установка вставки пробелов в начало
 set shiftwidth=4 "установка размера таб-отступа
 set shiftround
 set autoindent "автоматическая табуляция. если текущая строка начинается с TAB, то и следующая тоже
-set wildignore+=*/.git/*,*/.svn/*,*/bower_components/*,*/node_modules/*,*.pyc
-set fileformats+=dos
+" set wildignore+=*/.git/*,*/.svn/*,*/node_modules/*,*.pyc
+
+set cryptmethod=blowfish2
+set colorcolumn=80
 
 filetype off
 syntax on
 filetype plugin indent on
 
+" без этого inotify не срабатывает (webpack)
+set backupcopy=yes
 
 " ----------------------------------------------------------------------------
 "   Plug
@@ -63,40 +67,73 @@ endif
 call plug#begin('~/.vim/plugged')
 " Plug 'airblade/vim-rooter'
 " Plug 'idbrii/AsyncCommand'
+Plug 'tpope/vim-abolish'
+" Plug 'takac/vim-hardtime'
+Plug 'wikitopian/hardmode'
 
-Plug 'tpope/vim-sensible'
-Plug 'altercation/vim-colors-solarized'
-Plug 'easymotion/vim-easymotion'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'jlanzarotta/bufexplorer'
-Plug 'sjl/gundo.vim'
-Plug 'mileszs/ack.vim'
-Plug 'scrooloose/syntastic'
-Plug 'majutsushi/tagbar'
-Plug 'scrooloose/nerdcommenter'
 Plug 'SirVer/ultisnips'
+Plug 'altercation/vim-colors-solarized'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'flazz/vim-colorschemes'
 Plug 'honza/vim-snippets'
-Plug 'ciaranm/detectindent'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'majutsushi/tagbar'
+Plug 'mileszs/ack.vim'
+Plug 'w0rp/ale'
+" Plug 'neomake/neomake'
+" Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdcommenter'
+Plug 'sjl/gundo.vim'
+Plug 'tpope/vim-sensible'
+
+Plug 'hail2u/vim-css3-syntax'
+" Plug 'vim-scripts/SQLUtilities'
+" Plug 'suan/vim-instant-markdown'
+Plug 'blueyed/vim-diminactive'
+Plug 'felixhummel/setcolors.vim'
+" Plug 'kylef/apiblueprint.vim'
 
 Plug 'groenewege/vim-less', { 'for': 'less' }
-Plug 'insanum/votl', { 'for': 'votl' }
-Plug 'mgrabovsky/vim-cuesheet', { 'for': 'cuesheet' }
-Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
+" Plug 'insanum/votl', { 'for': 'votl' }
+" Plug 'mgrabovsky/vim-cuesheet', { 'for': 'cuesheet' }
+" Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
 Plug 'vim-perl/vim-perl', { 'for': 'perl' }
 " Plug 'klen/python-mode', { 'for': 'python' }
+" Plug 'Yggdroot/indentLine', { 'for': 'python' }
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'rapthead/vim-virtualenv', { 'for': 'python' }
-Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
+" Plug 'rapthead/vim-virtualenv', { 'for': 'python' }
+Plug 'jmcantrell/vim-virtualenv'
+Plug 'fisadev/vim-isort', { 'for': 'python' }
+Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
+" Plug 'tweekmonster/braceless.vim', { 'for': 'python' }
+
+Plug 'pangloss/vim-javascript' ", { 'for': 'javascript' }
+Plug 'moll/vim-node' ", { 'for': 'javascript' }
+Plug 'mxw/vim-jsx' ", { 'for': 'javascript.jsx' }
 filetype plugin indent on                   " required!
 call plug#end()
 
 " ----------------------------------------------------------------------------
 "   Plugins Settings
 " ----------------------------------------------------------------------------
+" Plug 'takac/vim-hardtime'
+let g:hardtime_default_on = 1
+" Plug 'neomake/neomake'
+let g:neomake_error_sign        = { 'text': '', 'texthl': 'ErrorMsg' }
+let g:neomake_warning_sign      = { 'text': '', 'texthl': 'WarningMsg' }
+
+" Plug 'ctrlpvim/ctrlp.vim'
+let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|node_modules)'
+let g:ctrlp_cmd = 'CtrlPMRU'
+
 " Plug 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" Plug 'tweekmonster/braceless.vim'
+" autocmd FileType python BracelessEnable +indent +fold
 
 " Plug 'mileszs/ack.vim'
 if executable('ag')
@@ -104,30 +141,36 @@ if executable('ag')
 endif
 
 " Plug 'scrooloose/syntastic'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" 
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" "
+" let g:syntastic_python_checkers = ['pyflakes', 'pycodestyle']
+" 
+" let g:syntastic_python_pylint_args = "-j 2 --disable=missing-docstring"
+" let g:syntastic_python_python_exec = '/path/to/python3'
+" 
+" let g:syntastic_javascript_checkers = ['eslint']
+" cabbrev <silent> bd <C-r>=(getcmdtype()==#':' && getcmdpos()==1 ? 'lclose\|bdelete' : 'bd')<CR>
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-" let g:syntastic_python_checkers = ['flake8', 'pylint']
-let g:syntastic_python_checkers = ['pyflakes', 'pep8']
-let g:syntastic_sort_aggregated_errors = 0
-let g:syntastic_python_pylint_args = "-j 2 --disable=missing-docstring"
-let g:syntastic_loc_list_height=5
-let g:syntastic_aggregate_errors=1
-" let g:syntastic_quiet_messages = {
-"     \ "!level":  "errors",
-"     \ "type":    "style",
-"     \ "regex":   '\m\[C03\d\d\]',
-"     \ "file:p":  ['\m^/usr/include/', '\m\c\.h$'] }
+" Plug 'neomake/neomake'
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_python_enabled_makers = ['pyflakes']
+let g:neomake_css_enabled_makers = []
+let g:neomake_open_list = 2
+let g:neomake_list_height = 5
 
-" Q. The error window is closed automatically when I :quit the current buffer but not when I :bdelete it?
-" A. There is no safe way to handle that situation automatically, but you can work around it:
-"nnoremap <silent> <C-d> :lclose<CR>:bdelete<CR>
-cabbrev <silent> bd <C-r>=(getcmdtype()==#':' && getcmdpos()==1 ? 'lclose\|bdelete' : 'bd')<CR>
+" autocmd! BufWritePost * Neomake
+" augroup neomake
+"     autocmd!
+"     autocmd BufReadPost * Neomake
+"     autocmd BufWritePost * Neomake
+" augroup END
 
 " Plug 'jlanzarotta/bufexplorer'
 map <Leader>b :BufExplorer<cr>
@@ -142,17 +185,17 @@ let g:bufExplorerSplitOutPathName=0
 let g:solarized_italic=0
 
 " Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
-let g:PHP_BracesAtCodeLevel = 0
+" let g:PHP_BracesAtCodeLevel = 1
 let g:PHP_outdentphpescape = 1
 
 " Plug 'easymotion/vim-easymotion'
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_do_mapping = 1
 let g:EasyMotion_smartcase = 1
 nmap s <Plug>(easymotion-s2)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
+map <C-J> <Plug>(easymotion-j)
+map <C-K> <Plug>(easymotion-k)
 
-colorscheme solarized
+colorscheme slate
 
 set mouse=
 nmap <ScrollWheelUp> <nop>
@@ -236,15 +279,16 @@ endif
 
 set background=dark
 if has("gui_running")
-    set background=light
+    colorscheme solarized
     set guioptions-=T
     set guioptions-=m
     if has("gui_gtk2")
-        set guifont=Source\ Code\ Pro\ Medium\ 10
+        set guifont=SauceCodePro\ Nerd\ Font\ Medium\ 10
+        " set guifont=Source\ Code\ Pro\ Medium\ 10
     elseif has("gui_macvim")
-        set guifont=Menlo\ Regular:h14
+        set guifont=SauceCodePro_Nerd_Font:h11:cRUSSIAN
     elseif has("gui_win32")
-        set guifont=Source_Code_Pro:h11:cRUSSIAN
+        set guifont=SauceCodePro_Nerd_Font:h11:cRUSSIAN
     endif
 endif
 
@@ -278,6 +322,8 @@ set smartcase
 set listchars=eol:$,tab:>-,trail:=,precedes:<,extends:>
 
 if has("autocmd") 
+    " close quickfix on buffer leave
+    autocmd BufWinLeave * lclose
     autocmd FileType * set nonumber linebreak foldcolumn=0
 
     autocmd FileType c,cpp set cindent 
@@ -291,7 +337,9 @@ if has("autocmd")
 
     autocmd FileType php set number nowrap foldlevel=50 foldcolumn=3
 
-    autocmd FileType python setlocal colorcolumn=80 sw=4 ts=4 sts=4
+    autocmd FileType python setlocal colorcolumn=120 completeopt-=preview
+
+    autocmd FileType javascript set nowrap foldlevel=50 foldcolumn=3 foldmethod=syntax
 
     " переходить к последней позиции в файле
     autocmd BufReadPost * 

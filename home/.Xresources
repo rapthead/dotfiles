@@ -2,6 +2,8 @@
 !#include ".Xresources.d/xcolors/dotshare"
 #define SOLARIZED_DARK
 #include ".Xresources.d/solarized_colors"
+!#include ".Xresources.d/base-16/base16-solarized-dark.Xresources"
+!#include ".Xresources.d/xcolors/themes/Muzieca pastel white"
 Xft.dpi: 96
 Xcursor.theme: Vanilla-DMZ
 ! ===========================================================================
@@ -9,8 +11,11 @@ Xcursor.theme: Vanilla-DMZ
 ! ===========================================================================
 !URxvt.font:               xft:DejaVu Sans Mono:style=Semibold:pixelsize=14:antialias=true:hinting=slight
 !URxvt.boldFont:           xft:DejaVu Sans Mono:style=bold:pixelsize=14:antialias=true:hinting=slight
-URxvt.font:               xft:Source Code Pro:style=Medium:pixelsize=12:antialias=true:hinting=slight
-URxvt.boldFont:           xft:Source Code Pro:style=Bold:pixelsize=12:antialias=true:hinting=slight
+URxvt.font:               xft:SauceCodePro Nerd Font:style=Medium:pixelsize=12:antialias=true:hinting=slight
+URxvt.boldFont:           xft:SauceCodePro Nerd Font:style=Bold:pixelsize=12:antialias=true:hinting=slight
 URxvt.scrollBar:false
 URxvt.perl-ext-common: default,matcher
 URxvt.underlineURLs:true
+URxvt.fading:50
+URxvt.intensityStyles: false
+*color8: #ccc

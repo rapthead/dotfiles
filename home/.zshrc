@@ -65,7 +65,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(catimg git bower common-aliases rsync django mercurial fabric virtualenv virtualenvwrapper)
+plugins=(catimg git bower common-aliases rsync mercurial fabric virtualenv virtualenvwrapper ssh-agent notify)
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
@@ -92,20 +92,32 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
-function hg_prompt_info() {
-    if [ $(in_hg) ]; then
-        hg_branch="< on %{$fg[red]%}<branch|quiet>%{$reset_color%}>"
-        hg_tags="< at %{$fg[yellow]%}<tags|%{$reset_color%}, %{$fg[yellow]%}>%{$reset_color%}>"
-        hg_bookmarks="< %{$fg[green]%}<bookmark>%{$reset_color%}>"
-        hg_status="<%{$fg[green]%}<status|modified|unknown>>"
-        hg_patches="patches: <patches|join( → )|pre_applied(%{$fg[yellow]%})|post_applied(%{$reset_color%})|pre_unapplied(%{$fg_bold[black]%})|post_unapplied(%{$reset_color%})>"
+# function hg_prompt_info() {
+#     if [ $(in_hg) ]; then
+#         hg_branch="< on %{$fg[red]%}<branch|quiet>%{$reset_color%}>"
+#         hg_tags="< at %{$fg[yellow]%}<tags|%{$reset_color%}, %{$fg[yellow]%}>%{$reset_color%}>"
+#         hg_bookmarks="< %{$fg[green]%}<bookmark>%{$reset_color%}>"
+#         hg_status="<%{$fg[green]%}<status|modified|unknown>>"
+#         hg_patches="patches: <patches|join( → )|pre_applied(%{$fg[yellow]%})|post_applied(%{$reset_color%})|pre_unapplied(%{$fg_bold[black]%})|post_unapplied(%{$reset_color%})>"
+# 
+#         hg prompt --angle-brackets "$hg_branch$hg_bookmarks$hg_status$hg_pathces" 2>/dev/null
+#     fi
+# }
 
-        hg prompt --angle-brackets "$hg_branch$hg_bookmarks$hg_status$hg_pathces" 2>/dev/null
-    fi
+# PROMPT='$_1LEFT
+# $(virtualenv_prompt_info) > $_LIBERTY '
+
+# PROMPT='$COLUMNS ${#${(%)_1LEFT}} > x
+# $_1LEFT ${(r:$((COLUMNS-${#${(%)_1LEFT}}))::x:)}
+# $(virtualenv_prompt_info) > $_LIBERTY '
+
+bureau_precmd () {
+  _1SPACES=`get_space $_1LEFT $_1RIGHT`
+  print
+  print -rP "${_1LEFT}%U${_1SPACES}%u${_1RIGHT}"
 }
-PROMPT='
-$_1LEFT
-$(virtualenv_prompt_info)$(hg_prompt_info) > $_LIBERTY '
+
+PROMPT='$(virtualenv_prompt_info) > $_LIBERTY '
 
 autoload select-word-style
 select-word-style shell
