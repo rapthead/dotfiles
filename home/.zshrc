@@ -1,5 +1,7 @@
+# vidir !!!!
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
+source ~/.oh-my-zsh/plugins/virtualenvwrapper/virtualenvwrapper.plugin.zsh;
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -10,7 +12,7 @@ ZSH_THEME="bureau"
 # Example aliases
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vr="gvim --remote"
-alias wo="source ~/.oh-my-zsh/plugins/virtualenvwrapper/virtualenvwrapper.plugin.zsh; workon"
+alias wo="workon"
 alias homeshick="source ~/.homesick/repos/homeshick/homeshick.sh; homeshick"
 
 alias cpr="rsync --progress"
@@ -41,7 +43,7 @@ mp() {
     fi
 }
 alias mf=$PLAYER' --cache-secs=3 http://cubie:8004'
-alias mcl=$PLAYER' --playlist=http://cubie/clips/all.m3u --shuffle -fs'
+alias mcl=$PLAYER' --playlist=http://rapthead.no-ip.org/clips/all.m3u --shuffle -fs'
 alias feh='feh --scale-down'
 
 # Uncomment the following line to use case-sensitive completion.
@@ -81,7 +83,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(catimg git bower common-aliases rsync django mercurial fabric virtualenv )
+plugins=(catimg git bower common-aliases rsync django mercurial fabric virtualenv notify)
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 

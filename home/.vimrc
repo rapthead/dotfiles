@@ -42,7 +42,7 @@ set smarttab "установка вставки пробелов в начало
 set shiftwidth=4 "установка размера таб-отступа
 set shiftround
 set autoindent "автоматическая табуляция. если текущая строка начинается с TAB, то и следующая тоже
-set wildignore+=*/.git/*,*/.svn/*,*/node_modules/*,*.pyc
+set wildignore+=*/.git/*,*/.svn/*,*/node_modules/*,*/target/*,*.pyc,*.class
 
 set cryptmethod=blowfish2
 
@@ -67,6 +67,8 @@ call plug#begin('~/.vim/plugged')
 " Plug 'airblade/vim-rooter'
 " Plug 'idbrii/AsyncCommand'
 
+Plug 'neomake/neomake'
+Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-sensible'
 Plug 'altercation/vim-colors-solarized'
 Plug 'easymotion/vim-easymotion'
@@ -74,12 +76,15 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'sjl/gundo.vim'
 Plug 'mileszs/ack.vim'
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdcommenter'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'groenewege/vim-less', { 'for': 'less' }
 Plug 'insanum/votl', { 'for': 'votl' }
 Plug 'mgrabovsky/vim-cuesheet', { 'for': 'cuesheet' }
@@ -107,9 +112,9 @@ if executable('ag')
 endif
 
 " Plug 'scrooloose/syntastic'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1

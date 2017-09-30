@@ -24,9 +24,7 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH:/usr/sbin:/sbin"
 fi
 
-if [ -d "$HOME/.pip" ] ; then
-    export PYTHONPATH="$HOME/.pip:$PYTHONPATH"
-fi
+export PYTHONPATH="$HOME/.local/lib/python3.5/site-packages/:$PYTHONPATH"
 
 export XDG_CONFIG_HOME="$HOME/.config/"
 export MPD_HOST="cubie"

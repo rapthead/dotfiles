@@ -29,4 +29,4 @@ autosync = 550
 
 [hdmi]
 af = format=format=s16:srate=44100:channels=2
-ao = alsa:device=[plughw:0,3]
+ao = alsa:device=[plughw:0,0]
