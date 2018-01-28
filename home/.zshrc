@@ -144,3 +144,5 @@ select-word-style shell
 # PROMPT=$PROMPT'${vcs_info_msg_0_}'
 # RPROMPT=$RPROMPT'${vcs_info_msg_1_}'
 # 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -23,6 +23,7 @@ fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH:/usr/sbin:/sbin"
 fi
+PATH="/usr/lib/go-1.9/bin:$PATH"
 
 export PYTHONPATH="$HOME/.local/lib/python3.5/site-packages/:$PYTHONPATH"
 

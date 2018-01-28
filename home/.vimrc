@@ -21,6 +21,9 @@ set formatoptions=tcql "опции форматирования по умолч�
 set comments& "выставление стандартных опций комментария
 set laststatus=2 "всегда отображать строку состояния
 set keymap=russian-jcukenwin "добавление допалнительной раскладки
+set langmap=йq,цw,уe,кr,еt,нy,гu,шi,щo,зp,х[,ъ],фa,ыs,вd,аf,пg,рh,оj,лk,дl,э',яz,чx,сc,мv,иb,тn,ьm,б\\,,ю.,ё`,ЙQ,ЦW,УE,КR,ЕT,НY,ГU,ШI,ЩO,ЗP,Х{,Ъ},ФA,ЫS,ВD,АF,ПG,РH,ОJ,ЛK,ДL,Ж:,Э\\",ЯZ,ЧX,СC,МV,ИB,ТN,ЬM,Б\\<,Ю\\>,Ё\\~
+" set langmap=ёйцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕHГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ\\;;`qwertyuiop[]asdfghjkl\\;’zxcvbnm\\,.QWERTYUIOP{}ASDFGHJKL:\\«ZXCVBNM$
+" set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 set iminsert=0
 set imsearch=-1 "раскладка по умолчанию - английская
 "set statusline=%<%f\ %m[%n]\ %{virtualenv#statusline()}\ [%H%R%Y]%=%-10.(%l,%c%V%)\ [en]\ %{&fileencoding}\ %P
@@ -44,7 +47,7 @@ set shiftround
 set autoindent "автоматическая табуляция. если текущая строка начинается с TAB, то и следующая тоже
 set wildignore+=*/.git/*,*/.svn/*,*/node_modules/*,*/target/*,*.pyc,*.class
 
-set cryptmethod=blowfish2
+let mapleader="\<SPACE>"
 
 filetype off
 syntax on
@@ -67,16 +70,15 @@ call plug#begin('~/.vim/plugged')
 " Plug 'airblade/vim-rooter'
 " Plug 'idbrii/AsyncCommand'
 
-Plug 'neomake/neomake'
+" Plug 'neomake/neomake'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-sensible'
 Plug 'altercation/vim-colors-solarized'
 Plug 'easymotion/vim-easymotion'
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'sjl/gundo.vim'
 Plug 'mileszs/ack.vim'
-" Plug 'scrooloose/syntastic'
 Plug 'w0rp/ale'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdcommenter'
@@ -95,6 +97,7 @@ Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'rapthead/vim-virtualenv', { 'for': 'python' }
 Plug 'fisadev/vim-isort', { 'for': 'python' }
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 filetype plugin indent on                   " required!
 call plug#end()
 
@@ -110,20 +113,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
-
-" Plug 'scrooloose/syntastic'
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-" let g:syntastic_python_checkers = ['flake8', 'pylint']
-let g:syntastic_python_checkers = ['pyflakes', 'pep8']
-let g:syntastic_python_pylint_args = "-j 2 --disable=missing-docstring"
-cabbrev <silent> bd <C-r>=(getcmdtype()==#':' && getcmdpos()==1 ? 'lclose\|bdelete' : 'bd')<CR>
 
 " Plug 'jlanzarotta/bufexplorer'
 map <Leader>b :BufExplorer<cr>
@@ -150,7 +139,7 @@ map <Leader>k <Plug>(easymotion-k)
 
 colorscheme solarized
 
-set mouse=
+set mouse=a
 nmap <ScrollWheelUp> <nop>
 nmap <S-ScrollWheelUp> <nop>
 nmap <C-ScrollWheelUp> <nop>
@@ -209,6 +198,8 @@ nmap <Tab>   :cclose<CR>:bnext<CR>
 nmap <S-Tab> :cclose<CR>:bprevious<CR>
 nmap <C-Tab> :cclose<CR>:tabnext<CR>
 
+nnoremap <C-P> :FZF<cr>
+
 """"""""""""""""
 """""menus""""""
 """"""""""""""""
@@ -248,13 +239,13 @@ endif
 function! ChLang()
     let str=substitute(&statusline, '\ ', '\\ ','g')
     if &iminsert==0
-	highlight StatusLine ctermfg=DarkBlue guifg=DarkBlue
-	let str=substitute(str,'\[en\]', '[ru]','')
-	exec "set iminsert=1 statusline=".str
+        highlight StatusLine ctermfg=DarkBlue guifg=DarkBlue
+        let str=substitute(str,'\[en\]', '[ru]','')
+        exec "set iminsert=1 statusline=".str
     else
-	highlight StatusLine ctermfg=DarkGreen guifg=DarkGreen
-	let str=substitute(str,'\[ru\]', '[en]','')
-	exec "set iminsert=0 statusline=".str
+        highlight StatusLine ctermfg=DarkGreen guifg=DarkGreen
+        let str=substitute(str,'\[ru\]', '[en]','')
+        exec "set iminsert=0 statusline=".str
     endif
 endfunction
 
@@ -271,9 +262,13 @@ set sidescroll=5
 set smartcase
 
 "замена непечатаемых символов в режиме "list"
-set listchars=eol:$,tab:>-,trail:=,precedes:<,extends:>
+if &listchars ==# 'eol:$'
+    set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+endif
+" Show problematic characters.
+set list
 
-if has("autocmd") 
+if has("autocmd")
     autocmd FileType * set nonumber linebreak foldcolumn=0
 
     autocmd FileType c,cpp set cindent 
