@@ -73,18 +73,18 @@ call plug#begin('~/.vim/plugged')
 " Plug 'neomake/neomake'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-sensible'
-Plug 'altercation/vim-colors-solarized'
+Plug 'iCyMind/NeoSolarized'
 Plug 'easymotion/vim-easymotion'
 " Plug 'ctrlpvim/ctrlp.vim'
-Plug 'jlanzarotta/bufexplorer'
 Plug 'sjl/gundo.vim'
 Plug 'mileszs/ack.vim'
 Plug 'w0rp/ale'
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdcommenter'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
+Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'groenewege/vim-less', { 'for': 'less' }
@@ -97,13 +97,39 @@ Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'rapthead/vim-virtualenv', { 'for': 'python' }
 Plug 'fisadev/vim-isort', { 'for': 'python' }
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
+
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'roxma/nvim-completion-manager'
 filetype plugin indent on                   " required!
 call plug#end()
 
 " ----------------------------------------------------------------------------
 "   Plugins Settings
 " ----------------------------------------------------------------------------
+" Plug 'autozimu/LanguageClient-neovim'
+let g:LanguageClient_serverCommands = {
+    \ 'typescript':     ['javascript-typescript-stdio', '--logfile', '/tmp/javascript-typescript-stdio-typescript'],
+    \ 'javascript':     ['javascript-typescript-stdio', '--logfile', '/tmp/javascript-typescript-stdio']
+    \ }
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+autocmd FileType javascript,typescript nnoremap <buffer>
+  \ <leader>lf :call LanguageClient_textDocument_documentSymbol()<cr>
+autocmd FileType javascript,typescript nnoremap <buffer>
+  \ <leader>lr :call LanguageClient_textDocument_rename()<cr>
+autocmd FileType javascript,typescript nnoremap <buffer>
+  \ <leader>ld :call LanguageClient_textDocument_definition()<cr>
+autocmd FileType javascript,typescript nnoremap <buffer>
+  \ <leader>lh :call LanguageClient_textDocument_hover()<cr>
+autocmd FileType javascript,typescript nnoremap <buffer>
+  \ <leader>lr :call LanguageClient_textDocument_rename()<cr>
+
 " Plug 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
@@ -113,18 +139,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
-
-" Plug 'jlanzarotta/bufexplorer'
-map <Leader>b :BufExplorer<cr>
-map <Leader>c :CMiniBufExplorer<cr>
-map <Leader>u :UMiniBufExplorer<cr>
-map <Leader>t :TMiniBufExplorer<cr>
-
-let g:bufExplorerShowRelativePath=1
-let g:bufExplorerSplitOutPathName=0
-
-" Plug 'altercation/vim-colors-solarized'
-let g:solarized_italic=0
 
 " Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
 " let g:PHP_BracesAtCodeLevel = 1
@@ -137,7 +151,14 @@ nmap s <Plug>(easymotion-s2)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
-colorscheme solarized
+" Plug 'junegunn/fzf.vim'
+nnoremap <C-P> :Files<cr>
+nnoremap <Leader>b :Buffers<cr>
+nnoremap <Leader>h :History<cr>
+imap <c-x><c-f> <plug>(fzf-complete-file)
+
+
+colorscheme NeoSolarized
 
 set mouse=a
 nmap <ScrollWheelUp> <nop>
@@ -197,9 +218,6 @@ imap <silent> <F7> <Left><Right><C-O>:call ChLang()<cr>
 nmap <Tab>   :cclose<CR>:bnext<CR>
 nmap <S-Tab> :cclose<CR>:bprevious<CR>
 nmap <C-Tab> :cclose<CR>:tabnext<CR>
-
-nnoremap <C-P> :FZF<cr>
-
 """"""""""""""""
 """""menus""""""
 """"""""""""""""
