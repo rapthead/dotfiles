@@ -78,7 +78,7 @@ Plug 'easymotion/vim-easymotion'
 " Plug 'ctrlpvim/ctrlp.vim'
 Plug 'sjl/gundo.vim'
 Plug 'mileszs/ack.vim'
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 " Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdcommenter'
 Plug 'SirVer/ultisnips'
@@ -87,28 +87,34 @@ Plug 'honza/vim-snippets'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'groenewege/vim-less', { 'for': 'less' }
-Plug 'insanum/votl', { 'for': 'votl' }
-Plug 'mgrabovsky/vim-cuesheet', { 'for': 'cuesheet' }
-Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
-Plug 'vim-perl/vim-perl', { 'for': 'perl' }
-" Plug 'klen/python-mode', { 'for': 'python' }
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'rapthead/vim-virtualenv', { 'for': 'python' }
-Plug 'fisadev/vim-isort', { 'for': 'python' }
-Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
+" Plug 'groenewege/vim-less', { 'for': 'less' }
+" Plug 'insanum/votl', { 'for': 'votl' }
+" Plug 'mgrabovsky/vim-cuesheet', { 'for': 'cuesheet' }
+" Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
+" Plug 'vim-perl/vim-perl', { 'for': 'perl' }
+" " Plug 'klen/python-mode', { 'for': 'python' }
+" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+" Plug 'rapthead/vim-virtualenv', { 'for': 'python' }
+" Plug 'fisadev/vim-isort', { 'for': 'python' }
+" Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'roxma/nvim-completion-manager'
+" Plug 'roxma/nvim-completion-manager'
 filetype plugin indent on                   " required!
 call plug#end()
 
 " ----------------------------------------------------------------------------
 "   Plugins Settings
 " ----------------------------------------------------------------------------
+" Plug 'Shougo/deoplete.nvim'
+let g:deoplete#enable_at_startup = 1
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
+call deoplete#custom#source('_', 'sorters', ['sorter_word'])
+
 " Plug 'autozimu/LanguageClient-neovim'
 let g:LanguageClient_serverCommands = {
     \ 'typescript':     ['javascript-typescript-stdio', '--logfile', '/tmp/javascript-typescript-stdio-typescript'],
@@ -152,7 +158,7 @@ map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
 " Plug 'junegunn/fzf.vim'
-nnoremap <C-P> :Files<cr>
+nnoremap <C-P> :GFiles<cr>
 nnoremap <Leader>b :Buffers<cr>
 nnoremap <Leader>h :History<cr>
 imap <c-x><c-f> <plug>(fzf-complete-file)
