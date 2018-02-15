@@ -84,7 +84,8 @@ Plug 'w0rp/ale'
 " Plug 'neomake/neomake'
 " Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
-Plug 'sjl/gundo.vim'
+" Plug 'sjl/gundo.vim'
+Plug 'mbbill/undotree'
 Plug 'tpope/vim-sensible'
 
 Plug 'hail2u/vim-css3-syntax'
@@ -111,6 +112,10 @@ Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'pangloss/vim-javascript' ", { 'for': 'javascript' }
 Plug 'moll/vim-node' ", { 'for': 'javascript' }
 Plug 'mxw/vim-jsx' ", { 'for': 'javascript.jsx' }
+Plug 'digitaltoad/vim-pug'
+Plug 'chase/vim-ansible-yaml'
+Plug 'hashivim/vim-terraform'
+
 filetype plugin indent on                   " required!
 call plug#end()
 
@@ -340,6 +345,8 @@ if has("autocmd")
     autocmd FileType python setlocal colorcolumn=120 completeopt-=preview
 
     autocmd FileType javascript set nowrap foldlevel=50 foldcolumn=3 foldmethod=syntax
+
+    autocmd FileType yaml setlocal shiftwidth=2
 
     " переходить к последней позиции в файле
     autocmd BufReadPost * 

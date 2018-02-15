@@ -15,7 +15,7 @@ alias wo="workon"
 alias cpr="rsync --progress"
 alias gmc="export EDITOR='gvimremote'; mc"
 
-ssh() { /usr/bin/ssh $* -t "env HGUSER='pgribanov <pgribanov@prural.ru>' bash -l" }
+# ssh() { /usr/bin/ssh $* -t "env HGUSER='pgribanov <pgribanov@prural.ru>' bash -l" }
 
 PLAYER=$(which mpv)
 if [ -z $PLAYER ]; then
@@ -118,6 +118,11 @@ bureau_precmd () {
 }
 
 PROMPT='$(virtualenv_prompt_info) > $_LIBERTY '
+RPROMPT='$(bureau_git_prompt)'
 
 autoload select-word-style
 select-word-style shell
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
