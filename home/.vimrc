@@ -67,19 +67,17 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-" Plug 'airblade/vim-rooter'
-" Plug 'idbrii/AsyncCommand'
+" Plug 'w0rp/ale'
+Plug 'Shougo/vimproc.vim'
+Plug 'Quramy/tsuquyomi'
+Plug 'Valloric/YouCompleteMe'
 
-" Plug 'neomake/neomake'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-sensible'
 Plug 'iCyMind/NeoSolarized'
 Plug 'easymotion/vim-easymotion'
-" Plug 'ctrlpvim/ctrlp.vim'
 Plug 'sjl/gundo.vim'
 Plug 'mileszs/ack.vim'
-" Plug 'w0rp/ale'
-" Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdcommenter'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -87,22 +85,11 @@ Plug 'honza/vim-snippets'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-" Plug 'groenewege/vim-less', { 'for': 'less' }
-" Plug 'insanum/votl', { 'for': 'votl' }
-" Plug 'mgrabovsky/vim-cuesheet', { 'for': 'cuesheet' }
-" Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
-" Plug 'vim-perl/vim-perl', { 'for': 'perl' }
-" " Plug 'klen/python-mode', { 'for': 'python' }
-" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-" Plug 'rapthead/vim-virtualenv', { 'for': 'python' }
-" Plug 'fisadev/vim-isort', { 'for': 'python' }
-" Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'roxma/nvim-completion-manager'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
 filetype plugin indent on                   " required!
 call plug#end()
 
@@ -110,31 +97,36 @@ call plug#end()
 "   Plugins Settings
 " ----------------------------------------------------------------------------
 " Plug 'Shougo/deoplete.nvim'
-let g:deoplete#enable_at_startup = 1
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
-call deoplete#custom#source('_', 'sorters', ['sorter_word'])
+" let g:deoplete#enable_at_startup = 1
+" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
+" call deoplete#custom#source('_', 'sorters', ['sorter_word'])
 
 " Plug 'autozimu/LanguageClient-neovim'
-let g:LanguageClient_serverCommands = {
-    \ 'typescript':     ['javascript-typescript-stdio', '--logfile', '/tmp/javascript-typescript-stdio-typescript'],
-    \ 'javascript':     ['javascript-typescript-stdio', '--logfile', '/tmp/javascript-typescript-stdio']
-    \ }
+" set hidden
+" let g:LanguageClient_serverCommands = {
+"     \ 'typescript':     ['javascript-typescript-stdio', '--logfile', '/tmp/javascript-typescript-stdio-typescript'],
+"     \ 'javascript':     ['javascript-typescript-stdio', '--logfile', '/tmp/javascript-typescript-stdio']
+"     \ }
+" 
+" nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+" nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+" 
+" autocmd FileType javascript,typescript nnoremap <buffer>
+"   \ <leader>lf :call LanguageClient_textDocument_documentSymbol()<cr>
+" autocmd FileType javascript,typescript nnoremap <buffer>
+"   \ <leader>lr :call LanguageClient_textDocument_rename()<cr>
+" autocmd FileType javascript,typescript nnoremap <buffer>
+"   \ <leader>ld :call LanguageClient_textDocument_definition()<cr>
+" autocmd FileType javascript,typescript nnoremap <buffer>
+"   \ <leader>lh :call LanguageClient_textDocument_hover()<cr>
+" autocmd FileType javascript,typescript nnoremap <buffer>
+"   \ <leader>lr :call LanguageClient_textDocument_rename()<cr>
 
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
-autocmd FileType javascript,typescript nnoremap <buffer>
-  \ <leader>lf :call LanguageClient_textDocument_documentSymbol()<cr>
-autocmd FileType javascript,typescript nnoremap <buffer>
-  \ <leader>lr :call LanguageClient_textDocument_rename()<cr>
-autocmd FileType javascript,typescript nnoremap <buffer>
-  \ <leader>ld :call LanguageClient_textDocument_definition()<cr>
-autocmd FileType javascript,typescript nnoremap <buffer>
-  \ <leader>lh :call LanguageClient_textDocument_hover()<cr>
-autocmd FileType javascript,typescript nnoremap <buffer>
-  \ <leader>lr :call LanguageClient_textDocument_rename()<cr>
+" Plug 'Quramy/tsuquyomi'
+autocmd FileType typescript nmap <buffer> <Leader>r <Plug>(TsuquyomiRenameSymbol)
+autocmd FileType typescript nmap <buffer> <Leader>R <Plug>(TsuquyomiRenameSymbolC)
 
 " Plug 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -158,7 +150,7 @@ map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
 " Plug 'junegunn/fzf.vim'
-nnoremap <C-P> :GFiles<cr>
+nnoremap <C-P> :GFiles --cached --others --exclude-standard<cr>
 nnoremap <Leader>b :Buffers<cr>
 nnoremap <Leader>h :History<cr>
 imap <c-x><c-f> <plug>(fzf-complete-file)

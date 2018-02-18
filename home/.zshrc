@@ -29,11 +29,11 @@ last_playlist() {
     echo `ls -t ~/Downloads/*.m3u | head -1`
 }
 ml() {
-    if [ $# -eq 0 ]; then
-        $PLAYER -fs -ao alsa -playlist "$(last_playlist)"
-    else
-        $PLAYER -fs $*
-    fi
+    # if [ $# -eq 0 ]; then
+        $PLAYER -fs -ao alsa -playlist "$(last_playlist)" $*
+    # else
+    #     $PLAYER -fs
+    # fi
 }
 mp() {
     if [ $# -eq 0 ]; then

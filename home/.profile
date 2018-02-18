@@ -35,6 +35,7 @@ export WORKON_HOME=~/.virtualenvs
 export PROJECT_HOME=$HOME/doc/projects
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export VDPAU_DRIVER=va_gl
+export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 # export LC_ALL=en_US.utf8
 # export LANG=en_US.utf8
 # export LANGUAGE=en
