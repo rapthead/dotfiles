@@ -21,10 +21,13 @@ set formatoptions=tcql "опции форматирования по умолч�
 set comments& "выставление стандартных опций комментария
 set laststatus=2 "всегда отображать строку состояния
 set keymap=russian-jcukenwin "добавление допалнительной раскладки
+set langmap=йq,цw,уe,кr,еt,нy,гu,шi,щo,зp,х[,ъ],фa,ыs,вd,аf,пg,рh,оj,лk,дl,э',яz,чx,сc,мv,иb,тn,ьm,б\\,,ю.,ё`,ЙQ,ЦW,УE,КR,ЕT,НY,ГU,ШI,ЩO,ЗP,Х{,Ъ},ФA,ЫS,ВD,АF,ПG,РH,ОJ,ЛK,ДL,Ж:,Э\\",ЯZ,ЧX,СC,МV,ИB,ТN,ЬM,Б\\<,Ю\\>,Ё\\~
+" set langmap=ёйцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕHГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ\\;;`qwertyuiop[]asdfghjkl\\;’zxcvbnm\\,.QWERTYUIOP{}ASDFGHJKL:\\«ZXCVBNM$
+" set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 set iminsert=0
 set imsearch=-1 "раскладка по умолчанию - английская
-set statusline=%<%f\ %m[%n]\ %{virtualenv#statusline()}\ [%H%R%Y]%=%-10.(%l,%c%V%)\ [en]\ %{&fileencoding}\ %P
-" set statusline=%<%f\ %m[%n]\ [%H%R%Y]%=%-10.(%l,%c%V%)\ [en]\ %{&fileencoding}\ %P "изменения формата "statusline"
+"set statusline=%<%f\ %m[%n]\ %{virtualenv#statusline()}\ [%H%R%Y]%=%-10.(%l,%c%V%)\ [en]\ %{&fileencoding}\ %P
+set statusline=%<%f\ %m[%n]\ [%H%R%Y]%=%-10.(%l,%c%V%)\ [en]\ %{&fileencoding}\ %P "изменения формата "statusline"
 set cmdheight=2 "высота командной строки
 set hidden "не выгружать буферы из памяти при закрытии окна буфера
 set fileencodings=utf-8,cp1251,cp866,koi8-r,utf-16le "список используемых кодировок
@@ -42,16 +45,15 @@ set smarttab "установка вставки пробелов в начало
 set shiftwidth=4 "установка размера таб-отступа
 set shiftround
 set autoindent "автоматическая табуляция. если текущая строка начинается с TAB, то и следующая тоже
-" set wildignore+=*/.git/*,*/.svn/*,*/node_modules/*,*.pyc
+set wildignore+=*/.git/*,*/.svn/*,*/node_modules/*,*/target/*,*.pyc,*.class
 
-set cryptmethod=blowfish2
-set colorcolumn=80
+let mapleader="\<SPACE>"
 
 filetype off
 syntax on
 filetype plugin indent on
 
-" без этого inotify не срабатывает (webpack)
+" без этого inotify не срабатывает
 set backupcopy=yes
 
 " ----------------------------------------------------------------------------
@@ -67,142 +69,103 @@ endif
 call plug#begin('~/.vim/plugged')
 " Plug 'airblade/vim-rooter'
 " Plug 'idbrii/AsyncCommand'
-Plug 'tpope/vim-abolish'
-" Plug 'takac/vim-hardtime'
-Plug 'wikitopian/hardmode'
 
-Plug 'SirVer/ultisnips'
-Plug 'altercation/vim-colors-solarized'
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'neomake/neomake'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-sensible'
+Plug 'iCyMind/NeoSolarized'
 Plug 'easymotion/vim-easymotion'
-Plug 'flazz/vim-colorschemes'
-Plug 'honza/vim-snippets'
-Plug 'jlanzarotta/bufexplorer'
-Plug 'majutsushi/tagbar'
+" Plug 'ctrlpvim/ctrlp.vim'
+Plug 'sjl/gundo.vim'
 Plug 'mileszs/ack.vim'
 Plug 'w0rp/ale'
-" Plug 'neomake/neomake'
-" Plug 'scrooloose/syntastic'
+" Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdcommenter'
-" Plug 'sjl/gundo.vim'
-Plug 'mbbill/undotree'
-Plug 'tpope/vim-sensible'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
-Plug 'hail2u/vim-css3-syntax'
-" Plug 'vim-scripts/SQLUtilities'
-" Plug 'suan/vim-instant-markdown'
-Plug 'blueyed/vim-diminactive'
-Plug 'felixhummel/setcolors.vim'
-" Plug 'kylef/apiblueprint.vim'
-
-Plug 'groenewege/vim-less', { 'for': 'less' }
+Plug 'leafgarland/typescript-vim'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+" Plug 'groenewege/vim-less', { 'for': 'less' }
 " Plug 'insanum/votl', { 'for': 'votl' }
 " Plug 'mgrabovsky/vim-cuesheet', { 'for': 'cuesheet' }
 " Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
-Plug 'vim-perl/vim-perl', { 'for': 'perl' }
-" Plug 'klen/python-mode', { 'for': 'python' }
-" Plug 'Yggdroot/indentLine', { 'for': 'python' }
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+" Plug 'vim-perl/vim-perl', { 'for': 'perl' }
+" " Plug 'klen/python-mode', { 'for': 'python' }
+" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 " Plug 'rapthead/vim-virtualenv', { 'for': 'python' }
-Plug 'jmcantrell/vim-virtualenv'
-Plug 'fisadev/vim-isort', { 'for': 'python' }
-Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
-" Plug 'tweekmonster/braceless.vim', { 'for': 'python' }
+" Plug 'fisadev/vim-isort', { 'for': 'python' }
+" Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
-Plug 'pangloss/vim-javascript' ", { 'for': 'javascript' }
-Plug 'moll/vim-node' ", { 'for': 'javascript' }
-Plug 'mxw/vim-jsx' ", { 'for': 'javascript.jsx' }
-Plug 'digitaltoad/vim-pug'
-Plug 'chase/vim-ansible-yaml'
-Plug 'hashivim/vim-terraform'
-
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'roxma/nvim-completion-manager'
 filetype plugin indent on                   " required!
 call plug#end()
 
 " ----------------------------------------------------------------------------
 "   Plugins Settings
 " ----------------------------------------------------------------------------
-" Plug 'takac/vim-hardtime'
-let g:hardtime_default_on = 1
-" Plug 'neomake/neomake'
-let g:neomake_error_sign        = { 'text': '', 'texthl': 'ErrorMsg' }
-let g:neomake_warning_sign      = { 'text': '', 'texthl': 'WarningMsg' }
+" Plug 'Shougo/deoplete.nvim'
+let g:deoplete#enable_at_startup = 1
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
+let g:deoplete#sources.typescript = ['LanguageClient']
+call deoplete#custom#source('_', 'sorters', ['sorter_word'])
 
-" Plug 'ctrlpvim/ctrlp.vim'
-let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|node_modules)'
-let g:ctrlp_cmd = 'CtrlPMRU'
+" Plug 'autozimu/LanguageClient-neovim'
+let g:LanguageClient_serverCommands = {
+    \ 'typescript':     ['javascript-typescript-stdio', '--logfile', '/tmp/javascript-typescript-stdio-typescript'],
+    \ 'javascript':     ['javascript-typescript-stdio', '--logfile', '/tmp/javascript-typescript-stdio']
+    \ }
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+autocmd FileType javascript,typescript nnoremap <buffer>
+  \ <leader>lf :call LanguageClient_textDocument_documentSymbol()<cr>
+autocmd FileType javascript,typescript nnoremap <buffer>
+  \ <leader>lr :call LanguageClient_textDocument_rename()<cr>
+autocmd FileType javascript,typescript nnoremap <buffer>
+  \ <leader>ld :call LanguageClient_textDocument_definition()<cr>
+autocmd FileType javascript,typescript nnoremap <buffer>
+  \ <leader>lh :call LanguageClient_textDocument_hover()<cr>
 
 " Plug 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-" Plug 'tweekmonster/braceless.vim'
-" autocmd FileType python BracelessEnable +indent +fold
-
 " Plug 'mileszs/ack.vim'
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
-
-" Plug 'scrooloose/syntastic'
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" 
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" "
-" let g:syntastic_python_checkers = ['pyflakes', 'pycodestyle']
-" 
-" let g:syntastic_python_pylint_args = "-j 2 --disable=missing-docstring"
-" let g:syntastic_python_python_exec = '/path/to/python3'
-" 
-" let g:syntastic_javascript_checkers = ['eslint']
-" cabbrev <silent> bd <C-r>=(getcmdtype()==#':' && getcmdpos()==1 ? 'lclose\|bdelete' : 'bd')<CR>
-
-" Plug 'neomake/neomake'
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_python_enabled_makers = ['pyflakes']
-let g:neomake_css_enabled_makers = []
-let g:neomake_open_list = 2
-let g:neomake_list_height = 5
-
-" autocmd! BufWritePost * Neomake
-" augroup neomake
-"     autocmd!
-"     autocmd BufReadPost * Neomake
-"     autocmd BufWritePost * Neomake
-" augroup END
-
-" Plug 'jlanzarotta/bufexplorer'
-map <Leader>b :BufExplorer<cr>
-map <Leader>c :CMiniBufExplorer<cr>
-map <Leader>u :UMiniBufExplorer<cr>
-map <Leader>t :TMiniBufExplorer<cr>
-
-let g:bufExplorerShowRelativePath=1
-let g:bufExplorerSplitOutPathName=0
-
-" Plug 'altercation/vim-colors-solarized'
-let g:solarized_italic=0
 
 " Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
 " let g:PHP_BracesAtCodeLevel = 1
 let g:PHP_outdentphpescape = 1
 
 " Plug 'easymotion/vim-easymotion'
-let g:EasyMotion_do_mapping = 1
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
 let g:EasyMotion_smartcase = 1
 nmap s <Plug>(easymotion-s2)
-map <C-J> <Plug>(easymotion-j)
-map <C-K> <Plug>(easymotion-k)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
 
-colorscheme slate
+" Plug 'junegunn/fzf.vim'
+nnoremap <C-P> :GFiles<cr>
+nnoremap <Leader>b :Buffers<cr>
+nnoremap <Leader>h :History<cr>
+imap <c-x><c-f> <plug>(fzf-complete-file)
 
-set mouse=
+
+colorscheme NeoSolarized
+
+set mouse=a
 nmap <ScrollWheelUp> <nop>
 nmap <S-ScrollWheelUp> <nop>
 nmap <C-ScrollWheelUp> <nop>
@@ -260,7 +223,6 @@ imap <silent> <F7> <Left><Right><C-O>:call ChLang()<cr>
 nmap <Tab>   :cclose<CR>:bnext<CR>
 nmap <S-Tab> :cclose<CR>:bprevious<CR>
 nmap <C-Tab> :cclose<CR>:tabnext<CR>
-
 """"""""""""""""
 """""menus""""""
 """"""""""""""""
@@ -284,16 +246,15 @@ endif
 
 set background=dark
 if has("gui_running")
-    colorscheme solarized
+    set background=light
     set guioptions-=T
     set guioptions-=m
     if has("gui_gtk2")
-        set guifont=SauceCodePro\ Nerd\ Font\ Medium\ 10
-        " set guifont=Source\ Code\ Pro\ Medium\ 10
+        set guifont=Source\ Code\ Pro\ Medium\ 10
     elseif has("gui_macvim")
-        set guifont=SauceCodePro_Nerd_Font:h11:cRUSSIAN
+        set guifont=Menlo\ Regular:h14
     elseif has("gui_win32")
-        set guifont=SauceCodePro_Nerd_Font:h11:cRUSSIAN
+        set guifont=Source_Code_Pro:h11:cRUSSIAN
     endif
 endif
 
@@ -301,13 +262,13 @@ endif
 function! ChLang()
     let str=substitute(&statusline, '\ ', '\\ ','g')
     if &iminsert==0
-	highlight StatusLine ctermfg=DarkBlue guifg=DarkBlue
-	let str=substitute(str,'\[en\]', '[ru]','')
-	exec "set iminsert=1 statusline=".str
+        highlight StatusLine ctermfg=DarkBlue guifg=DarkBlue
+        let str=substitute(str,'\[en\]', '[ru]','')
+        exec "set iminsert=1 statusline=".str
     else
-	highlight StatusLine ctermfg=DarkGreen guifg=DarkGreen
-	let str=substitute(str,'\[ru\]', '[en]','')
-	exec "set iminsert=0 statusline=".str
+        highlight StatusLine ctermfg=DarkGreen guifg=DarkGreen
+        let str=substitute(str,'\[ru\]', '[en]','')
+        exec "set iminsert=0 statusline=".str
     endif
 endfunction
 
@@ -324,11 +285,13 @@ set sidescroll=5
 set smartcase
 
 "замена непечатаемых символов в режиме "list"
-set listchars=eol:$,tab:>-,trail:=,precedes:<,extends:>
+if &listchars ==# 'eol:$'
+    set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+endif
+" Show problematic characters.
+set list
 
-if has("autocmd") 
-    " close quickfix on buffer leave
-    autocmd BufWinLeave * lclose
+if has("autocmd")
     autocmd FileType * set nonumber linebreak foldcolumn=0
 
     autocmd FileType c,cpp set cindent 
@@ -342,11 +305,7 @@ if has("autocmd")
 
     autocmd FileType php set number nowrap foldlevel=50 foldcolumn=3
 
-    autocmd FileType python setlocal colorcolumn=120 completeopt-=preview
-
-    autocmd FileType javascript set nowrap foldlevel=50 foldcolumn=3 foldmethod=syntax
-
-    autocmd FileType yaml setlocal shiftwidth=2
+    autocmd FileType python setlocal colorcolumn=120
 
     " переходить к последней позиции в файле
     autocmd BufReadPost * 
