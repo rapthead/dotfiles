@@ -16,7 +16,7 @@ hwdec = vaapi
 [save]
 write-filename-in-watch-later-config = yes
 
-[hw]
+# [hw]
 # vo = vdpau
 # vd = ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,
 

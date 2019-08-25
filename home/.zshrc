@@ -1,7 +1,6 @@
 # vidir !!!!
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-source ~/.oh-my-zsh/plugins/virtualenvwrapper/virtualenvwrapper.plugin.zsh;
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -18,7 +17,7 @@ alias homeshick="source ~/.homesick/repos/homeshick/homeshick.sh; homeshick"
 alias cpr="rsync --progress"
 alias gmc="export EDITOR='gvimremote'; mc"
 
-ssh() { /usr/bin/ssh $* -t "env HGUSER='pgribanov <pgribanov@prural.ru>' bash -l" }
+# ssh() { /usr/bin/ssh $* -t "env HGUSER='pgribanov <pgribanov@prural.ru>' bash -l" }
 
 PLAYER=$(which mpv)
 if [ -z $PLAYER ]; then
@@ -42,8 +41,9 @@ mp() {
         $PLAYER -fs --profile=pulse $*
     fi
 }
-alias mf=$PLAYER' --cache-secs=3 http://cubie:8004'
-alias mcl=$PLAYER' --playlist=http://rapthead.no-ip.org/clips/all.m3u --shuffle -fs'
+alias mf=$PLAYER' --cache-secs=3 http://rapthead.no-ip.org:8004'
+alias mcl=$PLAYER' --playlist=http://rapthead.no-ip.org/m3u/clips/ --shuffle -fs'
+alias mcb=$PLAYER' --playlist=http://rapthead.no-ip.org/m3u/clips/brass/ --shuffle -fs'
 alias feh='feh --scale-down'
 
 # Uncomment the following line to use case-sensitive completion.
@@ -83,7 +83,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(catimg git bower common-aliases rsync django mercurial fabric virtualenv notify)
+plugins=(catimg git common-aliases rsync mercurial notify)
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
@@ -144,5 +144,8 @@ select-word-style shell
 # PROMPT=$PROMPT'${vcs_info_msg_0_}'
 # RPROMPT=$RPROMPT'${vcs_info_msg_1_}'
 # 
+export NVM_DIR="$HOME/.config"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

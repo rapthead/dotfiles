@@ -23,12 +23,14 @@ fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH:/usr/sbin:/sbin"
 fi
-PATH="/usr/lib/go-1.9/bin:$PATH"
+export GOPATH=~/go
+PATH=$PATH:$GOPATH/bin
+PATH="/usr/lib/go-1.11/bin:$PATH"
 
 export PYTHONPATH="$HOME/.local/lib/python3.5/site-packages/:$PYTHONPATH"
 
 export XDG_CONFIG_HOME="$HOME/.config/"
-export MPD_HOST="cubie"
+export MPD_HOST="rapthead.no-ip.org"
 export EDITOR=vim
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export WORKON_HOME=~/.virtualenvs
@@ -36,6 +38,7 @@ export PROJECT_HOME=$HOME/doc/projects
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export VDPAU_DRIVER=va_gl
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+export GDK_SCALE=1.2
 # export LC_ALL=en_US.utf8
 # export LANG=en_US.utf8
 # export LANGUAGE=en
