@@ -13,6 +13,10 @@ vo = opengl
 #no-ytdl
 hwdec = vaapi
 
+[music]
+cache = 16
+cache-initial = 8
+
 [save]
 write-filename-in-watch-later-config = yes
 
