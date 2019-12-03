@@ -11,11 +11,12 @@ Xcursor.theme: Vanilla-DMZ
 ! ===========================================================================
 !URxvt.font:               xft:DejaVu Sans Mono:style=Semibold:pixelsize=14:antialias=true:hinting=slight
 !URxvt.boldFont:           xft:DejaVu Sans Mono:style=bold:pixelsize=14:antialias=true:hinting=slight
-URxvt.font:               xft:SauceCodePro Nerd Font:style=Medium:pixelsize=12:antialias=true:hinting=slight
-URxvt.boldFont:           xft:SauceCodePro Nerd Font:style=Bold:pixelsize=12:antialias=true:hinting=slight
+URxvt.font:               xft:SauceCodePro Nerd Font:style=Medium:pixelsize=14:antialias=true:hinting=slight
+URxvt.boldFont:           xft:SauceCodePro Nerd Font:style=Bold:pixelsize=14:antialias=true:hinting=slight
 URxvt.scrollBar:false
+URxvt.saveLines: 1000000
 URxvt.perl-ext-common: default,matcher
 URxvt.underlineURLs:true
-URxvt.fading:50
+URxvt.fading:75
 URxvt.intensityStyles: false
 *color8: #ccc

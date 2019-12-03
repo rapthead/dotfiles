@@ -171,8 +171,10 @@ mode "run" {
 }
 
 bindsym $mod+semicolon mode "run"
+bindsym $mod+g [instance="^google-chrome$"] focus
+bindsym $mod+n [instance="^nvim-qt$"] focus
 
-for_window [instance="^google-chrome$"] border none
+for_window [instance="^google-chrome$"] border none; background "<span foreground='red'>%title</span>"
 for_window [instance="^ncmpcpp|alsamixer$"] move scratchpad; scratchpad show
 
 bindsym --release $mod+x exec --no-startup-id import /tmp/latest-screenshot.png

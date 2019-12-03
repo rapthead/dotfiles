@@ -7,24 +7,24 @@
 #nomouseinput = yes
 cache = 32000
 cache-initial = 3200
-softvol = yes
-softvol-max = 500
+volume-max = 500
 vo = opengl
 no-ytdl
+no-audio-display
 
 [save]
 write-filename-in-watch-later-config = yes
 
-[hw]
-vo = vdpau
-vd = ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,
+# [hw]
+# vo = vdpau
+# vd = ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,
 
-[pulse]
-af = format=format=s16:srate=44100:channels=2
-ao = pulse:192.168.0.40:1:buffer=500
-softvol = no
-volume = 20
-autosync = 550
+# [pulse]
+# af = format=format=s16:srate=44100:channels=2
+# ao = pulse:192.168.0.40:1:buffer=500
+# softvol = no
+# volume = 20
+# autosync = 550
 
-[hdmi]
-ao = alsa:device=[plughw:0,3]
+# [hdmi]
+# ao = alsa:device=[plughw:0,3]
