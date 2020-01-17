@@ -25,6 +25,8 @@ ZSH_THEME="bureau"
 
 # Example aliases
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias cal="ncal -Mb"
+
 alias vim="nvim"
 alias vr="gvim --remote"
 alias wo="workon"
