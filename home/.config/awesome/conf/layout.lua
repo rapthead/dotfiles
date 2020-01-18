@@ -80,7 +80,7 @@ tags = {
    },
    layout = {
        awful.layout.suit.max,
-       awful.layout.suit.tile.top,
+       awful.layout.suit.tile.left,
        awful.layout.suit.max,
        awful.layout.suit.floating,
        awful.layout.suit.fair.horizontal,

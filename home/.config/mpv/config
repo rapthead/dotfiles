@@ -1,16 +1,10 @@
 [default]
-# Write your default config options here!
-#subcp = "utf8"
-#ao = alsa
-#mixer-channel = Master
-#alang = ru,rus
-#nomouseinput = yes
 cache = 32000
 cache-initial = 3200
-softvol = yes
-softvol-max = 500
+volume-max = 500
 vo = opengl
-#no-ytdl
+no-ytdl
+no-audio-display
 hwdec = vaapi
 
 [music]
@@ -35,3 +29,10 @@ autosync = 550
 # af = format=format=s16:srate=44100:channels=2
 # ao = alsa:device=[plughw:0,0]
 audio-device = 'alsa/hdmi:CARD=HDMI,DEV=0'
+
+[music]
+cache = 32
+cache-initial = 16
+
+[save]
+write-filename-in-watch-later-config = yes

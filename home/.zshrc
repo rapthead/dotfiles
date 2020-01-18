@@ -2,6 +2,22 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+# function clear-scrollback-buffer {
+#   # clear screen
+#   clear
+#   # clear buffer
+#   printf '\e[3J'
+#   # .reset-prompt: bypass the zsh-syntax-highlighting wrapper
+#   # https://github.com/sorin-ionescu/prezto/issues/1026
+#   # https://github.com/zsh-users/zsh-autosuggestions/issues/107#issuecomment-183824034
+#   # -R: redisplay the prompt to avoid old prompts being eaten up
+#   # https://github.com/Powerlevel9k/powerlevel9k/pull/1176#discussion_r299303453
+#   zle .reset-prompt && zle -R
+# }
+# 
+# zle -N clear-scrollback-buffer
+# bindkey '^L' clear-scrollback-buffer
+
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -10,10 +26,14 @@ ZSH_THEME="bureau"
 
 # Example aliases
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias cal="ncal -Mb"
+
+alias vim="nvim"
 alias vr="gvim --remote"
 alias wo="workon"
 alias homeshick="source ~/.homesick/repos/homeshick/homeshick.sh; homeshick"
 
+alias cls="tput reset"
 alias cpr="rsync --progress"
 alias gmc="export EDITOR='gvimremote'; mc"
 
@@ -83,68 +103,17 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(catimg git common-aliases rsync mercurial notify)
+plugins=(catimg git common-aliases rsync mercurial notify ssh-agent)
 
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
 source $ZSH/oh-my-zsh.sh
 
-function hg_get_branch_name() {
-    if [ $(in_hg) ]; then
-        hg_branch="< on %{$fg[magenta]%}<branch>%{$reset_color%}>"
-        hg_tags="< at %{$fg[yellow]%}<tags|%{$reset_color%}, %{$fg[yellow]%}>%{$reset_color%}>"
-        hg_bookmarks="< %{$fg[green]%}<bookmark>%{$reset_color%}>"
-        hg_status="%{$fg[green]%}<status|modified|unknown><update>%{$reset_color%}"
-        hg_patches="patches: <patches|join( → )|pre_applied(%{$fg[yellow]%})|post_applied(%{$reset_color%})|pre_unapplied(%{$fg_bold[black]%})|post_unapplied(%{$reset_color%})>>"
-
-        hg prompt --angle-brackets "$hg_branch$hg_bookmarks$hg_status$hg_pathces" 2>/dev/null
-    fi
-}
-
 autoload select-word-style
 select-word-style shell
 
-# # Load required modules.
-# autoload -U add-zsh-hook
-# autoload -Uz vcs_info
-# 
-# # Add hook for calling vcs_info before each command.
-# # add-zsh-hook precmd vcs_info
-# precmd() {
-#     vcs_info
-# }
-# 
-# # Set vcs_info parameters.
-# zstyle ':vcs_info:*' enable hg git
-# zstyle ':vcs_info:hg*:*' get-bookmarks true
-# zstyle ':vcs_info:*' check-for-changes true # Can be slow on big repos.
-# zstyle ':vcs_info:*' stagedstr '%F{green}●%f'
-# zstyle ':vcs_info:*' unstagedstr '%F{yellow}●%f'
-# zstyle ':vcs_info:*' actionformats "%S" "%s/%b %u%c (%a)"
-# zstyle ':vcs_info:*' formats "%b/%m %u%c" "%F{yellow}%s%F{reset}"
-# # zstyle ':vcs_info:*' nvcsformats "%~" ""
-# 
-# +vi-hg-bookmarks() {
-#     local s i
-#     # The bookmarks returned by `hg' are available in
-#     # the functions positional parameters.
-#     for i in "$@"; do
-#         echo $i
-#     done
-#     # tiny styling tweak when bookmark exists
-#     # [[ -n $s ]] && s=/$s
-#     hook_com[hg-bookmark-string]='test'
-#     # ret=1
-#     return 0
-# }
-# 
-# zstyle ':vcs_info:hg*+gen-hg-bookmark-string:*' hooks hg-bookmarks
-# zstyle ':vcs_info:*+*:*' debug true
-# 
-# PROMPT=$PROMPT'${vcs_info_msg_0_}'
-# RPROMPT=$RPROMPT'${vcs_info_msg_1_}'
-# 
 export NVM_DIR="$HOME/.config"
+# export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 

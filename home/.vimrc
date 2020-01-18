@@ -2,6 +2,7 @@
 "   Common Settings
 " ----------------------------------------------------------------------------
 
+set cpoptions+=>
 set nocompatible
 set noea
 set undofile
@@ -37,6 +38,7 @@ set scrolloff=3
 set modelines=0
 set lazyredraw " Don't redraw while executing macros (good performance config)
 set foldcolumn=1
+set nowrap
 
 " indent
 set tabstop=4
@@ -69,13 +71,12 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-" Plug 'nathanaelkane/vim-indent-guides'
-Plug 'w0rp/ale'
-" Plug 'Shougo/vimproc.vim'
-" Plug 'Quramy/tsuquyomi'
-Plug 'jparise/vim-graphql'
 
-Plug 'tpope/vim-abolish'
+Plug 'dense-analysis/ale'
+Plug 'jparise/vim-graphql'
+Plug 'hashivim/vim-terraform'
+
+Plug 'tpope/vim-abolish' " cases modifications
 Plug 'tpope/vim-sensible'
 Plug 'iCyMind/NeoSolarized'
 Plug 'easymotion/vim-easymotion'
@@ -86,27 +87,47 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 Plug 'leafgarland/typescript-vim'
-" Plug 'mxw/vim-jsx'
-" Plug 'peitalin/vim-jsx-typescript'
-" Plug 'maxmellon/vim-jsx-pretty'
-" Plug 'ianks/vim-tsx'
 Plug 'pangloss/vim-javascript'
-" Plug 'posva/vim-vue'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Plug 'elixir-editors/vim-elixir'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'stephpy/vim-yaml'
 
 " go
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'cespare/vim-toml'
 
 " uml
 Plug 'weirongxu/plantuml-previewer.vim'
 Plug 'tyru/open-browser.vim'
 Plug 'aklt/plantuml-syntax'
+
+" colorscheme
+Plug 'morhetz/gruvbox'
+
+" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next' }
+" Plug 'easymotion/vim-easymotion'
+" Plug 'elixir-editors/vim-elixir'
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Plug 'honza/vim-snippets'
+" Plug 'ianks/vim-tsx'
+" Plug 'iCyMind/NeoSolarized'
+" Plug 'mattn/vim-sqlfmt'
+" Plug 'maxmellon/vim-jsx-pretty'
+" Plug 'mileszs/ack.vim'
+" Plug 'mxw/vim-jsx'
+" Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+" Plug 'pangloss/vim-javascript'
+" Plug 'peitalin/vim-jsx-typescript'
+" Plug 'posva/vim-vue'
+" Plug 'Quramy/tsuquyomi'
+" Plug 'scrooloose/nerdcommenter'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+" Plug 'SirVer/ultisnips'
+" Plug 'sjl/gundo.vim'
+" Plug 'statico/vim-javascript-sql'
+" Plug 'Valloric/YouCompleteMe'
+
 filetype plugin indent on                   " required!
 call plug#end()
 
@@ -125,6 +146,7 @@ call plug#end()
 " set cmdheight=2
 " 
 " " Smaller updatetime for CursorHold & CursorHoldI
+" " You will have bad experience for diagnostic messages when it's default 4000.
 " set updatetime=300
 " 
 " " don't give |ins-completion-menu| messages.
@@ -201,6 +223,13 @@ call plug#end()
 " " Fix autofix problem of current line
 " nmap <leader>qf  <Plug>(coc-fix-current)
 " 
+" " Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+" nmap <silent> <TAB> <Plug>(coc-range-select)
+" xmap <silent> <TAB> <Plug>(coc-range-select)
+" xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
+" 
+" command! -nargs=0 CocDetail :call CocAction('diagnosticInfo')
+" 
 " " Use `:Format` to format current buffer
 " command! -nargs=0 Format :call CocAction('format')
 " 
@@ -221,6 +250,11 @@ call plug#end()
 "       \ }
 " 
 " 
+" " use `:OR` for organize import of current buffer
+" command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+" 
+" " Add status line support, for integration with other plugin, checkout `:h coc-status`
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " 
 " " Using CocList
 " " Show all diagnostics
@@ -238,7 +272,6 @@ call plug#end()
 " " Do default action for previous item.
 " nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " " Resume latest coc list
-" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " Plug 'fatih/vim-go'
 let g:go_fmt_command = "goimports"
@@ -249,12 +282,9 @@ let g:go_fmt_command = "goimports"
 " autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=lightgrey
 
 " Plug 'w0rp/ale'
-" let g:ale_linters = {
-" \   'typescript': ['tslint', 'tsserver', 'typecheck'],
-" \   'go': ['gofmt', 'go vet', 'staticcheck', 'golangserver'],
-" \}
+let g:ale_completion_enabled = 1
 let g:ale_linters = {
-\   'typescript': ['tsserver', 'typecheck'],
+\   'typescript': ['tsserver'],
 \   'go': ['gofmt', 'go vet', 'staticcheck', 'gopls'],
 \}
 let g:ale_fixers = {
@@ -262,10 +292,28 @@ let g:ale_fixers = {
 \ }
 let g:ale_fix_on_save = 1
 
-nmap <silent> [c :ALEPrevious<CR>
-nmap <silent> ]c :ALENext<CR>
-nmap <silent> K :ALEHover<CR>
-nmap <silent> gd :ALEGoToDefinition<CR>
+nmap K <Plug>(ale_hover)
+nmap gd <Plug>(ale_go_to_definition)
+nmap gy <Plug>(ale_go_to_type_definition)
+nmap <C-k> <Plug>(ale_previous_wrap)
+nmap <C-j> <Plug>(ale_next_wrap)
+nmap <leader>rn <Plug>(ale_rename)
+
+" " Plug 'statico/vim-javascript-sql'
+" let g:javascript_sql_dialect = 'pgsql'
+" 
+" " Plug 'autozimu/LanguageClient-neovim'
+" " let g:LanguageClient_windowLogMessageLevel = "Error"
+" " let g:LanguageClient_serverCommands = {
+" "     \ 'javascript': ['/usr/bin/javascript-typescript-stdio'],
+" "     \ 'typescript': ['/usr/bin/javascript-typescript-stdio'],
+" "     \ }
+
+" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
 " Plug 'Shougo/deoplete.nvim'
 " let g:deoplete#enable_at_startup = 1
 " inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
@@ -294,11 +342,10 @@ nmap <silent> gd :ALEGoToDefinition<CR>
 " autocmd FileType javascript,typescript nnoremap <buffer>
 "   \ <leader>lr :call LanguageClient_textDocument_rename()<cr>
 
-" " Plug 'Quramy/tsuquyomi'
 " let g:tsuquyomi_disable_quickfix = 1
 " autocmd FileType typescript nmap <buffer> <Leader>r <Plug>(TsuquyomiRenameSymbol)
 " autocmd FileType typescript nmap <buffer> <Leader>R <Plug>(TsuquyomiRenameSymbolC)
-" autocmd FileType typescript nmap <buffer> K :echo tsuquyomi#hint()<CR>
+" autocmd FileType typescript nmap <buffer> K :echo tsuquyomi#hint()<cr>
 
 " Plug 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -323,11 +370,9 @@ map <Leader>k <Plug>(easymotion-k)
 
 " Plug 'junegunn/fzf.vim'
 nnoremap <C-P> :GFiles --cached --others --exclude-standard<cr>
-" nnoremap <Leader>b :Buffers<cr>
+nnoremap <Leader>b :Buffers<cr>
 nnoremap <Leader>h :History<cr>
 imap <c-x><c-f> <plug>(fzf-complete-file)
-
-colorscheme NeoSolarized
 
 set mouse=a
 nmap <ScrollWheelUp> <nop>
@@ -409,18 +454,21 @@ else
 endif
 
 set background=dark
-if has("gui_running")
-    set background=light
-    set guioptions-=T
-    set guioptions-=m
-    if has("gui_gtk2")
-        set guifont=Source\ Code\ Pro\ Medium\ 10
-    elseif has("gui_macvim")
-        set guifont=Menlo\ Regular:h14
-    elseif has("gui_win32")
-        set guifont=Source_Code_Pro:h11:cRUSSIAN
-    endif
-endif
+colorscheme gruvbox
+" if has("gui_running")
+"     set background=light
+"     set guioptions-=T
+"     set guioptions-=m
+"     if has("gui_gtk2")
+"         set guifont=Source\ Code\ Pro\ Medium\ 10
+"     elseif has("gui_macvim")
+"         set guifont=Menlo\ Regular:h14
+"     elseif has("gui_win32")
+"         set guifont=Source_Code_Pro:h11:cRUSSIAN
+"     endif
+" else
+"     colorscheme slate
+" endif
 
 "функция для изменения "statusline" при изменении раскладки
 function! ChLang()
