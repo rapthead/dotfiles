@@ -24,8 +24,9 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH:/usr/sbin:/sbin"
 fi
 export GOPATH=~/go
+export GO111MODULE=on
 PATH=$PATH:$GOPATH/bin
-PATH="/usr/lib/go-1.11/bin:$PATH"
+PATH="/usr/lib/go-1.13/bin:$PATH"
 
 export PYTHONPATH="$HOME/.local/lib/python3.5/site-packages/:$PYTHONPATH"
 
@@ -42,3 +43,5 @@ export GDK_SCALE=1.2
 # export LC_ALL=en_US.utf8
 # export LANG=en_US.utf8
 # export LANGUAGE=en
+
+export PATH="$HOME/.cargo/bin:$PATH"

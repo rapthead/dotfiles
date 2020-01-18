@@ -39,7 +39,7 @@ set lazyredraw " Don't redraw while executing macros (good performance config)
 set foldcolumn=1
 
 " indent
-set tabstop=8
+set tabstop=4
 set expandtab
 set smarttab "установка вставки пробелов в начало строки вместо символа 'tabstop'
 set shiftwidth=4 "установка размера таб-отступа
@@ -100,7 +100,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " go
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'cespare/vim-toml'
 
 " uml
 Plug 'weirongxu/plantuml-previewer.vim'
@@ -254,7 +255,12 @@ let g:go_fmt_command = "goimports"
 " \}
 let g:ale_linters = {
 \   'typescript': ['tsserver', 'typecheck'],
+\   'go': ['gofmt', 'go vet', 'staticcheck', 'gopls'],
 \}
+let g:ale_fixers = {
+\ 'go': ['goimports']
+\ }
+let g:ale_fix_on_save = 1
 
 nmap <silent> [c :ALEPrevious<CR>
 nmap <silent> ]c :ALENext<CR>
