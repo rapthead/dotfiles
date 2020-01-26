@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openbox_menu xmlns="http://openbox.org/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://openbox.org/
+    file:///usr/share/openbox/menu.xsd">
+
+    <menu id="root-menu" label="Openbox 3">
+	<separator label="openbox" />
+	<item label="terminal">
+	    <action name="Execute"><execute>urxvtc</execute></action>
+	</item>
+	<item label="quake2">
+            <action name="Execute"><execute>urxvtc --perl-lib ~/.config/urxvtperl -pe 'kuake2' -name kuake2 -geometry 100x45 -fade 40 -e ~/bin/quake-autostart.sh</execute></action>
+	</item>
+	<item label="browser">
+	    <action name="Execute"><execute>x-www-browser</execute></action>
+	</item>
+	<item label="transmission">
+	    <action name="Execute"><execute>transmission-gtk</execute></action>
+	</item>
+	<item label="pidgin">
+	    <action name="Execute"><execute>pidgin</execute></action>
+	</item>
+	<item label="gtk-chtheme">
+	    <action name="Execute"><execute>gtk-chtheme</execute></action>
+	</item>
+	<item label="gmrun">
+	    <action name="Execute"><execute>gmrun</execute></action>
+	</item>
+	<item label="xterm">
+	    <action name="Execute"><execute>xterm</execute></action>
+	</item>
+	<!-- This requires the presence of the 'menu' package to work -->
+	<menu id="Debian" />
+	<separator />
+	<menu id="client-list-menu" />
+	<separator />
+	<item label="ObConf">
+	    <action name="Execute"><execute>obconf</execute></action>
+	</item>
+	<item label="Reconfigure">
+	    <action name="Reconfigure" />
+	</item>
+	<item label="Restart">
+	    <action name="Restart" />
+	</item>
+	<separator />
+	<item label="windows">
+            <action name="Execute"><execute>~/.config/openbox/winboot</execute></action>
+	</item>
+	<item label="Выход">
+	    <action name="Execute"><execute>~/.config/openbox/exit</execute></action>
+	</item>
+    </menu>
+
+</openbox_menu>

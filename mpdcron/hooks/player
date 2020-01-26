@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# vim: set sw=4 et sts=4 tw=80 :
+# Copyright 2009 Ali Polatel <alip@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+# Example player hook.
+#hooks/dump-status.bash
+#hooks/dump-song.bash
+#hooks/localsubmit.pl statistic.csv
+#hooks/userscripts/localsubmit.pl statistic.csv
+hooks/userscripts/dbsubmit.pl
+#hooks/userscripts/cover.sh
+if [ \( $MPD_STATUS_QUEUE_LENGTH -gt 0 \) -a \( $MPD_STATUS_SONG_ID -eq -1 \) ]
+then
+    echo "cronplay playlist updating"
+    hooks/userscripts/cronplay.pl
+fi
+#env | grep ^MPD | sort

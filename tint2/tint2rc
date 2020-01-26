@@ -1,0 +1,91 @@
+#---------------------------------------------
+# BACKGROUND AND BORDER
+#---------------------------------------------
+
+# panel background base03
+rounded = 0
+border_width = 0
+background_color = #002b36 50
+border_color = #ffffff 100
+
+# taskbar nonactive background base03
+rounded = 0
+border_width = 2
+background_color = #002b36 100
+border_color = #002b36 100
+
+rounded = 0
+border_width = 0
+background_color = #586e75 100
+border_color = #ffffff 100
+
+rounded = 0
+border_width = 0
+#background_color = #cb4b16 100
+background_color = #859900 100
+border_color = #ffffff 100
+
+# taskbar active background base03 border orange
+rounded = 0
+border_width = 2
+background_color = #002b36 100
+#border_color = #cb4b16 100
+border_color = #859900 100
+
+#---------------------------------------------
+# PANEL
+#---------------------------------------------
+panel_monitor = all
+panel_position = top left vertical
+panel_size = 0% 35
+panel_margin = 0 0
+panel_padding = 0 0 2
+font_shadow = 0
+panel_background_id = 1
+
+#---------------------------------------------
+# TASKBAR
+#---------------------------------------------
+taskbar_mode = multi_desktop
+taskbar_padding = 0 0 2
+taskbar_background_id = 2
+taskbar_active_background_id = 5
+
+#---------------------------------------------
+# TASKS
+#---------------------------------------------
+task_icon = 1
+task_text = 0
+task_width = 20
+task_centered = 1
+task_padding =3 3
+task_font = tahoma 8
+task_font_color = #ffffff 100
+task_active_font_color = #ffffff 100
+task_background_id = 3
+task_active_background_id = 4
+
+#---------------------------------------------
+# SYSTRAYBAR
+#---------------------------------------------
+systray_padding = 0 3 3
+systray_background_id = 3
+
+#---------------------------------------------
+# CLOCK
+#---------------------------------------------
+time1_format = %H:%M
+time1_font = tahoma bold 8
+#time2_format = %d/%m/%y
+#time2_font = tahoma 8
+clock_font_color = #ffffff 100
+clock_padding = 0 0
+clock_background_id = 2
+
+#---------------------------------------------
+# MOUSE ACTION ON TASK
+#---------------------------------------------
+mouse_middle = close
+mouse_right = shade
+mouse_scroll_up = toggle
+mouse_scroll_down = iconify

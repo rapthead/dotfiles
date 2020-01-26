@@ -1,0 +1,1 @@
+sudo grub-reboot 2 && sudo pm-hibernate

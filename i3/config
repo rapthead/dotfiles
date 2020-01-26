@@ -11,6 +11,7 @@
 
 set $term urxvtc
 set $mod Mod4
+set $lock "dm-tool switch-to-greeter"
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -124,7 +125,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+Control+l exec "dm-tool lock"
+bindsym $mod+Control+l exec "dm-tool switch-to-greeter"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -221,6 +222,13 @@ bindsym --release $mod+x exec --no-startup-id import /tmp/latest-screenshot.png
 bindsym XF86AudioMute exec --no-startup-id ~/bin/osd_volume mute
 bindsym XF86AudioLowerVolume exec --no-startup-id ~/bin/osd_volume down 5
 bindsym XF86AudioRaiseVolume exec --no-startup-id ~/bin/osd_volume up
+
+bindsym XF86AudioStop exec --no-startup-id mpc stop
+bindsym XF86AudioPlay exec --no-startup-id mpc toggle
+bindsym XF86AudioPrev exec --no-startup-id mpc prev
+bindsym XF86AudioNext exec --no-startup-id mpc next
+bindsym XF86ScreenSaver exec --no-startup-id $lock
+
 
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show

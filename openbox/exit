@@ -1,0 +1,12 @@
+#!/bin/bash
+#gxmessage -borderless -ontop -wrap "Выходим?" -center -title "Выход" -default "GTK_STOCK_CANCEL" -buttons "GTK_STOCK_CANCEL":1,"_Выход":2,"_Перезагрузка":3,"_Выключение":4,"_Сон":5,"_Гибернация":6 >/dev/null
+ans=$(zenity  --list --window-icon=question --text ''  --title "Выходим?" --radiolist --hide-header  --column "radio" --column "label" --column "id" --print-column=3 --hide-column=3 FALSE Выход 1 FALSE Перезагрузка 2 FALSE Выключение 3 FALSE Сон 4 FALSE Гибернация 5)
+echo $ans
+
+case $ans in
+    1) openbox --exit;;
+    2) sudo shutdown -r now;;
+    3) sudo shutdown -h now;;
+    4) sudo pm-suspend;;
+    5) sudo pm-hibernate;;
+esac

@@ -1,0 +1,25 @@
+#!/bin/sh
+#/usr/bin/env bash
+# vim: set sw=4 et sts=4 tw=80 :
+# Copyright 2009 Ali Polatel <alip@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+# Example update hook
+echo "* Update"
+if [ $MPD_STATUS_UPDATE_ID -eq 0 ]
+then
+    if [ ! -e dbupdate_state/update.lock ]
+        then
+        touch var/dbupdate_state/update.lock
+        echo '['`date --rfc-3339=seconds`']' >> logs/urgency
+        hooks/userscripts/dbupdate.sh 2>&1 | tee -a logs/urgency
+        if [ $? -eq 0 ]
+        then
+            hooks/userscripts/urgency2.pl 2>&1 | tee -a logs/urgency
+            #hooks/userscripts/urgency_cover.pl /home/noname/MUSIC/lossless/ covers/
+        fi
+        rm var/dbupdate_state/update.lock
+    else
+        echo "файл dbupdate_state/update.lock существует, остановка";
+    fi
+fi

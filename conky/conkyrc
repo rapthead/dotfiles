@@ -1,0 +1,140 @@
+# Use Xft?
+use_xft yes
+xftfont Droid Sans Mono:size=10
+
+# Update interval in seconds
+update_interval 1
+
+# This is the number of times Conky will update before quitting.
+# Set to zero to run forever.
+total_run_times 0
+
+# Create own window instead of using desktop (required in nautilus)
+own_window  yes
+own_window_transparent no
+own_window_type desktop
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager 
+
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+# Minimum size of text area
+#minimum_size 280 5
+
+maximum_width 110 
+minimum_size 110 
+# Draw shades?
+draw_shades no
+
+# Draw outlines?
+draw_outline no
+
+# Draw borders around text
+draw_borders yes
+
+# Stippled borders?
+stippled_borders 0
+
+# border margins
+#window.border_inner_margin 6
+
+# border width
+border_width 1
+
+# Default colors and also border colors
+default_color 303030
+#default_shade_color white
+#default_outline_color black
+own_window_colour 262626
+
+# Text alignment, other possible values are commented
+#alignment top_left
+alignment top_right
+#alignment bottom_left
+#alignment top_right
+
+# Gap between borders of screen and text
+# same thing as passing -x at command line
+gap_x 20
+gap_y 20
+
+# Subtract file system buffers from used memory?
+no_buffers yes
+
+# set to yes if you want all text to be in uppercase
+uppercase no
+
+# number of cpu samples to average
+# set to 1 to disable averaging
+cpu_avg_samples 2
+
+# number of net samples to average
+# set to 1 to disable averaging
+net_avg_samples 2
+
+# Force UTF8? note that UTF8 support required XFT
+override_utf8_locale yes
+
+# Add spaces to keep things from moving about?  This only affects certain objects.
+#use_spacer yes
+
+times_in_seconds yes
+short_units yes
+
+TEXT
+${color a2a2a2}${alignc}${format_time $uptime "\hh \mm"}
+battery:
+${color c7a46d}${format_time $battery_time "\hh \mm"}${alignr}${battery_percent}%
+${color a7895b}${battery_bar 4}
+${color a2a2a2}CPU1:${color c7a46d}${alignr}${cpu cpu0}%
+${color a7895b}${cpugraph cpu0 20 b49462} 
+${color a2a2a2}CPU2:${color c7a46d}${alignr}${cpu cpu1}%
+${color a7895b}${cpugraph cpu1 20 b49462 c7a46d} 
+${color a2a2a2}RAM:${color c7a46d}$memperc% ${alignr}$mem
+${color c7a46d}${membar 4}
+${color a2a2a2}${hr 1}
+${color a2a2a2}/${color c7a46d}${alignr}${fs_free /}
+${color c7a46d}${fs_bar 4 /}
+${color a2a2a2}/home${color c7a46d}${alignr}${fs_free /home/}
+${color c7a46d}${fs_bar 4 /home}
+${color a2a2a2}torrents${color c7a46d}${alignr}${fs_free /media/torrents/}
+${color c7a46d}${fs_bar 4 /media/torrents}
+#${color a2a2a2}Dropbox ${color c7a46d}${alignr}${execi 600 du -sm /home/noname/Dropbox | cut -f 1}MiB
+#${color c7a46d}${execibar 600 echo `du -sm /home/noname/Dropbox | cut -f 1 -`'*100/3060' | bc}
+${if_up ppp0}\
+ppp0 ${color a2a2a2}${hr 1}
+${color a2a2a2}Down:${color c7a46d}$alignr${downspeedf ppp0}K
+${color c7a46d}$alignr${totaldown ppp0}
+
+${color a2a2a2}Up:${color c7a46d}$alignr${upspeedf ppp0}K
+${color c7a46d}$alignr${totalup ppp0}$endif\
+
+${if_up wlan0}\
+wlan0 ${color a2a2a2}${hr 1}
+${color a2a2a2}Down:${color c7a46d}$alignr${downspeedf wlan0}K
+${color c7a46d}$alignr${totaldown wlan0}
+
+${color a2a2a2}Up:${color c7a46d}$alignr${upspeedf wlan0}K
+${color c7a46d}$alignr${totalup wlan0}$endif\
+
+${if_up lo}\
+lo ${color a2a2a2}${hr 1}
+${color a2a2a2}Down:${color c7a46d}$alignr${downspeedf lo}K
+${color c7a46d}$alignr${totaldown lo}
+
+${color a2a2a2}Up:${color c7a46d}$alignr${upspeedf lo}K
+${color c7a46d}$alignr${totalup lo}\
+$endif
+heat ${color a2a2a2}${hr 1}
+${color a2a2a2}cpu:$alignr${color c7a46d}${hwmon 0 temp 1}°
+#${color a2a2a2}cpu fan:$alignr${color c7a46d}${hwmon 1 fan 1}
+#${color a2a2a2}pci  fan:$alignr${color c7a46d}${hwmon 1 fan 3}
+##${color a2a2a2}/dev/sda:$alignr${color c7a46d}${hddtemp /dev/sda}°
+##${color a2a2a2}cpu:$alignr${color c7a46d}${execi 3 /home/noname/bin/cputemp }°
+${color a2a2a2}/dev/sda:$alignr${color c7a46d}${hddtemp /dev/sda}°
+#${color a2a2a2}/dev/sdb:$alignr${color c7a46d}${hddtemp /dev/sdb}°
+#mail ${color a2a2a2}${hr 1}
+#${color a2a2a2}@gmail.com:${color c7a46d}$alignr ${execi 600 curl -u rapthead:wuf620579 -s "https://mail.google.com/mail/feed/atom" | grep -c "<entry>"}
+#${color ffffff}${execi 600 wget -O ~/.conkyweather.gif http://informer.gismeteo.ru/new/4392-13.GIF}
+#${image ~/.conkyweather.gif}
