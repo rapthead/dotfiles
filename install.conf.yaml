@@ -1,0 +1,55 @@
+- defaults:
+    link:
+      relink: true
+
+- clean: ['~']
+
+- link:
+    ~/.config/i3/config:
+      path: i3/config
+      create: true
+    ~/.config/ncmpcpp/config:
+      path: ncmpcpp/config
+      create: true
+    ~/.config/mpv/config:
+      path: mpv/config
+      create: true
+    ~/.config/dunst/dunstrc:
+      path: dunst/dunstrc
+      create: true
+    ~/.config/mpv/input.conf:
+      path: mpv/input.conf
+      create: true
+    ~/.config/polybar/config:
+      path: polybar/config.ini
+      create: true
+    ~/.zshrc:
+      path: zsh/.zshrc
+    ~/.profile:
+      path: profile/.profile
+    ~/.xprofile:
+      path: profile/.profile
+    ~/.Xresources:
+      path: Xresources/.Xresources
+    # bin
+    ~/bin:
+      glob: true
+      create: true
+      path: bin/*
+    # vim, neovim
+    ~/.vimrc:
+      create: true
+      path: vim/vimrc
+    ~/.config/nvim/init.vim:
+      create: true
+      path: nvim/init.vim
+    # vifm
+    ~/.config/vifm/vifmrc:
+      create: true
+      path: vifm/vifmrc
+    ~/.config/vifm/colors/gruvbox.vifm:
+      create: true
+      path: vifm-colors/gruvbox.vifm
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]

@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/home/noname'
-let g:netrw_dirhist_2='/home/noname/doc/projects/typescript-koa-example/src'
-let g:netrw_dirhist_3='/home/noname/doc/projects/typescript-koa-example/src/controller'

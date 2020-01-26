@@ -1,0 +1,13 @@
+[submodule "dotbot"]
+	path = dotbot
+	url = https://github.com/anishathalye/dotbot
+	ignore = dirty
+[submodule "ohmyzsh"]
+	path = ohmyzsh
+	url = https://github.com/ohmyzsh/ohmyzsh
+[submodule "gruvbox-contrib"]
+	path = gruvbox-contrib
+	url = https://github.com/morhetz/gruvbox-contrib
+[submodule "vifm-colors"]
+	path = vifm-colors
+	url = https://github.com/vifm/vifm-colors
