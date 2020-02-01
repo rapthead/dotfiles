@@ -25,22 +25,28 @@ VOLUME=$( echo $MIXER_OUTPUT | awk -W posix -F'[][]' '/dB/ { gsub("%", ""); prin
 echo $MIXER_OUTPUT
 echo $ISMUTED
 
-if [ $ISMUTED -eq 0 ]; then
-    ICON='audio-volume-muted'
-elif [ $VOLUME -gt 66 ]; then
-    ICON='audio-volume-high'
-elif [ $VOLUME -gt 33 ]; then
-    ICON='audio-volume-medium'
-else
-    ICON='audio-volume-low'
-fi
-
 NOTIFICAION_ID=842921
-dunstify \
-    -r $NOTIFICAION_ID \
-    -i $ICON -t 1500 \
-    -h "int:value:$VOLUME" \
-    -h string:synchronous:volume ''
+TIMEOUT=1500
+if [ $ISMUTED -eq 0 ]; then
+    dunstify \
+        -r $NOTIFICAION_ID \
+        -i 'audio-volume-muted' -t $TIMEOUT \
+        -h string:synchronous:volume 'muted'
+else
+    if [ $VOLUME -gt 66 ]; then
+        ICON='audio-volume-high'
+    elif [ $VOLUME -gt 33 ]; then
+        ICON='audio-volume-medium'
+    else
+        ICON='audio-volume-low'
+    fi
+
+    dunstify \
+        -r $NOTIFICAION_ID \
+        -i $ICON -t $TIMEOUT \
+        -h "int:value:$VOLUME" \
+        -h string:synchronous:volume ''
+fi
 # notify-send.sh -i "$ICON" -h "int:value:$VOLUME" volume -R /tmp/osd_volume_replace_id -t 1000
 
 # gdbus call --session \

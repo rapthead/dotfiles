@@ -65,6 +65,12 @@ mp() {
         $PLAYER -fs --profile=pulse $*
     fi
 }
+mr() {
+    rsync -avr ~/.config/mpv/watch_later/ noname@rapthead.no-ip.org:/media/data/watch_later
+    rsync -avr noname@rapthead.no-ip.org:/media/data/watch_later/ ~/.config/mpv/watch_later
+    $PLAYER $*
+}
+
 alias mf=$PLAYER' --cache-secs=3 http://rapthead.no-ip.org:8004'
 alias mcl=$PLAYER' --playlist=http://rapthead.no-ip.org/m3u/clips/ --shuffle -fs'
 alias mcb=$PLAYER' --playlist=http://rapthead.no-ip.org/m3u/clips/brass/ --shuffle -fs'

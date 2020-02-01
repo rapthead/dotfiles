@@ -43,29 +43,23 @@
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
      nix-index
-     zsh 
-     bash 
      killall
      tty-clock
      fzf
 
-     wget curl screen chromium
-     git mpv ncmpcpp mpc_cli
+     chromium
+     mpc_cli
      rofi lm_sensors
      python3 youtube-dl
      rxvt_unicode ack
      libva-utils
-     transmission-gtk
      shutter
 
-     vim neovim neovim-qt neovim-remote
+     vim
 
      tint2
-     feh
-     sshfs
      libnotify
      # notify-osd
-     xorg.xbacklight
      (dunst.override { 
        dunstify = true;
      })
@@ -80,7 +74,72 @@
      wine
      glxinfo
      xorg.xev
+     xorg.xbacklight
 
+     sshfs
+     steam-run-native
+
+     # antiword
+     at
+     awscli
+     bash
+     # cheese
+     curl
+     davfs2
+     dialog
+     dnsutils
+     dosfstools
+     evince
+     f2fs-tools
+     fbreader
+     fdupes
+     feh
+     ffmpeg
+     file
+     flac
+     gimp
+     git
+     gitg
+     gparted
+     graphviz
+     hddtemp
+     hdparm
+     htop
+     imagemagick
+     iotop
+     jq
+     lsof
+     mc
+     mediainfo
+     mkvtoolnix
+     mpv
+     ncmpcpp
+     neovim
+     neovim-qt
+     neovim-remote
+     renameutils
+     rsync
+     screen
+     scrot
+     telnet
+     traceroute
+     transmission-gtk
+     umlet
+     unrar
+     unzip
+     vifm
+     wget
+     whois
+     xclip
+     xsel
+     zip
+     zsh
+
+     tdesktop
+     bc
+
+     rustup
+     gcc
      # arc-icon-theme
      # hicolor-icon-theme
      # arc-icon-theme
@@ -130,7 +189,6 @@
     enable = true;
     windowManager.i3.enable = true;
     displayManager.lightdm.enable = true;
-    xautolock.enable = true;
     synaptics = {
       enable = true;
       twoFingerScroll = true;
