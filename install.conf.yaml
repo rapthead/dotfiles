@@ -6,6 +6,7 @@
 
 - link:
     ~/.config/i3/config:
+      if: 'which polybar'
       path: i3/config
       create: true
     ~/.config/ncmpcpp/config:

@@ -75,6 +75,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'dense-analysis/ale'
 Plug 'jparise/vim-graphql'
 Plug 'hashivim/vim-terraform'
+Plug 'LnL7/vim-nix'
 
 Plug 'tpope/vim-abolish' " cases modifications
 Plug 'tpope/vim-sensible'
@@ -283,6 +284,7 @@ let g:go_fmt_command = "goimports"
 
 " Plug 'w0rp/ale'
 let g:ale_completion_enabled = 1
+let g:ale_rust_rls_toolchain = 'stable-x86_64-unknown-linux-gnu'
 let g:ale_linters = {
 \   'typescript': ['tsserver'],
 \   'go': ['gofmt', 'go vet', 'staticcheck', 'gopls'],

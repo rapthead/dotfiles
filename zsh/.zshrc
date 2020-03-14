@@ -66,9 +66,9 @@ mp() {
     fi
 }
 mr() {
-    rsync -avr ~/.config/mpv/watch_later/ noname@rapthead.no-ip.org:/media/data/watch_later
     rsync -avr noname@rapthead.no-ip.org:/media/data/watch_later/ ~/.config/mpv/watch_later
     $PLAYER $*
+    rsync -avr ~/.config/mpv/watch_later/ noname@rapthead.no-ip.org:/media/data/watch_later
 }
 
 alias mf=$PLAYER' --cache-secs=3 http://rapthead.no-ip.org:8004'
@@ -122,8 +122,8 @@ source $ZSH/oh-my-zsh.sh
 autoload select-word-style
 select-word-style shell
 
-export NVM_DIR="$HOME/.config"
-# export NVM_DIR="$HOME/.nvm"
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+# export PREFIX=""
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
