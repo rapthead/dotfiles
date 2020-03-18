@@ -47,6 +47,27 @@
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
 
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_11;
+    ensureDatabases = [ "musiclib" "ppldo" ];
+    ensureUsers = 	[
+      {
+        name = "noname";
+      }
+    ];
+    # initialScript = pkgs.writeText "backend-initScript" ''
+    #   ALTER USER noname WITH SUPERUSER;
+    # ''; # dont work
+    identMap = ''
+      noname-user noname noname
+    '';
+  };
+
+  environment.systemPackages = with pkgs; [
+    woeusb
+  ];
+
   # Select internationalisation properties.
   # i18n = {
   #   consoleFont = "Lat2-Terminus16";
