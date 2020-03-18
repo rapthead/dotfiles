@@ -51,7 +51,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    woeusb
+    kodi
   ];
 
   # Select internationalisation properties.

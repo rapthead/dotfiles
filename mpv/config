@@ -5,7 +5,7 @@ volume-max = 500
 vo = gpu
 no-ytdl
 no-audio-display
-hwdec = vaapi
+#hwdec = vaapi
 
 [save]
 write-filename-in-watch-later-config = yes
