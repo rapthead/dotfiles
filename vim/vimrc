@@ -288,19 +288,26 @@ let g:ale_rust_rls_toolchain = 'stable-x86_64-unknown-linux-gnu'
 let g:ale_linters = {
 \   'typescript': ['tsserver'],
 \   'go': ['gofmt', 'go vet', 'staticcheck', 'gopls'],
-\   'rust': ['rls']
+\   'rust': ['rls', 'cargo']
 \}
 let g:ale_fixers = {
 \ 'go': ['goimports']
 \ }
 let g:ale_fix_on_save = 1
 
-nmap K <Plug>(ale_hover)
-nmap gd <Plug>(ale_go_to_definition)
-nmap gy <Plug>(ale_go_to_type_definition)
-nmap <C-k> <Plug>(ale_previous_wrap)
-nmap <C-j> <Plug>(ale_next_wrap)
-nmap <leader>rn <Plug>(ale_rename)
+" nmap K <Plug>(ale_hover)
+" nmap gd <Plug>(ale_go_to_definition)
+" nmap gy <Plug>(ale_go_to_type_definition)
+" nmap <C-k> <Plug>(ale_previous_wrap)
+" nmap <C-j> <Plug>(ale_next_wrap)
+" nmap <leader>rn <Plug>(ale_rename)
+
+nmap K :ALEHover<CR>
+nmap gd :ALEGoToDefinition<CR>
+nmap gy :ALEGoToTypeDefinition<CR>
+nmap <C-k> :ALEPreviousWrap<CR>
+nmap <C-j> :ALENextWrap<CR>
+nmap <leader>rn :ALERename<CR>
 
 " " Plug 'statico/vim-javascript-sql'
 " let g:javascript_sql_dialect = 'pgsql'

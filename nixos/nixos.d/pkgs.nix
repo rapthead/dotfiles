@@ -65,6 +65,7 @@
     nodejs-slim-12_x
     rustup
     umlet
+    openssl
 
     # multimedia
 

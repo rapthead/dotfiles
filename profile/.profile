@@ -12,7 +12,7 @@
   #logout
 #fi
 # if running bash
-export NIX_PATH="nixos-config=$HOME/.dotfiles/nixos/configuration.nix"
+# export NIX_PATH="nixos-config=$HOME/.dotfiles/nixos/configuration.nix"
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
