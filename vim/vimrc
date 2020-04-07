@@ -105,6 +105,8 @@ Plug 'aklt/plantuml-syntax'
 " colorscheme
 Plug 'morhetz/gruvbox'
 
+Plug 'wsdjeg/vim-fetch'
+
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next' }
 " Plug 'easymotion/vim-easymotion'
 " Plug 'elixir-editors/vim-elixir'

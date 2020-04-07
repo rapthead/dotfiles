@@ -45,10 +45,10 @@
     zip
     zsh
 
-    # games
-    wine
-    steam-run-native
-    steam
+    # # games
+    # wine
+    # steam-run-native
+    # steam
 
     # work
     (yarn.override { nodejs = nodejs-slim-12_x; })
