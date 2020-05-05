@@ -24,6 +24,7 @@
     # https://github.com/knopwob/dunst/issues/26#issuecomment-36159395
     icon_position = left
     icon_folders = /run/current-system/sw/share/icons/Papirus-Dark/16x16/panel/
+    max_icon_size = 32
     # icon_folders = /run/current-system/sw/share/icons/Faba-Mono/16x16/status/
     # icon_folders = /run/current-system/sw/share/icons/Arc/panel/16/
     # icon_folders = /run/current-system/sw/share/icons/Faba/16x16/panel/

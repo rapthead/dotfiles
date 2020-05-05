@@ -31,7 +31,7 @@ export GOPATH=~/go
 export GO111MODULE=on
 PATH=$PATH:$GOPATH/bin
 PATH="/usr/lib/go-1.13/bin:$PATH"
-PATH="~/.cargo/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 export PYTHONPATH="$HOME/.local/lib/python3.5/site-packages/:$PYTHONPATH"
 
@@ -46,8 +46,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 export VDPAU_DRIVER=va_gl
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 export GDK_SCALE=1.2
+export SSH_ASKPASS=""
 # export LC_ALL=en_US.utf8
 # export LANG=en_US.utf8
 # export LANGUAGE=en
-
-export PATH="$HOME/.cargo/bin:$PATH"

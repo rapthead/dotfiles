@@ -1,6 +1,7 @@
 [default]
-cache = 32000
-cache-initial = 3200
+cache = yes
+demuxer-max-bytes = 32000
+demuxer-readahead-secs = 30
 volume-max = 500
 vo = gpu
 no-ytdl
@@ -24,10 +25,6 @@ autosync = 550
 # af = format=format=s16:srate=44100:channels=2
 # ao = alsa:device=[plughw:0,0]
 audio-device = 'alsa/hdmi:CARD=HDMI,DEV=0'
-
-[music]
-cache = 32
-cache-initial = 16
 
 [save]
 write-filename-in-watch-later-config = yes

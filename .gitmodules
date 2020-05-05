@@ -11,3 +11,6 @@
 [submodule "vifm-colors"]
 	path = vifm-colors
 	url = https://github.com/vifm/vifm-colors
+[submodule "dotenv-shell"]
+	path = dotenv-shell
+	url = https://github.com/madcoda/dotenv-shell

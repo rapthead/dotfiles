@@ -20,11 +20,13 @@
     };
 
     desktopManager = {
-      default = "none";
       xterm.enable = false;
     };
 
-    displayManager.lightdm.enable = true;
+    displayManager = {
+      defaultSession = "none+i3";
+      lightdm.enable = true;
+    };
     synaptics = {
       enable = true;
       twoFingerScroll = true;

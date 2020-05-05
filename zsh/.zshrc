@@ -41,6 +41,8 @@ alias cls="tput reset"
 alias cpr="rsync --progress"
 alias gmc="export EDITOR='gvimremote'; mc"
 
+alias terraform="dotenv terraform"
+
 # ssh() { /usr/bin/ssh $* -t "env HGUSER='pgribanov <pgribanov@prural.ru>' bash -l" }
 
 PLAYER=$(which mpv)

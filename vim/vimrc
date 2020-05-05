@@ -76,6 +76,7 @@ Plug 'dense-analysis/ale'
 Plug 'jparise/vim-graphql'
 Plug 'hashivim/vim-terraform'
 Plug 'LnL7/vim-nix'
+Plug 'wsdjeg/vim-fetch'
 
 Plug 'tpope/vim-abolish' " cases modifications
 Plug 'tpope/vim-sensible'
@@ -517,12 +518,12 @@ if has("autocmd")
     autocmd FileType * set nonumber linebreak foldcolumn=0
 
     autocmd FileType go set listchars=tab:\ \ ,trail:-,extends:>,precedes:<,nbsp:+
-    autocmd FileType go nmap <leader>b  <Plug>(go-build)
-    autocmd FileType go nmap <leader>c  <Plug>(go-build)
-    autocmd FileType go nmap <leader>g  <Plug>(go-generate)
-    autocmd FileType go nmap <leader>e  <Plug>(go-iferr)
-    autocmd FileType go nmap <F2>  <Plug>(go-rename)
-    autocmd FileType go nmap K  <Plug>(go-info)
+    " autocmd FileType go nmap <leader>b  <Plug>(go-build)
+    " autocmd FileType go nmap <leader>c  <Plug>(go-build)
+    " autocmd FileType go nmap <leader>g  <Plug>(go-generate)
+    " autocmd FileType go nmap <leader>e  <Plug>(go-iferr)
+    " autocmd FileType go nmap <F2>  <Plug>(go-rename)
+    " autocmd FileType go nmap K  <Plug>(go-info)
 
     autocmd FileType c,cpp set cindent 
         \formatoptions=croql comments=sr:/*,mb:*,ex:*/,:// number textwidth=41

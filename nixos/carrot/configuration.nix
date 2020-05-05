@@ -3,7 +3,8 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+let unstable = import <nixos-unstable> {};
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -44,29 +45,67 @@
   users.users.noname = {
     shell = pkgs.zsh;
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
   };
 
-  services.postgresql = {
-    enable = true;
-    package = pkgs.postgresql_11;
-    ensureDatabases = [ "musiclib" "ppldo" ];
-    ensureUsers = 	[
-      {
-        name = "noname";
-      }
-    ];
-    # initialScript = pkgs.writeText "backend-initScript" ''
-    #   ALTER USER noname WITH SUPERUSER;
-    # ''; # dont work
-    identMap = ''
-      noname-user noname noname
-    '';
+  services = {
+    redis = {
+      enable = true;
+    };
+    postgresql = {
+      enable = true;
+      package = pkgs.postgresql_11;
+      ensureDatabases = [ "musiclib" "ppldo" "ppldo_dev"  "ppldo_testing" ];
+      ensureUsers = 	[
+        {
+          name = "noname";
+        }
+      ];
+      # initialScript = pkgs.writeText "backend-initScript" ''
+      #   ALTER USER noname WITH SUPERUSER;
+      # ''; # dont work
+      identMap = ''
+        noname-user noname noname
+      '';
+    };
   };
+
+  systemd.services.disable-cdrom-eject = {
+    script = "/run/current-system/sw/bin/eject --manualeject on /dev/sr0";
+    wantedBy = [ "multi-user.target" ];
+  };
+  powerManagement.resumeCommands = "/run/current-system/sw/bin/eject --manualeject on /dev/sr0";
+  services.udev.extraRules = ''
+    ENV{DISK_EJECT_REQUEST}=="?*", RUN="", GOTO="cdrom_end"
+  '';
 
   environment.systemPackages = with pkgs; [
+    electron
+
+    tor-browser-bundle-bin
+    vim
+    skypeforlinux
     woeusb
+
+    gnumake
+    autoconf
+    automake
+
+    # solaar
+    thunderbird
+    tree
+    unstable.go
+    unstable.neovim
+    unstable.neovim-qt
+
+    docker-compose
+    wrk
+
+    teamviewer
   ];
+
+  virtualisation.docker.enable = true;
+  programs.fuse.userAllowOther = true;
 
   # Select internationalisation properties.
   # i18n = {
@@ -89,7 +128,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;

@@ -59,8 +59,6 @@
     graphviz
     imagemagick
     jq
-    neovim
-    neovim-qt
     neovim-remote
     nodejs-slim-12_x
     rustup

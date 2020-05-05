@@ -37,6 +37,9 @@
       glob: true
       create: true
       path: bin/*
+    ~/bin/dotenv:
+      create: true
+      path: dotenv-shell/dotenv.sh
     # vim, neovim
     ~/.vimrc:
       create: true
