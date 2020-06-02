@@ -50,3 +50,10 @@ export SSH_ASKPASS=""
 # export LC_ALL=en_US.utf8
 # export LANG=en_US.utf8
 # export LANGUAGE=en
+
+### musiclib config ###
+export MUSICLIB_LIB_ROOT=/home/noname/musiclib
+export MUSICLIB_MOUNT_PATH=/home/noname/musiclib_fuse
+
+export MUSICLIB_POSTGRES_CONN_STR="host=localhost port=5433 user=musiclib password=DirbVQYpPE7s56P dbname=musicdb sslmode=disable"
+export MUSICLIB_REDIS_URL=redis://localhost:6380

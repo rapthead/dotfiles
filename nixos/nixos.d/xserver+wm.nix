@@ -14,6 +14,7 @@
           mpdSupport = true;
         })
 
+        hicolor_icon_theme
         vanilla-dmz
         papirus-icon-theme
       ];

@@ -45,7 +45,7 @@ in
   users.users.noname = {
     shell = pkgs.zsh;
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "vboxusers" ]; # Enable ‘sudo’ for the user.
   };
 
   services = {
@@ -78,8 +78,10 @@ in
   services.udev.extraRules = ''
     ENV{DISK_EJECT_REQUEST}=="?*", RUN="", GOTO="cdrom_end"
   '';
+  services.teamviewer.enable = true;
 
   environment.systemPackages = with pkgs; [
+    baobab
     electron
 
     tor-browser-bundle-bin
@@ -94,18 +96,32 @@ in
     # solaar
     thunderbird
     tree
-    unstable.go
+    go
     unstable.neovim
     unstable.neovim-qt
 
     docker-compose
     wrk
 
-    teamviewer
+    easytag
+    nmap
+    xkb-switch
+
+    protobuf
+    go-protobuf
+
+    entr
+    fswatch
+    inotify-tools
+    firefox
+
+    ansible
   ];
 
   virtualisation.docker.enable = true;
   programs.fuse.userAllowOther = true;
+
+  virtualisation.virtualbox.host.enable = true;
 
   # Select internationalisation properties.
   # i18n = {

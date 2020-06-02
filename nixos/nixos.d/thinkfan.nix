@@ -2,10 +2,10 @@
 
 {
   services.thinkfan = {
-    enable = true;
+    enable = false;
     sensors = ''
       hwmon /sys/devices/virtual/thermal/thermal_zone0/temp
-      hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input
+      hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input
     '';
     levels = ''
           (0,     0,      60)
