@@ -116,6 +116,7 @@ in
     firefox
 
     ansible
+    sshpass
   ];
 
   virtualisation.docker.enable = true;
