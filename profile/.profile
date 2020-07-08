@@ -52,6 +52,7 @@ export SSH_ASKPASS=""
 # export LANGUAGE=en
 
 ### musiclib config ###
+export MUSICLIB_COVERS_PATH=/tmp/covers
 export MUSICLIB_LIB_ROOT=/home/noname/musiclib
 export MUSICLIB_MOUNT_PATH=/home/noname/musiclib_fuse
 

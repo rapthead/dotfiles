@@ -51,7 +51,7 @@
     steam
 
     # work
-    (yarn.override { nodejs = nodejs-slim-12_x; })
+    (yarn.override { nodejs = nodejs-12_x; })
     awscli
     diesel-cli
     gcc
@@ -60,7 +60,7 @@
     imagemagick
     jq
     neovim-remote
-    nodejs-slim-12_x
+    nodejs-12_x
     rustup
     umlet
     openssl

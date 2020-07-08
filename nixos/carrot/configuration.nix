@@ -81,6 +81,7 @@ in
   services.teamviewer.enable = true;
 
   environment.systemPackages = with pkgs; [
+    colordiff
     baobab
     electron
 
@@ -117,6 +118,9 @@ in
 
     ansible
     sshpass
+    rcm
+    beets
+    sqlite
   ];
 
   virtualisation.docker.enable = true;

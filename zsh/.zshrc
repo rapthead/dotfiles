@@ -55,7 +55,7 @@ last_playlist() {
 }
 ml() {
     # if [ $# -eq 0 ]; then
-        $PLAYER -fs -ao alsa -playlist "$(last_playlist)" $*
+        $PLAYER -fs -ao=alsa -playlist="$(last_playlist)" $*
     # else
     #     $PLAYER -fs
     # fi
