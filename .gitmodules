@@ -14,3 +14,6 @@
 [submodule "dotenv-shell"]
 	path = dotenv-shell
 	url = https://github.com/madcoda/dotenv-shell
+[submodule "zsh-z"]
+	path = zsh-z
+	url = https://github.com/agkozak/zsh-z
