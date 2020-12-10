@@ -9,7 +9,7 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-set $term urxvtc
+set $term urxvtcd
 set $mod Mod4
 set $lock "dm-tool switch-to-greeter"
 

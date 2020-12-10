@@ -17,3 +17,6 @@
 [submodule "zsh-z"]
 	path = zsh-z
 	url = https://github.com/agkozak/zsh-z
+[submodule "zsh-auto-notify"]
+	path = zsh-auto-notify
+	url = https://github.com/MichaelAquilina/zsh-auto-notify.git

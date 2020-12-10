@@ -52,7 +52,6 @@
 
     # work
     (yarn.override { nodejs = nodejs-12_x; })
-    awscli
     diesel-cli
     gcc
     gitg

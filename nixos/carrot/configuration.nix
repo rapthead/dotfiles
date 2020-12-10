@@ -9,11 +9,13 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./nixos.d/boot.efi.nix
+      ./nixos.d/boot.grub.nix
+      # ./nixos.d/boot.efi.nix
       ./nixos.d/pkgs.nix
       ./nixos.d/xserver+wm.nix
       ./nixos.d/opengl.nix
       ./nixos.d/thinkfan.nix
+      ./nixos.d/mpd.nix
     ];
 
   networking.hostName = "carrot"; # Define your hostname.
@@ -81,6 +83,15 @@ in
   services.teamviewer.enable = true;
 
   environment.systemPackages = with pkgs; [
+    libxslt
+    gparted
+    smartmontools
+    mtpfs
+    jmtpfs
+
+    ansible
+    qemu
+
     colordiff
     baobab
     electron
@@ -94,7 +105,7 @@ in
     autoconf
     automake
 
-    # solaar
+    solaar
     thunderbird
     tree
     go
@@ -116,11 +127,15 @@ in
     inotify-tools
     firefox
 
+    ncdu
     ansible
     sshpass
     rcm
     beets
     sqlite
+
+    moreutils
+    websocat
   ];
 
   virtualisation.docker.enable = true;

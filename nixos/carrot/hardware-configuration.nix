@@ -29,7 +29,7 @@
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/4f8d2d27-5870-4222-b82f-e5a5bb4326d2"; }
+    [ { device = "/dev/disk/by-uuid/ec14a92c-e70e-44b3-8fa8-54949fc2c357"; }
     ];
 
   nix.maxJobs = lib.mkDefault 4;

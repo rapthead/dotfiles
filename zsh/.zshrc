@@ -1,6 +1,10 @@
+source $HOME/.profile
 # vidir !!!!
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.dotfiles/ohmyzsh
+if [ -d $HOME/.dotfiles/zsh-auto-notify ]; then
+    source $HOME/.dotfiles/zsh-auto-notify/auto-notify.plugin.zsh
+fi
 
 # function clear-scrollback-buffer {
 #   # clear screen
@@ -24,8 +28,6 @@ export ZSH=$HOME/.dotfiles/ohmyzsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="bureau"
 
-# Example aliases
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 if type ncal > /dev/null; then
     alias cal="ncal -Mb"
 else
@@ -124,10 +126,10 @@ source $ZSH/oh-my-zsh.sh
 autoload select-word-style
 select-word-style shell
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-# export PREFIX=""
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# nvm
+# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

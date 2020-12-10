@@ -6,42 +6,35 @@
 
 # the default umask is set in /etc/profile; for setting the umask
 # for ssh logins, install and configure the libpam-umask package.
-#umask 022
-#if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]] && [[ "`whoami`" != "root" ]]; then
-  #. startx
-  #logout
-#fi
-# if running bash
-# export NIX_PATH="nixos-config=$HOME/.dotfiles/nixos/configuration.nix"
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
 	. "$HOME/.bashrc"
     fi
 fi
-if [ -f "$HOME/.Xresources" ]; then
-    xrdb -merge -I$HOME $HOME/.Xresources
+
+if [ -f "$HOME/.secrets.sh" ]; then
+    . "$HOME/.secrets.sh"
 fi
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH:/usr/sbin:/sbin"
-fi
 export GOPATH=~/go
 export GO111MODULE=on
 PATH=$PATH:$GOPATH/bin
 PATH="/usr/lib/go-1.13/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$PATH:/usr/sbin:/sbin:$HOME/bin"
+fi
 
 export PYTHONPATH="$HOME/.local/lib/python3.5/site-packages/:$PYTHONPATH"
 
 export XDG_CONFIG_HOME="$HOME/.config/"
-export MPD_HOST="rapthead.no-ip.org"
-export TERMINAL=urxvtc
+export TERMINAL=urxvtcd
 export EDITOR=vim
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-export WORKON_HOME=~/.virtualenvs
 export PROJECT_HOME=$HOME/doc/projects
+export WORKON_HOME=~/.virtualenvs
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export VDPAU_DRIVER=va_gl
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
@@ -50,11 +43,3 @@ export SSH_ASKPASS=""
 # export LC_ALL=en_US.utf8
 # export LANG=en_US.utf8
 # export LANGUAGE=en
-
-### musiclib config ###
-export MUSICLIB_COVERS_PATH=/tmp/covers
-export MUSICLIB_LIB_ROOT=/home/noname/musiclib
-export MUSICLIB_MOUNT_PATH=/home/noname/musiclib_fuse
-
-export MUSICLIB_POSTGRES_CONN_STR="host=localhost port=5433 user=musiclib password=DirbVQYpPE7s56P dbname=musicdb sslmode=disable"
-export MUSICLIB_REDIS_URL=redis://localhost:6380
