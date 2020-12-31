@@ -14,7 +14,7 @@ Xcursor.theme: Vanilla-DMZ
 URxvt.font:               xft:Source Code Pro:style=Medium:pixelsize=14:antialias=true:hinting=slight
 URxvt.boldFont:           xft:Source Code Pro:style=Bold:pixelsize=14:antialias=true:hinting=slight
 URxvt.scrollBar:false
-URxvt.saveLines: 1000000
+URxvt.saveLines: 10000
 URxvt.perl-ext-common: default,matcher
 URxvt.underlineURLs:true
 URxvt.fading:75

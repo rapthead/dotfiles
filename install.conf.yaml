@@ -4,13 +4,20 @@
 
 - clean: ['~']
 
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
+
 - link:
     ~/.config/i3/config:
       if: 'which polybar'
       path: i3/config
       create: true
-    ~/.config/ncmpcpp/config:
-      path: ncmpcpp/config
+    ~/.config/ncmpcpp:
+      glob: true
+      create: true
+      path: ncmpcpp/*
+    ~/.config/mpd/mpd.conf:
+      path: mpd/mpd.conf
       create: true
     ~/.config/mpv/config:
       path: mpv/config
@@ -54,6 +61,3 @@
     ~/.config/vifm/colors/gruvbox.vifm:
       create: true
       path: vifm-colors/gruvbox.vifm
-
-- shell:
-  - [git submodule update --init --recursive, Installing submodules]

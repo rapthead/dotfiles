@@ -233,4 +233,6 @@ bindsym XF86ScreenSaver exec --no-startup-id $lock
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
+bindsym $mod+Shift+b border normal
+
 exec_always --no-startup-id $HOME/.dotfiles/polybar/launch.sh

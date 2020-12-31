@@ -4,6 +4,7 @@ source $HOME/.profile
 export ZSH=$HOME/.dotfiles/ohmyzsh
 if [ -d $HOME/.dotfiles/zsh-auto-notify ]; then
     source $HOME/.dotfiles/zsh-auto-notify/auto-notify.plugin.zsh
+    AUTO_NOTIFY_IGNORE+=("docker" "mpv" "ncmpcpp" "vifm")
 fi
 
 # function clear-scrollback-buffer {
