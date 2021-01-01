@@ -49,227 +49,9 @@ set shiftround
 set autoindent "автоматическая табуляция. если текущая строка начинается с TAB, то и следующая тоже
 set wildignore+=*/.git/*,*/.svn/*,*/node_modules/*,*/target/*,*.pyc,*.class
 
-let mapleader="\<SPACE>"
-
-filetype off
-syntax on
-syntax sync minlines=10000
-filetype plugin indent on
-
 " без этого inotify не срабатывает
 set backupcopy=yes
 set termguicolors
-
-" ----------------------------------------------------------------------------
-"   Plug
-" ----------------------------------------------------------------------------
-
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
-endif
-
-call plug#begin('~/.vim/plugged')
-
-Plug 'dense-analysis/ale'
-Plug 'jparise/vim-graphql'
-Plug 'hashivim/vim-terraform'
-Plug 'LnL7/vim-nix'
-Plug 'wsdjeg/vim-fetch'
-
-Plug 'tpope/vim-abolish' " cases modifications
-Plug 'tpope/vim-sensible'
-Plug 'iCyMind/NeoSolarized'
-Plug 'easymotion/vim-easymotion'
-Plug 'sjl/gundo.vim'
-Plug 'mileszs/ack.vim'
-Plug 'scrooloose/nerdcommenter'
-" Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-
-Plug 'leafgarland/typescript-vim'
-Plug 'pangloss/vim-javascript'
-
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'stephpy/vim-yaml'
-
-" go
-Plug 'cespare/vim-go-templates'
-Plug 'b0o/builder.vim'
-Plug 'b0o/quicktemplate.vim'
-
-" uml
-Plug 'weirongxu/plantuml-previewer.vim'
-Plug 'tyru/open-browser.vim'
-Plug 'aklt/plantuml-syntax'
-
-" colorscheme
-Plug 'morhetz/gruvbox'
-
-filetype plugin indent on                   " required!
-call plug#end()
-
-" ----------------------------------------------------------------------------
-"   Plugins Settings
-" ----------------------------------------------------------------------------
-" Plug 'fatih/vim-go'
-let g:go_fmt_command = "goimports"
-" Plug 'w0rp/ale'
-"
-let g:ale_completion_enabled = 1
-let g:ale_rust_rls_toolchain = 'stable-x86_64-unknown-linux-gnu'
-let g:ale_linters = {
-\   'typescript': ['tsserver'],
-\   'go': ['gofmt', 'go vet', 'gopls'],
-\   'rust': ['rls', 'cargo']
-\}
-let g:ale_fixers = {
-\ 'go': ['goimports']
-\ }
-let g:ale_fix_on_save = 1
-
-nmap K :ALEHover<CR>
-nmap gd :ALEGoToDefinition<CR>
-nmap gy :ALEGoToTypeDefinition<CR>
-nmap <C-k> :ALEPreviousWrap<CR>
-nmap <C-j> :ALENextWrap<CR>
-nmap <leader>rn :ALERename<CR>
-
-" " Plug 'statico/vim-javascript-sql'
-" let g:javascript_sql_dialect = 'pgsql'
-
-" Plug 'SirVer/ultisnips'
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" Plug 'easymotion/vim-easymotion'
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-let g:EasyMotion_smartcase = 1
-nmap s <Plug>(easymotion-s2)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-
-" Plug 'junegunn/fzf.vim'
-nnoremap <C-P> :GFiles --cached --others --exclude-standard<cr>
-nnoremap <Leader>b :Buffers<cr>
-nnoremap <Leader>h :History<cr>
-imap <c-x><c-f> <plug>(fzf-complete-file)
-
-set mouse=a
-nmap <ScrollWheelUp> <nop>
-nmap <S-ScrollWheelUp> <nop>
-nmap <C-ScrollWheelUp> <nop>
-nmap <ScrollWheelDown> <nop>
-nmap <S-ScrollWheelDown> <nop>
-nmap <C-ScrollWheelDown> <nop>
-nmap <ScrollWheelLeft> <nop>
-nmap <S-ScrollWheelLeft> <nop>
-nmap <C-ScrollWheelLeft> <nop>
-nmap <ScrollWheelRight> <nop>
-nmap <S-ScrollWheelRight> <nop>
-nmap <C-ScrollWheelRight> <nop>
-imap <ScrollWheelUp> <nop>
-imap <S-ScrollWheelUp> <nop>
-imap <C-ScrollWheelUp> <nop>
-imap <ScrollWheelDown> <nop>
-imap <S-ScrollWheelDown> <nop>
-imap <C-ScrollWheelDown> <nop>
-imap <ScrollWheelLeft> <nop>
-imap <S-ScrollWheelLeft> <nop>
-imap <C-ScrollWheelLeft> <nop>
-imap <ScrollWheelRight> <nop>
-imap <S-ScrollWheelRight> <nop>
-imap <C-ScrollWheelRight> <nop>
-vmap <ScrollWheelUp> <nop>
-vmap <S-ScrollWheelUp> <nop>
-vmap <C-ScrollWheelUp> <nop>
-vmap <ScrollWheelDown> <nop>
-vmap <S-ScrollWheelDown> <nop>
-vmap <C-ScrollWheelDown> <nop>
-vmap <ScrollWheelLeft> <nop>
-vmap <S-ScrollWheelLeft> <nop>
-vmap <C-ScrollWheelLeft> <nop>
-vmap <ScrollWheelRight> <nop>
-vmap <S-ScrollWheelRight> <nop>
-vmap <C-ScrollWheelRight> <nop>
-"отключение мыши
-
-" исключение буферов quickfix из listed
-augroup qf
-    autocmd!
-    autocmd FileType qf set nobuflisted
-augroup END
-""""""""""""""""""""""""""""""""""
-"""""клавиатурные сокращения""""""
-""""""""""""""""""""""""""""""""""
-"не использовать режим Ex, использовать Q для форматирования
-map Q gq
-
-"вызов функции изменения "statusline"
-nmap <silent> <F7> :call ChLang()<cr>
-imap <silent> <F7> <Left><Right><C-O>:call ChLang()<cr>
-
-"переключение между открытыми файлами: <Tab>, <Shift>+<Tab>
-nmap <Tab>   :cclose<CR>:bnext<CR>
-nmap <S-Tab> :cclose<CR>:bprevious<CR>
-nmap <C-Tab> :cclose<CR>:tabnext<CR>
-""""""""""""""""
-"""""menus""""""
-""""""""""""""""
-"меню выбора кодировки по f8
-menu Encoding.utf-8        :e ++enc=utf-8<CR>
-menu Encoding.windows-1251 :e ++enc=cp1251<CR>
-menu Encoding.utf-16le     :e ++enc=utf-16le<CR>
-menu Encoding.koi8-r 	   :e ++enc=koi8-r<CR>
-menu Encoding.ibm-866      :e ++enc=ibm866<CR>
-map <F8> :emenu Encoding.<TAB>
-
-if has("win32")
-    set dir=~/_vimfiles/swaps/
-    set undodir=~/_vimfiles/undos/
-    lan mes en
-else
-    set dir=~/.vim/swaps/
-    set undodir=~/.vim/undos/
-    set t_Co=256
-endif
-
-set background=dark
-colorscheme gruvbox
-" if has("gui_running")
-"     set background=light
-"     set guioptions-=T
-"     set guioptions-=m
-"     if has("gui_gtk2")
-"         set guifont=Source\ Code\ Pro\ Medium\ 10
-"     elseif has("gui_macvim")
-"         set guifont=Menlo\ Regular:h14
-"     elseif has("gui_win32")
-"         set guifont=Source_Code_Pro:h11:cRUSSIAN
-"     endif
-" else
-"     colorscheme slate
-" endif
-
-"функция для изменения "statusline" при изменении раскладки
-function! ChLang()
-    let str=substitute(&statusline, '\ ', '\\ ','g')
-    if &iminsert==0
-        highlight StatusLine ctermfg=DarkBlue guifg=DarkBlue
-        let str=substitute(str,'\[en\]', '[ru]','')
-        exec "set iminsert=1 statusline=".str
-    else
-        highlight StatusLine ctermfg=DarkGreen guifg=DarkGreen
-        let str=substitute(str,'\[ru\]', '[en]','')
-        exec "set iminsert=0 statusline=".str
-    endif
-endfunction
-
-"изменение цвета "statusline" по умолчанию
-highlight StatusLine ctermfg=DarkGreen guifg=DarkGreen
 
 "показывать неполные строки не помещающиеся в экран
 set display=lastline
@@ -280,12 +62,235 @@ set sidescroll=5
 "отменяет действие "ignorecase" если шаблон находится в верхнем регистре
 set smartcase
 
-"замена непечатаемых символов в режиме "list"
-if &listchars ==# 'eol:$'
-    set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+""""""""""""""""""""""""""""""""""
+"""""клавиатурные сокращения""""""
+""""""""""""""""""""""""""""""""""
+"не использовать режим Ex, использовать Q для форматирования
+map Q gq
+
+"переключение между открытыми файлами: <Tab>, <Shift>+<Tab>
+nmap <Tab>   :cclose<CR>:bnext<CR>
+nmap <S-Tab> :cclose<CR>:bprevious<CR>
+nmap <C-Tab> :cclose<CR>:tabnext<CR>
+
+if has("menu")
+    "меню выбора кодировки по f8
+    menu Encoding.utf-8        :e ++enc=utf-8<CR>
+    menu Encoding.windows-1251 :e ++enc=cp1251<CR>
+    menu Encoding.utf-16le     :e ++enc=utf-16le<CR>
+    menu Encoding.koi8-r 	   :e ++enc=koi8-r<CR>
+    menu Encoding.ibm-866      :e ++enc=ibm866<CR>
+    map <F8> :emenu Encoding.<TAB>
 endif
-" Show problematic characters.
-set list
+
+if has("mouse")
+    set mouse=a
+    nmap <ScrollWheelUp> <nop>
+    nmap <S-ScrollWheelUp> <nop>
+    nmap <C-ScrollWheelUp> <nop>
+    nmap <ScrollWheelDown> <nop>
+    nmap <S-ScrollWheelDown> <nop>
+    nmap <C-ScrollWheelDown> <nop>
+    nmap <ScrollWheelLeft> <nop>
+    nmap <S-ScrollWheelLeft> <nop>
+    nmap <C-ScrollWheelLeft> <nop>
+    nmap <ScrollWheelRight> <nop>
+    nmap <S-ScrollWheelRight> <nop>
+    nmap <C-ScrollWheelRight> <nop>
+    imap <ScrollWheelUp> <nop>
+    imap <S-ScrollWheelUp> <nop>
+    imap <C-ScrollWheelUp> <nop>
+    imap <ScrollWheelDown> <nop>
+    imap <S-ScrollWheelDown> <nop>
+    imap <C-ScrollWheelDown> <nop>
+    imap <ScrollWheelLeft> <nop>
+    imap <S-ScrollWheelLeft> <nop>
+    imap <C-ScrollWheelLeft> <nop>
+    imap <ScrollWheelRight> <nop>
+    imap <S-ScrollWheelRight> <nop>
+    imap <C-ScrollWheelRight> <nop>
+    vmap <ScrollWheelUp> <nop>
+    vmap <S-ScrollWheelUp> <nop>
+    vmap <C-ScrollWheelUp> <nop>
+    vmap <ScrollWheelDown> <nop>
+    vmap <S-ScrollWheelDown> <nop>
+    vmap <C-ScrollWheelDown> <nop>
+    vmap <ScrollWheelLeft> <nop>
+    vmap <S-ScrollWheelLeft> <nop>
+    vmap <C-ScrollWheelLeft> <nop>
+    vmap <ScrollWheelRight> <nop>
+    vmap <S-ScrollWheelRight> <nop>
+    vmap <C-ScrollWheelRight> <nop>
+    "отключение мыши
+endif
+
+if has("syntax")
+    syntax on
+    syntax sync minlines=10000
+endif
+
+if has("eval")
+    let mapleader="\<SPACE>"
+
+    filetype off
+    filetype plugin indent on
+
+    " ----------------------------------------------------------------------------
+    "   Plug
+    " ----------------------------------------------------------------------------
+    if empty(glob('~/.vim/autoload/plug.vim'))
+        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall | source $MYVIMRC
+    endif
+
+    call plug#begin('~/.vim/plugged')
+
+    Plug 'dense-analysis/ale'
+    Plug 'jparise/vim-graphql'
+    Plug 'hashivim/vim-terraform'
+    Plug 'LnL7/vim-nix'
+    Plug 'wsdjeg/vim-fetch'
+
+    Plug 'tpope/vim-abolish' " cases modifications
+    Plug 'tpope/vim-sensible'
+    Plug 'iCyMind/NeoSolarized'
+    Plug 'easymotion/vim-easymotion'
+    Plug 'sjl/gundo.vim'
+    Plug 'mileszs/ack.vim'
+    Plug 'scrooloose/nerdcommenter'
+    " Plug 'SirVer/ultisnips'
+    Plug 'honza/vim-snippets'
+
+    Plug 'leafgarland/typescript-vim'
+    Plug 'pangloss/vim-javascript'
+
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf.vim'
+    Plug 'stephpy/vim-yaml'
+
+    " go
+    Plug 'cespare/vim-go-templates'
+    Plug 'b0o/builder.vim'
+    Plug 'b0o/quicktemplate.vim'
+
+    " uml
+    Plug 'weirongxu/plantuml-previewer.vim'
+    Plug 'tyru/open-browser.vim'
+    Plug 'aklt/plantuml-syntax'
+
+    " colorscheme
+    Plug 'morhetz/gruvbox'
+
+    filetype plugin indent on                   " required!
+    call plug#end()
+
+    " ----------------------------------------------------------------------------
+    "   Plugins Settings
+    " ----------------------------------------------------------------------------
+    " Plug 'fatih/vim-go'
+    let g:go_fmt_command = "goimports"
+    " Plug 'w0rp/ale'
+    "
+    let g:ale_completion_enabled = 1
+    let g:ale_rust_rls_toolchain = 'stable-x86_64-unknown-linux-gnu'
+    let g:ale_linters = {
+    \   'typescript': ['tsserver'],
+    \   'go': ['gofmt', 'go vet', 'gopls'],
+    \   'rust': ['rls', 'cargo']
+    \}
+    let g:ale_fixers = {
+    \ 'go': ['goimports']
+    \ }
+    let g:ale_fix_on_save = 1
+
+    nmap K :ALEHover<CR>
+    nmap gd :ALEGoToDefinition<CR>
+    nmap gy :ALEGoToTypeDefinition<CR>
+    nmap <C-k> :ALEPreviousWrap<CR>
+    nmap <C-j> :ALENextWrap<CR>
+    nmap <leader>rn :ALERename<CR>
+
+    " " Plug 'statico/vim-javascript-sql'
+    " let g:javascript_sql_dialect = 'pgsql'
+
+    " Plug 'SirVer/ultisnips'
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<c-b>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+    " Plug 'easymotion/vim-easymotion'
+    let g:EasyMotion_do_mapping = 0 " Disable default mappings
+    let g:EasyMotion_smartcase = 1
+    nmap s <Plug>(easymotion-s2)
+    map <Leader>j <Plug>(easymotion-j)
+    map <Leader>k <Plug>(easymotion-k)
+
+    " Plug 'junegunn/fzf.vim'
+    nnoremap <C-P> :GFiles --cached --others --exclude-standard<cr>
+    nnoremap <Leader>b :Buffers<cr>
+    nnoremap <Leader>h :History<cr>
+    imap <c-x><c-f> <plug>(fzf-complete-file)
+
+    if has("win32")
+        set dir=~/_vimfiles/swaps/
+        set undodir=~/_vimfiles/undos/
+        lan mes en
+    else
+        set dir=~/.vim/swaps/
+        set undodir=~/.vim/undos/
+        set t_Co=256
+    endif
+
+    set background=dark
+    colorscheme gruvbox
+    " if has("gui_running")
+    "     set background=light
+    "     set guioptions-=T
+    "     set guioptions-=m
+    "     if has("gui_gtk2")
+    "         set guifont=Source\ Code\ Pro\ Medium\ 10
+    "     elseif has("gui_macvim")
+    "         set guifont=Menlo\ Regular:h14
+    "     elseif has("gui_win32")
+    "         set guifont=Source_Code_Pro:h11:cRUSSIAN
+    "     endif
+    " else
+    "     colorscheme slate
+    " endif
+
+    "изменение цвета "statusline" по умолчанию
+    highlight StatusLine ctermfg=DarkGreen guifg=DarkGreen
+
+    "вызов функции изменения "statusline"
+    nmap <silent> <F7> :call ChLang()<cr>
+    imap <silent> <F7> <Left><Right><C-O>:call ChLang()<cr>
+
+    "функция для изменения "statusline" при изменении раскладки
+    function! ChLang()
+        let str=substitute(&statusline, '\ ', '\\ ','g')
+        if &iminsert==0
+            highlight StatusLine ctermfg=DarkBlue guifg=DarkBlue
+            let str=substitute(str,'\[en\]', '[ru]','')
+            exec "set iminsert=1 statusline=".str
+        else
+            highlight StatusLine ctermfg=DarkGreen guifg=DarkGreen
+            let str=substitute(str,'\[ru\]', '[en]','')
+            exec "set iminsert=0 statusline=".str
+        endif
+    endfunction
+
+    "замена непечатаемых символов в режиме "list"
+    if &listchars ==# 'eol:$'
+        set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+    endif
+    " Show problematic characters.
+    set list
+
+    function! CueMakeTitle()
+        %s#FILE\s\+".\+\\\d\d\s\?-\s\?\(.\+\).\(wav\|flac\)"\s\+WAVE#\0    TITLE "\1"#
+    endfunction
+endif
 
 if has("autocmd")
     autocmd FileType * set nonumber linebreak foldcolumn=0
@@ -302,10 +307,12 @@ if has("autocmd")
         \formatoptions=croql comments=sr:/*,mb:*,ex:*/,:// number textwidth=41
         \ nowrap number
 
-    autocmd FileType perl set number nowrap foldlevel=50 foldcolumn=3
-        let perl_fold=1
-        let perl_fold_blocks=1
-    autocmd! BufEnter *.pl compiler perl
+    if has("eval")
+        autocmd FileType perl set number nowrap foldlevel=50 foldcolumn=3
+            let perl_fold=1
+            let perl_fold_blocks=1
+        autocmd! BufEnter *.pl compiler perl
+    endif
 
     autocmd FileType php set number nowrap foldlevel=50 foldcolumn=3
 
@@ -326,8 +333,10 @@ if has("autocmd")
         \ setlocal noswapfile foldlevel=1 "viminfo=""
     autocmd BufRead,BufNewFile auth.otl 
         \ setlocal foldlevel=1
-endif
 
-function! CueMakeTitle()
-    %s#FILE\s\+".\+\\\d\d\s\?-\s\?\(.\+\).\(wav\|flac\)"\s\+WAVE#\0    TITLE "\1"#
-endfunction
+    " исключение буферов quickfix из listed
+    augroup qf
+        autocmd!
+        autocmd FileType qf set nobuflisted
+    augroup END
+endif
