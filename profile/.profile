@@ -17,10 +17,10 @@ if [ -f "$HOME/.secrets.sh" ]; then
     . "$HOME/.secrets.sh"
 fi
 
-export GOPATH=~/go
+export GOPATH=$HOME/go
 export GO111MODULE=on
 PATH=$PATH:$GOPATH/bin
-PATH="/usr/lib/go-1.13/bin:$PATH"
+PATH="/usr/local/go/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
