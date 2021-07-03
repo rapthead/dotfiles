@@ -228,6 +228,7 @@ bindsym XF86AudioPlay exec --no-startup-id mpc toggle
 bindsym XF86AudioPrev exec --no-startup-id mpc prev
 bindsym XF86AudioNext exec --no-startup-id mpc next
 bindsym XF86ScreenSaver exec --no-startup-id $lock
+bindsym XF86Display exec --no-startup-id xset dpms force off
 
 
 bindsym $mod+Shift+minus move scratchpad

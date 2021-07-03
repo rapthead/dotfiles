@@ -146,7 +146,42 @@ if has("eval")
 
     call plug#begin('~/.vim/plugged')
 
-    Plug 'dense-analysis/ale'
+    " Plug 'dense-analysis/ale'
+    if 0
+        Plug 'dense-analysis/ale'
+
+        let g:ale_completion_enabled = 1
+        let g:ale_rust_rls_toolchain = 'stable-x86_64-unknown-linux-gnu'
+        let g:ale_linters = {
+        \   'typescript': ['tsserver'],
+        \   'go': ['gofmt', 'go vet', 'gopls'],
+        \   'rust': ['rls', 'cargo']
+        \}
+        let g:ale_fixers = {
+        \ 'go': ['goimports']
+        \ }
+        let g:ale_fix_on_save = 1
+
+        nmap K :ALEHover<CR>
+        nmap gd :ALEGoToDefinition<CR>
+        nmap gy :ALEGoToTypeDefinition<CR>
+        nmap <C-k> :ALEPreviousWrap<CR>
+        nmap <C-j> :ALENextWrap<CR>
+        nmap <leader>rn :ALERename<CR>
+    else
+        Plug 'neovim/nvim-lspconfig'
+        Plug 'hrsh7th/nvim-compe'
+
+        nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+        nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+        nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+        nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+        nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+        nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+        nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+        nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+    endif
+
     Plug 'jparise/vim-graphql'
     Plug 'hashivim/vim-terraform'
     Plug 'LnL7/vim-nix'
@@ -190,26 +225,6 @@ if has("eval")
     " ----------------------------------------------------------------------------
     " Plug 'fatih/vim-go'
     let g:go_fmt_command = "goimports"
-    " Plug 'w0rp/ale'
-    "
-    let g:ale_completion_enabled = 1
-    let g:ale_rust_rls_toolchain = 'stable-x86_64-unknown-linux-gnu'
-    let g:ale_linters = {
-    \   'typescript': ['tsserver'],
-    \   'go': ['gofmt', 'go vet', 'gopls'],
-    \   'rust': ['rls', 'cargo']
-    \}
-    let g:ale_fixers = {
-    \ 'go': ['goimports']
-    \ }
-    let g:ale_fix_on_save = 1
-
-    nmap K :ALEHover<CR>
-    nmap gd :ALEGoToDefinition<CR>
-    nmap gy :ALEGoToTypeDefinition<CR>
-    nmap <C-k> :ALEPreviousWrap<CR>
-    nmap <C-j> :ALENextWrap<CR>
-    nmap <leader>rn :ALERename<CR>
 
     " " Plug 'statico/vim-javascript-sql'
     " let g:javascript_sql_dialect = 'pgsql'

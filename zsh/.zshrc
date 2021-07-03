@@ -45,6 +45,7 @@ alias cpr="rsync --progress"
 alias gmc="export EDITOR='gvimremote'; mc"
 
 alias terraform="dotenv terraform"
+alias npm-exec='PATH=$(npm bin):$PATH'
 
 # ssh() { /usr/bin/ssh $* -t "env HGUSER='pgribanov <pgribanov@prural.ru>' bash -l" }
 
@@ -76,9 +77,9 @@ mr() {
     rsync -avr ~/.config/mpv/watch_later/ noname@rapthead.no-ip.org:/media/data/watch_later
 }
 
-alias mf=$PLAYER' --cache-secs=3 http://rapthead.no-ip.org:8004'
-alias mcl=$PLAYER' --playlist=http://rapthead.no-ip.org/m3u/clips/ --shuffle -fs'
-alias mcb=$PLAYER' --playlist=http://rapthead.no-ip.org/m3u/clips/brass/ --shuffle -fs'
+alias mf=$PLAYER' --cache-secs=3 http://browse.rapthead.tk:8004'
+alias mcl=$PLAYER' --playlist=http://browse.rapthead.tk/m3u/clips/ --shuffle -fs'
+alias mcb=$PLAYER' --playlist=http://browse.rapthead.tk/m3u/clips/brass/ --shuffle -fs'
 alias feh='feh --scale-down'
 
 # Uncomment the following line to use case-sensitive completion.
@@ -136,3 +137,10 @@ select-word-style shell
 
 source $HOME/.dotfiles/zsh-z/zsh-z.plugin.zsh
 zstyle ':completion:*' menu select
+
+# The next line updates PATH for Yandex Cloud CLI.
+if [ -f '/home/noname/yandex-cloud/path.bash.inc' ]; then source '/home/noname/yandex-cloud/path.bash.inc'; fi
+
+# The next line enables shell command completion for yc.
+if [ -f '/home/noname/yandex-cloud/completion.zsh.inc' ]; then source '/home/noname/yandex-cloud/completion.zsh.inc'; fi
+

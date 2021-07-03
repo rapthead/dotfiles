@@ -19,6 +19,9 @@
     ~/.config/mpd/mpd.conf:
       path: mpd/mpd.conf
       create: true
+    ~/.config/mpdscribble/mpdscribble.conf:
+      path: mpdscribble/mpdscribble.conf
+      create: true
     ~/.config/mpv/config:
       path: mpv/config
       create: true

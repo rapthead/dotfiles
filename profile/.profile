@@ -17,7 +17,7 @@ if [ -f "$HOME/.secrets.sh" ]; then
     . "$HOME/.secrets.sh"
 fi
 
-export GOPATH=~/go
+export GOPATH=$HOME/go
 export GO111MODULE=on
 PATH=$PATH:$GOPATH/bin
 PATH=$PATH:/usr/sbin:/sbin

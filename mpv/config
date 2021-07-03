@@ -3,16 +3,17 @@ cache = yes
 volume-max = 500
 no-ytdl
 no-audio-display
+vo = xv
+# profile = hw
+ao = pulse
 # demuxer-max-bytes = 32000
 # demuxer-readahead-secs = 30
 # vo = gpu
 # hwdec = vaapi
 
-[save]
-write-filename-in-watch-later-config = yes
-
 [hw]
 hwdec = vaapi
+vo = vaapi
 # vd = ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,
 
 [pulse]
