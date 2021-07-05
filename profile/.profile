@@ -17,8 +17,9 @@ if [ -f "$HOME/.secrets.sh" ]; then
     . "$HOME/.secrets.sh"
 fi
 
-export GOPATH=~/go
+export GOPATH=$HOME/go
 export GO111MODULE=on
+export PATH="$(yarn global bin):$PATH"
 PATH=$PATH:$GOPATH/bin
 PATH=$PATH:/usr/sbin:/sbin
 PATH="/usr/lib/go-1.13/bin:$PATH"

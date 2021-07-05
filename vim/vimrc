@@ -50,7 +50,8 @@ set autoindent "автоматическая табуляция. если тек
 set wildignore+=*/.git/*,*/.svn/*,*/node_modules/*,*/target/*,*.pyc,*.class
 
 " без этого inotify не срабатывает
-set backupcopy=yes
+" set backupcopy=yes
+
 set termguicolors
 
 "показывать неполные строки не помещающиеся в экран
@@ -205,6 +206,7 @@ if has("eval")
     let g:ale_fix_on_save = 1
 
     nmap K :ALEHover<CR>
+    nmap gs :ALEGoToDefinition split<CR>
     nmap gd :ALEGoToDefinition<CR>
     nmap gy :ALEGoToTypeDefinition<CR>
     nmap <C-k> :ALEPreviousWrap<CR>
@@ -228,6 +230,7 @@ if has("eval")
 
     " Plug 'junegunn/fzf.vim'
     nnoremap <C-P> :GFiles --cached --others --exclude-standard<cr>
+    nnoremap <C-B> :Buffers<cr>
     nnoremap <Leader>b :Buffers<cr>
     nnoremap <Leader>h :History<cr>
     imap <c-x><c-f> <plug>(fzf-complete-file)
