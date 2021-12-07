@@ -19,6 +19,7 @@ fi
 
 export GOPATH=$HOME/go
 export GO111MODULE=on
+PATH=$PATH:$HOME/.local/opt/goneovim
 PATH=$PATH:$GOPATH/bin
 PATH=$PATH:/usr/sbin:/sbin
 PATH="/usr/lib/go-1.13/bin:$PATH"
@@ -26,6 +27,7 @@ PATH="/usr/local/go/bin:$PATH"
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$PATH:$HOME/bin"
+    PATH="$PATH:$HOME/bin/Telegram"
 fi
 
 export PYTHONPATH="$HOME/.local/lib/python3.5/site-packages/:$PYTHONPATH"
