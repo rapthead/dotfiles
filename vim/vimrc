@@ -178,9 +178,8 @@ if has("eval")
         nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
         nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
         nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
-        nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-        nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-        nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+        nnoremap <silent> <C-k> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+        nnoremap <silent> <C-j> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
     endif
 
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -359,3 +358,6 @@ if has("autocmd")
         autocmd FileType qf set nobuflisted
     augroup END
 endif
+
+let @d = "console.warn(require('components/_common/persistence/sql').stringifyStatement(stmt))"
+let @f = "for (let i=0; i<100; i++) {"
