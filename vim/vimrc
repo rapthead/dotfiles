@@ -183,6 +183,8 @@ if has("eval")
         nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
     endif
 
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
     Plug 'jparise/vim-graphql'
     Plug 'hashivim/vim-terraform'
     Plug 'LnL7/vim-nix'

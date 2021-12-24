@@ -23,4 +23,4 @@ URxvt.intensityStyles: false
 !!                               rofi
 !! ===========================================================================
 rofi.theme:                          gruvbox-dark
-rofi.font:                           Source Code Pro Medium 12
+! rofi.font:                           Source Code Pro Medium 12
