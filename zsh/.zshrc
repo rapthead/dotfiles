@@ -32,7 +32,7 @@ ZSH_THEME="bureau"
 if type ncal > /dev/null; then
     alias cal="ncal -Mb"
 else
-    alias cal="cal -m"
+    alias cal="cal -M"
 fi
 
 alias vim="nvim"
