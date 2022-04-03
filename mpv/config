@@ -3,28 +3,32 @@ cache = yes
 volume-max = 500
 no-ytdl
 no-audio-display
-vo = xv
-# profile = hw
-ao = pulse
-# demuxer-max-bytes = 32000
-# demuxer-readahead-secs = 30
-# vo = gpu
-# hwdec = vaapi
+profile = alsa,ml,tv
 
 [hw]
 hwdec = vaapi
-vo = vaapi
-# vd = ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,
+vo = gpu
 
 [pulse]
 af = format=format=s16:srate=44100:channels=2
-# ao = pulse:cubie:1:buffer=500
 volume = 20
 autosync = 550
 
+[alsa]
+ao = alsa
+audio-device = 'alsa/plughw:CARD=Generic,DEV=3'
+
+[ml]
+hwdec = vaapi
+vo = gpu
+fs
+fs-screen = 1
+profile = tv
+
+[tv]
+x11-name = mpvTV
+
 [hdmi]
-# af = format=format=s16:srate=44100:channels=2
-# ao = alsa:device=[plughw:0,0]
 audio-device = 'alsa/hdmi:CARD=HDMI,DEV=0'
 
 [fiio]

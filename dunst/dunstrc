@@ -1,4 +1,5 @@
 [global]
+    width = (0, 1000)
     font = "Hack 8"
     allow_markup = yes
     format = "<b>%p %s</b>\n%b"
