@@ -60,3 +60,7 @@ export GDK_DPI_SCALE=0.5
 if [ -f "$HOME/.Xresources" ]; then
     xrdb -merge ~/.Xresources
 fi
+
+if [ -d "$HOME/.Xresources.d" ]; then
+    xrdb -merge ~/.Xresources.d/*
+fi

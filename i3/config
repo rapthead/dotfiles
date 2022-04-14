@@ -9,8 +9,8 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-set $primary_monitor HDMI-1
-set $secondary_monitor HDMI-2
+set_from_resource $primary_monitor i3wm.primary_monitor HDMI-1
+set_from_resource $secondary_monitor i3wm.secondary_monitor HDMI-2
 
 floating_minimum_size 500 x 300
 floating_maximum_size 2000 x 1500
