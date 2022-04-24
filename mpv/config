@@ -11,6 +11,12 @@ no-audio-display
 [save]
 write-filename-in-watch-later-config = yes
 
+[rpi-hw]
+vo=gpu
+gpu-context=drm
+drm-connector=1.HDMI-A-1 # if hdmi port changed change this line!
+hwdec=v4l2m2m-copy
+
 [hw]
 hwdec = vaapi
 # vd = ffh264vdpau,ffmpeg12vdpau,ffvc1vdpau,
