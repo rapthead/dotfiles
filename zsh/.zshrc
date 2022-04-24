@@ -4,6 +4,7 @@ source $HOME/.profile
 export ZSH=$HOME/.dotfiles/ohmyzsh
 if [ -d $HOME/.dotfiles/zsh-auto-notify ]; then
     source $HOME/.dotfiles/zsh-auto-notify/auto-notify.plugin.zsh
+    AUTO_NOTIFY_IGNORE+=("docker" "mpv" "ncmpcpp" "vifm")
 fi
 
 # function clear-scrollback-buffer {
@@ -31,7 +32,7 @@ ZSH_THEME="bureau"
 if type ncal > /dev/null; then
     alias cal="ncal -Mb"
 else
-    alias cal="cal -m"
+    alias cal="cal -M"
 fi
 
 alias vim="nvim"
@@ -44,40 +45,24 @@ alias cpr="rsync --progress"
 alias gmc="export EDITOR='gvimremote'; mc"
 
 alias terraform="dotenv terraform"
+alias npm-exec='PATH=$(npm bin):$PATH'
 
-# ssh() { /usr/bin/ssh $* -t "env HGUSER='pgribanov <pgribanov@prural.ru>' bash -l" }
-
-PLAYER=$(which mpv)
-if [ -z $PLAYER ]; then
-    PLAYER=$(which mplayer)
-fi
+PLAYER="mpv"
+# PLAYER=$(which mpv)
+# if [ -z $PLAYER ]; then
+#     PLAYER=$(which mplayer)
+# fi
 
 last_playlist() {
     echo `ls -t ~/Downloads/*.m3u | head -1`
 }
 ml() {
-    # if [ $# -eq 0 ]; then
-        $PLAYER -fs -ao=alsa -playlist="$(last_playlist)" $*
-    # else
-    #     $PLAYER -fs
-    # fi
-}
-mp() {
-    if [ $# -eq 0 ]; then
-        $PLAYER -fs --profile=pulse -playlist "$(last_playlist)"
-    else
-        $PLAYER -fs --profile=pulse $*
-    fi
-}
-mr() {
-    rsync -avr noname@rapthead.no-ip.org:/media/data/watch_later/ ~/.config/mpv/watch_later
-    $PLAYER $*
-    rsync -avr ~/.config/mpv/watch_later/ noname@rapthead.no-ip.org:/media/data/watch_later
+    $PLAYER -profile=ml -playlist="$(last_playlist)" $*
 }
 
-alias mf=$PLAYER' --cache-secs=3 http://rapthead.no-ip.org:8004'
-alias mcl=$PLAYER' --playlist=http://rapthead.no-ip.org/m3u/clips/ --shuffle -fs'
-alias mcb=$PLAYER' --playlist=http://rapthead.no-ip.org/m3u/clips/brass/ --shuffle -fs'
+alias mf=$PLAYER' --cache-secs=3 http://browse.rapthead.tk:8004'
+alias mcl=$PLAYER' --profile=ml --playlist=http://browse.rapthead.tk/m3u/clips/ --shuffle -fs'
+alias mcb=$PLAYER' --profile=ml --playlist=http://browse.rapthead.tk/m3u/clips/brass/ --shuffle -fs'
 alias feh='feh --scale-down'
 
 # Uncomment the following line to use case-sensitive completion.
@@ -135,3 +120,9 @@ select-word-style shell
 
 source $HOME/.dotfiles/zsh-z/zsh-z.plugin.zsh
 zstyle ':completion:*' menu select
+
+# The next line updates PATH for Yandex Cloud CLI.
+if [ -f '/home/noname/yandex-cloud/path.bash.inc' ]; then source '/home/noname/yandex-cloud/path.bash.inc'; fi
+
+# The next line enables shell command completion for yc.
+if [ -f '/home/noname/yandex-cloud/completion.zsh.inc' ]; then source '/home/noname/yandex-cloud/completion.zsh.inc'; fi

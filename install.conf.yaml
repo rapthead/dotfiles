@@ -4,13 +4,31 @@
 
 - clean: ['~']
 
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
+
 - link:
+    # wayland
+    ~/.config/foot/foot.ini:
+      create: true
+      path: foot/foot.ini
+    ~/.config/waybar/config:
+      create: true
+      path: waybar/config
+
     ~/.config/i3/config:
       if: 'which polybar'
       path: i3/config
       create: true
-    ~/.config/ncmpcpp/config:
-      path: ncmpcpp/config
+    ~/.config/ncmpcpp:
+      glob: true
+      create: true
+      path: ncmpcpp/*
+    ~/.config/mpd/mpd.conf:
+      path: mpd/mpd.conf
+      create: true
+    ~/.config/mpdscribble/mpdscribble.conf:
+      path: mpdscribble/mpdscribble.conf
       create: true
     ~/.config/mpv/config:
       path: mpv/config
@@ -30,6 +48,8 @@
       path: profile/.profile
     ~/.xprofile:
       path: profile/.profile
+    ~/.xsessionrc:
+      path: profile/xsessionrc
     ~/.Xresources:
       path: Xresources/.Xresources
     # bin
@@ -44,9 +64,11 @@
     ~/.vimrc:
       create: true
       path: vim/vimrc
-    ~/.config/nvim/init.vim:
+    ~/.config/nvim/:
+      glob: true
       create: true
-      path: nvim/init.vim
+      path: nvim/*
+
     # vifm
     ~/.config/vifm/vifmrc:
       create: true
@@ -54,6 +76,3 @@
     ~/.config/vifm/colors/gruvbox.vifm:
       create: true
       path: vifm-colors/gruvbox.vifm
-
-- shell:
-  - [git submodule update --init --recursive, Installing submodules]

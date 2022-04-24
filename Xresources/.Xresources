@@ -1,6 +1,7 @@
 #include ".dotfiles/gruvbox-contrib/xresources/gruvbox-dark.xresources"
 #include ".dotfiles/gruvbox-contrib/urxvt256/gruvbox-urxvt256.xresources"
-!!Xft.dpi: 120
+*.dpi: 240
+Xft.dpi: 240
 Xft.autohint: 0
 Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintfull
@@ -11,10 +12,10 @@ Xcursor.theme: Vanilla-DMZ
 !! ===========================================================================
 !!                               Urxvt
 !! ===========================================================================
-URxvt.font:               xft:Source Code Pro:style=Medium:pixelsize=14:antialias=true:hinting=slight
-URxvt.boldFont:           xft:Source Code Pro:style=Bold:pixelsize=14:antialias=true:hinting=slight
+URxvt.font:               xft:DejaVu Sans Mono:style=Medium:pixelsize=32:antialias=true:hinting=slight
+URxvt.boldFont:           xft:DejaVu Sans Mono:style=Bold:pixelsize=32:antialias=true:hinting=slight
 URxvt.scrollBar:false
-URxvt.saveLines: 1000000
+URxvt.saveLines: 10000
 URxvt.perl-ext-common: default,matcher
 URxvt.underlineURLs:true
 URxvt.fading:75
@@ -23,4 +24,9 @@ URxvt.intensityStyles: false
 !!                               rofi
 !! ===========================================================================
 rofi.theme:                          gruvbox-dark
-rofi.font:                           Source Code Pro Medium 12
+rofi.dpi: 240
+! rofi.font:                           Source Code Pro Medium 12
+!! ===========================================================================
+!!                               polybar
+!! ===========================================================================
+polybar.dpi: 240

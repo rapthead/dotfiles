@@ -7,7 +7,7 @@ else
     criteria=$1
     shift
     focus_result=$(i3-msg "$criteria focus")
-    if [ $focus_result != "[{\"success\":true}]" ]; then
+    if [ "$focus_result" != '[{"success":true}]' ]; then
         echo i3-msg exec "$*"
         i3-msg exec "$*"
     fi
