@@ -5,6 +5,12 @@ no-ytdl
 no-audio-display
 profile = alsa,ml,tv
 
+[rpi-hw]
+vo=gpu
+gpu-context=drm
+drm-connector=1.HDMI-A-1 # if hdmi port changed change this line!
+hwdec=v4l2m2m-copy
+
 [hw]
 hwdec = vaapi
 vo = gpu
