@@ -64,3 +64,7 @@ fi
 if [ -d "$HOME/.Xresources.d" ]; then
     xrdb -merge ~/.Xresources.d/*
 fi
+
+if [ -f "$HOME/.wallpaper.jpg" ]; then
+    feh --bg-fill "$HOME/.wallpaper.jpg"
+fi
