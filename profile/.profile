@@ -24,6 +24,7 @@ PATH=$PATH:$GOPATH/bin
 PATH=$PATH:/usr/sbin:/sbin
 PATH="/usr/lib/go-1.13/bin:$PATH"
 PATH="/usr/local/go/bin:$PATH"
+PATH="$HOME/.local/go/bin:$PATH"
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$PATH:$HOME/bin"
