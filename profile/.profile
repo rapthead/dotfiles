@@ -4,6 +4,8 @@
 # see /usr/share/doc/bash/examples/startup-files for examples.
 # the files are located in the bash-doc package.
 
+HOSTNAME=$(hostname)
+
 # the default umask is set in /etc/profile; for setting the umask
 # for ssh logins, install and configure the libpam-umask package.
 if [ -n "$BASH_VERSION" ]; then
@@ -13,12 +15,17 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
+if [ -f "$HOME/.config/host/$HOSTNAME.sh" ]; then
+    . "$HOME/.config/host/$HOSTNAME.sh"
+fi
+
 if [ -f "$HOME/.secrets.sh" ]; then
     . "$HOME/.secrets.sh"
 fi
 
 export GOPATH=$HOME/go
 export GO111MODULE=on
+export PATH="$(yarn global bin):$PATH"
 PATH=$PATH:$HOME/.local/opt/goneovim
 PATH=$PATH:$GOPATH/bin
 PATH=$PATH:/usr/sbin:/sbin
@@ -47,3 +54,18 @@ export SSH_ASKPASS=""
 # export LC_ALL=en_US.utf8
 # export LANG=en_US.utf8
 # export LANGUAGE=en
+
+export GDK_SCALE=2
+export GDK_DPI_SCALE=0.5
+
+if [ -f "$HOME/.Xresources" ]; then
+    xrdb -merge ~/.Xresources
+fi
+
+if [ -d "$HOME/.Xresources.d" ]; then
+    xrdb -merge ~/.Xresources.d/*
+fi
+
+if [ -f "$HOME/.wallpaper.jpg" ]; then
+    feh --bg-fill "$HOME/.wallpaper.jpg"
+fi

@@ -50,7 +50,8 @@ set autoindent "автоматическая табуляция. если тек
 set wildignore+=*/.git/*,*/.svn/*,*/node_modules/*,*/target/*,*.pyc,*.class
 
 " без этого inotify не срабатывает
-set backupcopy=yes
+" set backupcopy=yes
+
 set termguicolors
 
 "показывать неполные строки не помещающиеся в экран
@@ -172,14 +173,16 @@ if has("eval")
         Plug 'neovim/nvim-lspconfig'
         Plug 'hrsh7th/nvim-compe'
 
-        nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-        nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
-        nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-        nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
-        nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
-        nnoremap <silent> <C-k> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-        nnoremap <silent> <C-j> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+        " nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+        " nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+        " nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+        " nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+        " nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+        " nnoremap <silent> <C-k> <cmd>lua vim.diagnostic.goto_prev()<CR>
+        " nnoremap <silent> <C-j> <cmd>lua vim.diagnostic.goto_next()<CR>
     endif
+
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
     Plug 'jparise/vim-graphql'
     Plug 'hashivim/vim-terraform'
@@ -242,6 +245,7 @@ if has("eval")
 
     " Plug 'junegunn/fzf.vim'
     nnoremap <C-P> :GFiles --cached --others --exclude-standard<cr>
+    nnoremap <C-B> :Buffers<cr>
     nnoremap <Leader>b :Buffers<cr>
     nnoremap <Leader>h :History<cr>
     imap <c-x><c-f> <plug>(fzf-complete-file)
