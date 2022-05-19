@@ -72,10 +72,9 @@
     ~/.vimrc:
       create: true
       path: vim/vimrc
-    ~/.config/nvim/:
-      glob: true
+    ~/.config/nvim:
       create: true
-      path: nvim/*
+      path: nvim
 
     # vifm
     ~/.config/vifm/vifmrc:
