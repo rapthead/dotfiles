@@ -6,6 +6,7 @@
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
+  - cp user-dirs/dirs ~/.config/user-dirs.dirs
 
 - link:
     # wayland
@@ -24,34 +25,41 @@
       glob: true
       create: true
       path: ncmpcpp/*
+
     ~/.config/mpd/mpd.conf:
       path: mpd/mpd.conf
       create: true
     ~/.config/mpdscribble/mpdscribble.conf:
       path: mpdscribble/mpdscribble.conf
       create: true
+
     ~/.config/mpv/config:
       path: mpv/config
-      create: true
-    ~/.config/dunst/dunstrc:
-      path: dunst/dunstrc
       create: true
     ~/.config/mpv/input.conf:
       path: mpv/input.conf
       create: true
+
+    ~/.config/dunst/dunstrc:
+      path: dunst/dunstrc
+      create: true
     ~/.config/polybar/config:
       path: polybar/config.ini
       create: true
+
     ~/.zshrc:
-      path: zsh/.zshrc
+      path: zsh/zshrc
     ~/.profile:
-      path: profile/.profile
+      path: profile/profile
     ~/.xprofile:
-      path: profile/.profile
+      path: profile/xprofile
     ~/.xsessionrc:
-      path: profile/xsessionrc
-    ~/.Xresources:
-      path: Xresources/.Xresources
+      path: profile/xprofile
+    ~/.xsession:
+      path: profile/xprofile
+    ~/.xinitrc:
+      path: profile/xprofile
+
     # bin
     ~/bin:
       glob: true

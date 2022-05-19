@@ -1,5 +1,3 @@
-source $HOME/.profile
-# vidir !!!!
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.dotfiles/ohmyzsh
 if [ -d $HOME/.dotfiles/zsh-auto-notify ]; then
@@ -54,7 +52,7 @@ PLAYER="mpv"
 # fi
 
 last_playlist() {
-    echo `ls -t ~/Downloads/*.m3u | head -1`
+    echo `ls -t ~/downloads/*.m3u | head -1`
 }
 ml() {
     $PLAYER -profile=ml -playlist="$(last_playlist)" $*
@@ -117,6 +115,8 @@ select-word-style shell
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export ZSH_COMPDUMP=$ZSH/.cache/zcompdump-$HOST
 
 source $HOME/.dotfiles/zsh-z/zsh-z.plugin.zsh
 zstyle ':completion:*' menu select

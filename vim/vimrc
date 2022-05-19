@@ -74,61 +74,7 @@ nmap <Tab>   :cclose<CR>:bnext<CR>
 nmap <S-Tab> :cclose<CR>:bprevious<CR>
 nmap <C-Tab> :cclose<CR>:tabnext<CR>
 
-if has("menu")
-    "меню выбора кодировки по f8
-    menu Encoding.utf-8        :e ++enc=utf-8<CR>
-    menu Encoding.windows-1251 :e ++enc=cp1251<CR>
-    menu Encoding.utf-16le     :e ++enc=utf-16le<CR>
-    menu Encoding.koi8-r 	   :e ++enc=koi8-r<CR>
-    menu Encoding.ibm-866      :e ++enc=ibm866<CR>
-    map <F8> :emenu Encoding.<TAB>
-endif
-
-if has("mouse")
-    set mouse=a
-    nmap <ScrollWheelUp> <nop>
-    nmap <S-ScrollWheelUp> <nop>
-    nmap <C-ScrollWheelUp> <nop>
-    nmap <ScrollWheelDown> <nop>
-    nmap <S-ScrollWheelDown> <nop>
-    nmap <C-ScrollWheelDown> <nop>
-    nmap <ScrollWheelLeft> <nop>
-    nmap <S-ScrollWheelLeft> <nop>
-    nmap <C-ScrollWheelLeft> <nop>
-    nmap <ScrollWheelRight> <nop>
-    nmap <S-ScrollWheelRight> <nop>
-    nmap <C-ScrollWheelRight> <nop>
-    imap <ScrollWheelUp> <nop>
-    imap <S-ScrollWheelUp> <nop>
-    imap <C-ScrollWheelUp> <nop>
-    imap <ScrollWheelDown> <nop>
-    imap <S-ScrollWheelDown> <nop>
-    imap <C-ScrollWheelDown> <nop>
-    imap <ScrollWheelLeft> <nop>
-    imap <S-ScrollWheelLeft> <nop>
-    imap <C-ScrollWheelLeft> <nop>
-    imap <ScrollWheelRight> <nop>
-    imap <S-ScrollWheelRight> <nop>
-    imap <C-ScrollWheelRight> <nop>
-    vmap <ScrollWheelUp> <nop>
-    vmap <S-ScrollWheelUp> <nop>
-    vmap <C-ScrollWheelUp> <nop>
-    vmap <ScrollWheelDown> <nop>
-    vmap <S-ScrollWheelDown> <nop>
-    vmap <C-ScrollWheelDown> <nop>
-    vmap <ScrollWheelLeft> <nop>
-    vmap <S-ScrollWheelLeft> <nop>
-    vmap <C-ScrollWheelLeft> <nop>
-    vmap <ScrollWheelRight> <nop>
-    vmap <S-ScrollWheelRight> <nop>
-    vmap <C-ScrollWheelRight> <nop>
-    "отключение мыши
-endif
-
-if has("syntax")
-    syntax on
-    syntax sync minlines=10000
-endif
+inoremap <ESC> <ESC>:set iminsert=0<CR>
 
 if has("eval")
     let mapleader="\<SPACE>"
@@ -147,63 +93,21 @@ if has("eval")
 
     call plug#begin('~/.vim/plugged')
 
-    " Plug 'dense-analysis/ale'
-    if 0
-        Plug 'dense-analysis/ale'
-
-        let g:ale_completion_enabled = 1
-        let g:ale_rust_rls_toolchain = 'stable-x86_64-unknown-linux-gnu'
-        let g:ale_linters = {
-        \   'typescript': ['tsserver'],
-        \   'go': ['gofmt', 'go vet', 'gopls'],
-        \   'rust': ['rls', 'cargo']
-        \}
-        let g:ale_fixers = {
-        \ 'go': ['goimports']
-        \ }
-        let g:ale_fix_on_save = 1
-
-        nmap K :ALEHover<CR>
-        nmap gd :ALEGoToDefinition<CR>
-        nmap gy :ALEGoToTypeDefinition<CR>
-        nmap <C-k> :ALEPreviousWrap<CR>
-        nmap <C-j> :ALENextWrap<CR>
-        nmap <leader>rn :ALERename<CR>
-    else
-        Plug 'neovim/nvim-lspconfig'
-        Plug 'hrsh7th/nvim-compe'
-
-        " nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-        " nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
-        " nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-        " nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
-        " nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
-        " nnoremap <silent> <C-k> <cmd>lua vim.diagnostic.goto_prev()<CR>
-        " nnoremap <silent> <C-j> <cmd>lua vim.diagnostic.goto_next()<CR>
-    endif
-
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
     Plug 'jparise/vim-graphql'
     Plug 'hashivim/vim-terraform'
-    Plug 'LnL7/vim-nix'
-    Plug 'wsdjeg/vim-fetch'
 
-    Plug 'tpope/vim-abolish' " cases modifications
-    Plug 'tpope/vim-sensible'
-    Plug 'iCyMind/NeoSolarized'
     Plug 'easymotion/vim-easymotion'
     Plug 'sjl/gundo.vim'
     Plug 'mileszs/ack.vim'
     Plug 'scrooloose/nerdcommenter'
-    " Plug 'SirVer/ultisnips'
-    Plug 'honza/vim-snippets'
 
     Plug 'leafgarland/typescript-vim'
     Plug 'pangloss/vim-javascript'
 
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-    Plug 'junegunn/fzf.vim'
+    " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    " Plug 'junegunn/fzf.vim'
     Plug 'stephpy/vim-yaml'
 
     " go
@@ -225,16 +129,9 @@ if has("eval")
     " ----------------------------------------------------------------------------
     "   Plugins Settings
     " ----------------------------------------------------------------------------
-    " Plug 'fatih/vim-go'
-    let g:go_fmt_command = "goimports"
 
     " " Plug 'statico/vim-javascript-sql'
     " let g:javascript_sql_dialect = 'pgsql'
-
-    " Plug 'SirVer/ultisnips'
-    let g:UltiSnipsExpandTrigger="<tab>"
-    let g:UltiSnipsJumpForwardTrigger="<c-b>"
-    let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
     " Plug 'easymotion/vim-easymotion'
     let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -243,12 +140,12 @@ if has("eval")
     map <Leader>j <Plug>(easymotion-j)
     map <Leader>k <Plug>(easymotion-k)
 
-    " Plug 'junegunn/fzf.vim'
-    nnoremap <C-P> :GFiles --cached --others --exclude-standard<cr>
-    nnoremap <C-B> :Buffers<cr>
-    nnoremap <Leader>b :Buffers<cr>
-    nnoremap <Leader>h :History<cr>
-    imap <c-x><c-f> <plug>(fzf-complete-file)
+    " " Plug 'junegunn/fzf.vim'
+    " nnoremap <C-P> :GFiles --cached --others --exclude-standard<cr>
+    " nnoremap <C-B> :Buffers<cr>
+    " nnoremap <Leader>b :Buffers<cr>
+    " nnoremap <Leader>h :History<cr>
+    " imap <c-x><c-f> <plug>(fzf-complete-file)
 
     if has("win32")
         set dir=~/_vimfiles/swaps/
@@ -262,6 +159,7 @@ if has("eval")
 
     set background=dark
     colorscheme gruvbox
+    " colorscheme gruvbox-baby
     " if has("gui_running")
     "     set background=light
     "     set guioptions-=T
@@ -304,59 +202,21 @@ if has("eval")
     endif
     " Show problematic characters.
     set list
-
-    function! CueMakeTitle()
-        %s#FILE\s\+".\+\\\d\d\s\?-\s\?\(.\+\).\(wav\|flac\)"\s\+WAVE#\0    TITLE "\1"#
-    endfunction
 endif
 
 if has("autocmd")
     autocmd FileType * set nonumber linebreak foldcolumn=0
 
     autocmd FileType go set listchars=tab:\ \ ,trail:-,extends:>,precedes:<,nbsp:+
-    " autocmd FileType go nmap <leader>b  <Plug>(go-build)
-    " autocmd FileType go nmap <leader>c  <Plug>(go-build)
-    " autocmd FileType go nmap <leader>g  <Plug>(go-generate)
-    " autocmd FileType go nmap <leader>e  <Plug>(go-iferr)
-    " autocmd FileType go nmap <F2>  <Plug>(go-rename)
-    " autocmd FileType go nmap K  <Plug>(go-info)
-
-    autocmd FileType c,cpp set cindent 
-        \formatoptions=croql comments=sr:/*,mb:*,ex:*/,:// number textwidth=41
-        \ nowrap number
-
-    if has("eval")
-        autocmd FileType perl set number nowrap foldlevel=50 foldcolumn=3
-            let perl_fold=1
-            let perl_fold_blocks=1
-        autocmd! BufEnter *.pl compiler perl
-    endif
-
-    autocmd FileType php set number nowrap foldlevel=50 foldcolumn=3
-
-    autocmd FileType python setlocal colorcolumn=120
 
     " переходить к последней позиции в файле
-    autocmd BufReadPost * 
+    autocmd BufReadPost *
         \ if line("'\"") > 0 && line("'\"") <= line("$") | 
-        \   exe "normal g`\"" | 
-        \ endif 
+        \   exe "normal g`\"" |
+        \ endif
 
     " gotpl
     autocmd BufNewFile,BufReadPost *.tpl setfiletype gotpl
-
-    " outline
-    autocmd BufNewFile,BufReadPost *.otl setfiletype votl
-    autocmd BufReadPre,BufNewFile auth.otl 
-        \ setlocal noswapfile foldlevel=1 "viminfo=""
-    autocmd BufRead,BufNewFile auth.otl 
-        \ setlocal foldlevel=1
-
-    " исключение буферов quickfix из listed
-    augroup qf
-        autocmd!
-        autocmd FileType qf set nobuflisted
-    augroup END
 endif
 
 let @d = "console.warn(require('components/_common/persistence/sql').stringifyStatement(stmt))"
