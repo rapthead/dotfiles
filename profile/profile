@@ -21,6 +21,10 @@ if [ -d "$HOME/.local/opt/Telegram" ] ; then
     PATH="$PATH:$HOME/.local/opt/Telegram"
 fi
 
+if [ -d "$HOME/.cargo/bin/" ] ; then
+    PATH="$PATH:$HOME/.cargo/bin/"
+fi
+
 export XDG_CONFIG_HOME="$HOME/.config/"
 export TERMINAL=urxvtcd
 export EDITOR=nvim

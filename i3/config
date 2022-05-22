@@ -15,7 +15,7 @@ set_from_resource $secondary_monitor i3wm.secondary_monitor HDMI-2
 floating_minimum_size 500 x 300
 floating_maximum_size 2000 x 1500
 
-set $term urxvtcd
+set $term alacritty msg create-window || alacritty
 set $mod Mod4
 set $lock "dm-tool switch-to-greeter"
 

@@ -47,6 +47,8 @@
       path: polybar/config.ini
       create: true
 
+    ~/.config/fish:
+      path: fish
     ~/.zshrc:
       path: zsh/zshrc
     ~/.profile:
