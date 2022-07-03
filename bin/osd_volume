@@ -1,15 +1,12 @@
 #!/usr/bin/env bash
 
 APP_NAME="${0##*/}"
-
-# amixer options
-CHANNEL=Master  # usually Master, but for Asus EEE, this is iSpeaker
-CARD=0          # Which sound card, if your system has more than one?
-VOL_STEP="${2:-4}" # amount to increase / decrease volume
+VOL_STEP="${2:-5}" # amount to increase / decrease volume
 
 if [ "$1" = "mute" ]; then
     amixer -c $CARD set $CHANNEL toggle >/dev/null 2>&1
 elif [ "$1" = "up" ]; then
+    pactl set-sink-volume @DEFAULT_SINK@ +$VOL_STEP%
     amixer -c $CARD sset $CHANNEL $VOL_STEP+, unmute >/dev/null 2>&1
 elif [ "$1" = "down" ]; then
     amixer -c $CARD sset $CHANNEL $VOL_STEP-, unmute >/dev/null 2>&1
@@ -25,13 +22,38 @@ VOLUME=$( echo $MIXER_OUTPUT | awk -W posix -F'[][]' '/dB/ { gsub("%", ""); prin
 echo $MIXER_OUTPUT
 echo $ISMUTED
 
-NOTIFICAION_ID=842921
-TIMEOUT=1500
+readonly NOTIFICAION_ID=842921
+readonly TIMEOUT=1500
+
+showNotificationDunst() {
+    local volume=$1
+    local icon=$2
+    local notificationID=$3
+    local message=$4
+
+    dunstify "$message" \
+        -r $notificationID \
+        -i $icon \
+        -t $TIMEOUT \
+        -h "int:value:$volume" \
+        -h string:synchronous:volume $message
+}
+showNotificationNotifySend() {
+    local volume=$1
+    local icon=$2
+    local notificationID=$3
+    local message=$4
+
+    notify-send "$message" \
+        -i "$icon" \
+        -t $TIMEOUT \
+        -h "int:value:$volume" \
+        -h string:x-canonical-private-synchronous:volume
+}
+showNotificationImpl=showNotificationNotifySend
+
 if [ $ISMUTED -eq 0 ]; then
-    dunstify \
-        -r $NOTIFICAION_ID \
-        -i 'audio-volume-muted' -t $TIMEOUT \
-        -h string:synchronous:volume 'muted'
+    $showNotificationImpl $VOLUME 'audio-volume-muted' $NOTIFICAION_ID 'muted'
 else
     if [ $VOLUME -gt 66 ]; then
         ICON='audio-volume-high'
@@ -40,22 +62,5 @@ else
     else
         ICON='audio-volume-low'
     fi
-
-    dunstify \
-        -r $NOTIFICAION_ID \
-        -i $ICON -t $TIMEOUT \
-        -h "int:value:$VOLUME" \
-        -h string:synchronous:volume ''
+    $showNotificationImpl $VOLUME $ICON $NOTIFICAION_ID ' '
 fi
-# notify-send.sh -i "$ICON" -h "int:value:$VOLUME" volume -R /tmp/osd_volume_replace_id -t 1000
-
-# gdbus call --session \
-#     --dest org.freedesktop.Notifications \
-#     --object-path /org/freedesktop/Notifications \
-#     --method org.freedesktop.Notifications.CloseNotification $(cat /tmp/last_id)
-
-# gdbus call --session \
-#     --dest org.freedesktop.Notifications \
-#     --object-path /org/freedesktop/Notifications \
-#     --method org.freedesktop.Notifications.Notify \
-#     "$APP_NAME" 42 audio-card "Volume" "$VOLUME" [] {} 20 # | sed 's/[^ ]* //; s/,.//' > /tmp/last_id

@@ -118,7 +118,10 @@ select-word-style shell
 
 export ZSH_COMPDUMP=$ZSH/.cache/zcompdump-$HOST
 
-source $HOME/.dotfiles/zsh-z/zsh-z.plugin.zsh
+# jump
+eval "$(zoxide init zsh)"
+# source $HOME/.dotfiles/zsh-z/zsh-z.plugin.zsh
+
 zstyle ':completion:*' menu select
 
 # The next line updates PATH for Yandex Cloud CLI.
