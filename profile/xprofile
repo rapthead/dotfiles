@@ -1,0 +1,23 @@
+. "$HOME/.dotfiles/profile/profile"
+
+xrdb -I$HOME -merge ~/.dotfiles/Xresources/Xresources
+
+if [ -f "$HOME/.dotfiles/profile/host/$HOSTNAME/xprofile" ]; then
+    . "$HOME/.dotfiles/profile/host/$HOSTNAME/xprofile"
+fi
+
+if [ -f "$HOME/.dotfiles/wallpaper.jpg" ]; then
+    feh --bg-fill "$HOME/.dotfiles/wallpaper.jpg"
+fi
+
+if [ -f "$HOME/.Xresources" ]; then
+    xrdb -I$HOME -merge ~/.Xresources
+fi
+
+if [ -d "$HOME/.Xresources.d" ]; then
+    xrdb -I$HOME -merge ~/.Xresources.d/*
+fi
+
+xset +fp $HOME/.local/share/fonts
+xset fp rehash
+xset b off

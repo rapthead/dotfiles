@@ -1,0 +1,11 @@
+[Unit]
+Description=i3 - an improved dynamic, tiling window manager
+Requires=xorg.target
+Before=graphical-session.target
+After=xprofile.service xorg.target
+
+[Service]
+ExecStart=/usr/bin/i3
+ExecReload=/usr/bin/i3-msg restart
+Slice=session.slice
+Restart=on-failure

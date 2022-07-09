@@ -1,0 +1,39 @@
+HOSTNAME=$(hostname)
+
+if [ -f "$HOME/.dotfiles/profile/host/$HOSTNAME/profile" ]; then
+    . "$HOME/.dotfiles/profile/host/$HOSTNAME/profile"
+fi
+
+if [ -f "$HOME/.secrets.sh" ]; then
+    . "$HOME/.secrets.sh"
+fi
+
+. "$HOME/.dotfiles/profile/lang/go"
+. "$HOME/.dotfiles/profile/lang/node"
+
+PATH=$PATH:/usr/sbin:/sbin
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+if [ -d "$HOME/.local/opt/Telegram" ] ; then
+    PATH="$PATH:$HOME/.local/opt/Telegram"
+fi
+
+if [ -d "$HOME/.cargo/bin/" ] ; then
+    PATH="$PATH:$HOME/.cargo/bin/"
+fi
+
+export XDG_CONFIG_HOME="$HOME/.config/"
+export TERMINAL=urxvtcd
+export EDITOR=nvim
+export PATH=$HOME/.local/bin:/usr/local/bin:$PATH
+export PROJECT_HOME=$HOME/doc/projects
+export VDPAU_DRIVER=va_gl
+export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+export SSH_ASKPASS=""
+
+# # export LC_ALL=en_US.utf8
+# # export LANG=en_US.utf8
+# # export LANGUAGE=en

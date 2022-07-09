@@ -3,7 +3,7 @@ cache = yes
 volume-max = 500
 no-ytdl
 no-audio-display
-profile = alsa,ml,tv
+profile = ml,tv
 
 [raspberrypi]
 profile = rpi-hw

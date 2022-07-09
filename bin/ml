@@ -1,0 +1,2 @@
+#!/bin/bash
+mpv -profile=ml -playlist="`ls -t ~/downloads/*.m3u | head -1`" $*
