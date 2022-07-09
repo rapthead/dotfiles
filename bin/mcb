@@ -1,0 +1,2 @@
+#!/bin/bash
+mpv --profile=ml --playlist=http://browse.rapthead.tk/m3u/clips/brass/ --shuffle -fs $*
