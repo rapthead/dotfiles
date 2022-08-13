@@ -1,131 +1,70 @@
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.dotfiles/ohmyzsh
-if [ -d $HOME/.dotfiles/zsh-auto-notify ]; then
-    source $HOME/.dotfiles/zsh-auto-notify/auto-notify.plugin.zsh
+export KEYTIMEOUT=1 # decrease entering normal mode delay https://www.johnhawthorn.com/2012/09/vi-escape-delays/
+bindkey -v
+
+# magic insert
+zle -N bracketed-paste
+autoload -Uz bracketed-paste-magic url-quote-magic
+zle -N bracketed-paste bracketed-paste-magic
+
+# Fix slowness of pastes with zsh-syntax-highlighting.zsh or zsh-autosuggestions.zsh
+# https://github.com/zsh-users/zsh-autosuggestions/issues/238#issuecomment-389324292
+pasteinit() {
+    OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+    zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+
+pastefinish() {
+    zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
+### Fix slowness of pastes
+
+# history
+HISTSIZE=100000
+SAVEHIST=100000
+HISTFILE=~/.zsh_history
+# bindkey '^R' history-incremental-search-backward
+setopt extended_history       # record timestamp of command in HISTFILE
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt share_history          # share command history data
+
+export ZSH_COMPDUMP=$ZSH/.cache/zcompdump-$HOST
+zstyle ':completion:*' menu select
+compinit
+
+# fzf
+if [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
+fi
+
+if [ -d $HOME/.dotfiles/zsh/plugins/zsh-auto-notify ]; then
+    source $HOME/.dotfiles/zsh/plugins/zsh-auto-notify/auto-notify.plugin.zsh
     AUTO_NOTIFY_IGNORE+=("docker" "mpv" "ncmpcpp" "vifm")
 fi
 
-# function clear-scrollback-buffer {
-#   # clear screen
-#   clear
-#   # clear buffer
-#   printf '\e[3J'
-#   # .reset-prompt: bypass the zsh-syntax-highlighting wrapper
-#   # https://github.com/sorin-ionescu/prezto/issues/1026
-#   # https://github.com/zsh-users/zsh-autosuggestions/issues/107#issuecomment-183824034
-#   # -R: redisplay the prompt to avoid old prompts being eaten up
-#   # https://github.com/Powerlevel9k/powerlevel9k/pull/1176#discussion_r299303453
-#   zle .reset-prompt && zle -R
-# }
-# 
-# zle -N clear-scrollback-buffer
-# bindkey '^L' clear-scrollback-buffer
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="bureau"
-
-if type ncal > /dev/null; then
-    alias cal="ncal -Mb"
-else
-    alias cal="cal -M"
+if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+    source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-alias vim="nvim"
-alias vr="gvim --remote"
-alias wo="workon"
-alias homeshick="source ~/.homesick/repos/homeshick/homeshick.sh; homeshick"
+if [ -d $HOME/.dotfiles/zsh/plugins/zsh-autosuggestions ]; then
+    source $HOME/.dotfiles/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 
-alias cls="tput reset"
-alias cpr="rsync --progress"
-alias gmc="export EDITOR='gvimremote'; mc"
+STARSHIP_INIT="$(starship init zsh --print-full-init 2>/dev/null)"
+if [ $? -eq 0 ]; then
+    eval $STARSHIP_INIT
+fi
 
-alias terraform="dotenv terraform"
-alias npm-exec='PATH=$(npm bin):$PATH'
+# zoxide (must be after prompt-plugin)
+ZOXIDE_INIT="$(zoxide init zsh 2>/dev/null)"
+if [ $? -eq 0 ]; then
+    eval $ZOXIDE_INIT
+fi
 
-PLAYER="mpv"
-# PLAYER=$(which mpv)
-# if [ -z $PLAYER ]; then
-#     PLAYER=$(which mplayer)
-# fi
-
-last_playlist() {
-    echo `ls -t ~/downloads/*.m3u | head -1`
-}
-ml() {
-    $PLAYER -profile=ml -playlist="$(last_playlist)" $*
-}
-
-alias mf=$PLAYER' --cache-secs=3 http://browse.rapthead.tk:8004'
-alias mcl=$PLAYER' --profile=ml --playlist=http://browse.rapthead.tk/m3u/clips/ --shuffle -fs'
-alias mcb=$PLAYER' --profile=ml --playlist=http://browse.rapthead.tk/m3u/clips/brass/ --shuffle -fs'
-alias feh='feh --scale-down'
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to disable command auto-correction.
-# DISABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git common-aliases rsync bgnotify ssh-agent)
-
-fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
-
-source $ZSH/oh-my-zsh.sh
-
-autoload select-word-style
-select-word-style shell
-
-# nvm
-# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-export ZSH_COMPDUMP=$ZSH/.cache/zcompdump-$HOST
-
-# jump
-eval "$(zoxide init zsh)"
-# source $HOME/.dotfiles/zsh-z/zsh-z.plugin.zsh
-
-zstyle ':completion:*' menu select
-
-# The next line updates PATH for Yandex Cloud CLI.
-if [ -f '/home/noname/yandex-cloud/path.bash.inc' ]; then source '/home/noname/yandex-cloud/path.bash.inc'; fi
-
-# The next line enables shell command completion for yc.
-if [ -f '/home/noname/yandex-cloud/completion.zsh.inc' ]; then source '/home/noname/yandex-cloud/completion.zsh.inc'; fi
+# export ZSH=$HOME/.dotfiles/ohmyzsh
+# plugins=()
+# source $ZSH/oh-my-zsh.sh

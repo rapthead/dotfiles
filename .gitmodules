@@ -18,5 +18,14 @@
 	path = zsh-z
 	url = https://github.com/agkozak/zsh-z
 [submodule "zsh-auto-notify"]
-	path = zsh-auto-notify
+	path = zsh/plugins/zsh-auto-notify
 	url = https://github.com/MichaelAquilina/zsh-auto-notify.git
+[submodule "alien"]
+	path = alien
+	url = https://github.com/eendroroy/alien.git
+[submodule "spaceship-prompt"]
+	path = spaceship-prompt
+	url = git@github.com:spaceship-prompt/spaceship-prompt.git
+[submodule "zsh/plugins/zsh-autosuggestions"]
+	path = zsh/plugins/zsh-autosuggestions
+	url = git@github.com:zsh-users/zsh-autosuggestions.git
