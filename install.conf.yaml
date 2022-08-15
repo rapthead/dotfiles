@@ -46,6 +46,9 @@
     ~/.config/polybar/config:
       path: polybar/config.ini
       create: true
+    ~/.config/rofi/config.rasi:
+      path: rofi/config.rasi
+      create: true
 
     ~/.zshrc:
       path: zsh/zshrc

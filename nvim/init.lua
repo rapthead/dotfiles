@@ -9,7 +9,14 @@ vim.opt.signcolumn = 'number'
 vim.opt.ignorecase = true -- игнорим кейс при поиске
 vim.opt.smartcase = true -- не игнорим кейс если в строке поиска есть апперкейс
 
+-- indent
 vim.opt.tabstop = 4
+vim.opt.expandtab = true
+vim.opt.smarttab = true -- установка вставки пробелов в начало строки вместо символа 'tabstop'
+vim.opt.shiftwidth = 4 -- установка размера таб-отступа
+vim.opt.shiftround = true
+vim.opt.autoindent = true -- автоматическая табуляция. если текущая строка начинается с TAB, то и следующая тоже
+
 vim.opt.list = true
 vim.opt.listchars = {
     tab = "> ",

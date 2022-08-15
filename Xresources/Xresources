@@ -2,8 +2,8 @@
 #include ".dotfiles/gruvbox-contrib/urxvt256/gruvbox-urxvt256.xresources"
 
 Xft.autohint: 0
-Xft.lcdfilter:  lcddefault
-Xft.hintstyle:  hintfull
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintfull
 Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
@@ -11,9 +11,9 @@ Xcursor.theme: Vanilla-DMZ
 !! ===========================================================================
 !!                               Urxvt
 !! ===========================================================================
-URxvt.font:               xft:DejaVu Sans Mono:style=Medium:size=10:antialias=true:hinting=slight
-URxvt.boldFont:           xft:DejaVu Sans Mono:style=Bold:size=10:antialias=true:hinting=slight
-URxvt.scrollBar:false
+URxvt.font:      xft:DejaVu Sans Mono:style=Medium:size=10:antialias=true:hinting=slight
+URxvt.boldFont:  xft:DejaVu Sans Mono:style=Bold:size=10:antialias=true:hinting=slight
+URxvt.scrollBar: false
 URxvt.saveLines: 10000
 URxvt.perl-ext-common: default,matcher
 URxvt.underlineURLs:true
@@ -22,7 +22,8 @@ URxvt.intensityStyles: false
 !! ===========================================================================
 !!                               rofi
 !! ===========================================================================
-rofi.theme:                          gruvbox-dark
+rofi.theme: gruvbox-dark
+rofi.font: mono 20
 ! rofi.font:                           Source Code Pro Medium 12
 !! ===========================================================================
 !!                               polybar

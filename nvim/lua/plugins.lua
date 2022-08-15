@@ -35,7 +35,7 @@ return require('packer').startup(function()
 
     use 'wsdjeg/vim-fetch'
     use 'tpope/vim-abolish' -- cases modifications
-    use "lukas-reineke/indent-blankline.nvim"
+    -- use 'lukas-reineke/indent-blankline.nvim'
 
     use {
         'numToStr/Comment.nvim',
@@ -44,25 +44,18 @@ return require('packer').startup(function()
         end
     }
 
-    -- use {
-    --     "folke/tokyonight.nvim",
-    --     config = function()
-    --         vim.cmd[[colorscheme tokyonight]]
-    --     end
-    -- }
-
     use {
-        "ellisonleao/gruvbox.nvim",
+        'ellisonleao/gruvbox.nvim',
         config = function()
             vim.cmd[[colorscheme gruvbox]]
         end
     }
 
     use {
-        "folke/trouble.nvim",
-        requires = "kyazdani42/nvim-web-devicons",
+        'folke/trouble.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
         config = function()
-            require("trouble").setup {
+            require('trouble').setup {
                 -- your configuration comes here
                 -- or leave it empty to use the default settings
                 -- refer to the configuration section below
@@ -87,7 +80,7 @@ return require('packer').startup(function()
                     lualine_c = {
                         {'filename', path = 1},
                         -- {lsp_status.status},
-                        -- {"require'lsp-status'.status()"},
+                        -- {'require'lsp-status'.status()'},
                     },
                 },
             }
@@ -101,7 +94,7 @@ return require('packer').startup(function()
             local nvim_lsp = require('lspconfig')
 			local lsp_status = require('lsp-status')
 
-			-- vim.lsp.handlers["textDocument/publishDiagnostics"] = local function location_handler(_, result, ctx, _)
+			-- vim.lsp.handlers['textDocument/publishDiagnostics'] = local function location_handler(_, result, ctx, _)
 
 
             -- Use an on_attach function to only map the following keys
@@ -150,7 +143,7 @@ return require('packer').startup(function()
 
             -- Use a loop to conveniently call 'setup' on multiple servers and
             -- map buffer local keybindings when the language server attaches
-            local servers = { "gopls", "tsserver" }
+            local servers = { 'gopls', 'tsserver' }
             for _, lsp in ipairs(servers) do
                 nvim_lsp[lsp].setup {
                     on_attach = on_attach,
@@ -165,13 +158,13 @@ return require('packer').startup(function()
             --   https://github.com/neovim/nvim-lspconfig/issues/115
             function goimports(wait_ms)
                 local params = vim.lsp.util.make_range_params()
-                params.context = {only = {"source.organizeImports"}}
-                local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
+                params.context = {only = {'source.organizeImports'}}
+                local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, wait_ms)
                 for _, res in pairs(result or {}) do
                     for _, r in pairs(res.result or {}) do
                         if r.edit then
                             -- note: text encoding param is required
-                            vim.lsp.util.apply_workspace_edit(r.edit, "utf-16")
+                            vim.lsp.util.apply_workspace_edit(r.edit, 'utf-16')
                         else
                             vim.lsp.buf.execute_command(r.command)
                         end
@@ -208,10 +201,10 @@ return require('packer').startup(function()
                 snippet = {
                     -- REQUIRED - you must specify a snippet engine
                     expand = function(args)
-                        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+                        vim.fn['vsnip#anonymous'](args.body) -- For `vsnip` users.
                         -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
                         -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-                        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+                        -- vim.fn['UltiSnips#Anon'](args.body) -- For `ultisnips` users.
                     end,
                 },
                 window = {
@@ -285,7 +278,7 @@ return require('packer').startup(function()
     -- use {'andymass/vim-matchup', event = 'VimEnter'}
 
     -- -- Load on a combination of conditions: specific filetypes or commands
-    -- -- Also run code after load (see the "config" key)
+    -- -- Also run code after load (see the 'config' key)
     -- use {
     --   'w0rp/ale',
     --   ft = {'sh', 'zsh', 'bash', 'c', 'cpp', 'cmake', 'html', 'markdown', 'racket', 'vim', 'tex'},
