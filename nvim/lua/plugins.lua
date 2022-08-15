@@ -15,16 +15,31 @@ return require('packer').startup(function()
     use 'wbthomason/packer.nvim'
 
     use 'nvim-treesitter/nvim-treesitter'
+    use 'nanotee/zoxide.vim'
     use {
         'nvim-telescope/telescope.nvim',
         requires = {
             {'nvim-lua/plenary.nvim'},
             {'BurntSushi/ripgrep'},
+            -- {'jvgrootveld/telescope-zoxide'},
             {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
         },
         config = function()
             require('telescope').setup()
             require('telescope').load_extension('fzf')
+
+            -- require('telescope').load_extension('zoxide')
+            -- require('telescope._extensions.zoxide.config').setup({
+            --     mappings = {
+            --         default = {
+            --             action = function(selection)
+            --                 vim.cmd("tcd " .. selection.path)
+            --             end,
+            --         },
+            --     }
+            -- })
+
+            -- vim.keymap.set('n', '<Leader>cd', function() require'telescope'.extensions.zoxide.list() end, { noremap = true, silent = true })
 
             vim.keymap.set('n', '<C-P>', function() require('telescope.builtin').git_files() end, { noremap = true, silent = true })
             vim.keymap.set('n', '<C-B>', function() require('telescope.builtin').buffers() end, { noremap = true, silent = true })
@@ -67,12 +82,19 @@ return require('packer').startup(function()
 		'nvim-lualine/lualine.nvim',
 		requires = {'kyazdani42/nvim-web-devicons', opt = true},
 		config = function()
-		    -- lsp_status = require('lsp-status')
+			local section_separators, component_separators
+			if true then
+				section_separators = {left = '', right = ''}
+				component_separators = {left = '', right = ''}
+			else
+				section_separators = {left = '', right = ''}
+				component_separators = {left = '', right = ''}
+			end
             require('lualine').setup {
                 options = {
                     theme = 'gruvbox',
-                    section_separators = {left = '', right = ''},
-                    component_separators = {left = '', right = ''},
+                    section_separators = section_separators,
+                    component_separators = component_separators,
                     globalstatus = true,
                 },
                 extensions = {'quickfix'},

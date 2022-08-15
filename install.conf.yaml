@@ -50,6 +50,8 @@
       path: rofi/config.rasi
       create: true
 
+    ~/.config/fish:
+      path: fish
     ~/.zshrc:
       path: zsh/zshrc
     ~/.profile:
