@@ -155,11 +155,11 @@ return require('packer').startup(function()
                 vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
                 vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, opts)
                 vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-                vim.keymap.set('n', '<space>e', vim.lsp.diagnostic.show_line_diagnostics, opts)
                 vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, opts)
                 vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, opts)
-                vim.keymap.set('n', '<space>q', vim.lsp.diagnostic.set_loclist, opts)
                 vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, opts)
+                -- vim.keymap.set('n', '<space>e', vim.lsp.diagnostic.show_line_diagnostics, opts)
+                -- vim.keymap.set('n', '<space>q', vim.lsp.diagnostic.set_loclist, opts)
                 -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
             end
 
