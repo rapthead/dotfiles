@@ -79,17 +79,17 @@ return require('packer').startup(function()
     }
 
     use {
-		'nvim-lualine/lualine.nvim',
-		requires = {'kyazdani42/nvim-web-devicons', opt = true},
-		config = function()
-			local section_separators, component_separators
-			if true then
-				section_separators = {left = '', right = ''}
-				component_separators = {left = '', right = ''}
-			else
-				section_separators = {left = '', right = ''}
-				component_separators = {left = '', right = ''}
-			end
+        'nvim-lualine/lualine.nvim',
+        requires = {'kyazdani42/nvim-web-devicons', opt = true},
+        config = function()
+            local section_separators, component_separators
+            if true then
+                section_separators = {left = '', right = ''}
+                component_separators = {left = '', right = ''}
+            else
+                section_separators = {left = '', right = ''}
+                component_separators = {left = '', right = ''}
+            end
             require('lualine').setup {
                 options = {
                     theme = 'gruvbox',
@@ -106,7 +106,7 @@ return require('packer').startup(function()
                     },
                 },
             }
-		end
+        end
     }
 
     use {
@@ -114,38 +114,38 @@ return require('packer').startup(function()
         requires = 'nvim-lua/lsp-status.nvim',
         config = function()
             local nvim_lsp = require('lspconfig')
-			local lsp_status = require('lsp-status')
+            local lsp_status = require('lsp-status')
 
-			-- vim.lsp.handlers['textDocument/publishDiagnostics'] = local function location_handler(_, result, ctx, _)
+            -- vim.lsp.handlers['textDocument/publishDiagnostics'] = local function location_handler(_, result, ctx, _)
 
 
             -- Use an on_attach function to only map the following keys
             -- after the language server attaches to the current buffer
             local on_attach = function(client, bufnr)
-				lsp_status.on_attach(client, bufnr)
+                lsp_status.on_attach(client, bufnr)
 
                 --Enable completion triggered by <c-x><c-o>
-				vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+                vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
                 -- Mappings.
                 local opts = { noremap=true, silent=true, buffer = bufnr }
 
-				local function inPrevWindowHandler(err, result, ctx, config)
-					vim.api.nvim_command('wincmd p')
-					vim.lsp.handlers[ctx.method](err, result, ctx, config)
-				end
+                local function inPrevWindowHandler(err, result, ctx, config)
+                    vim.api.nvim_command('wincmd p')
+                    vim.lsp.handlers[ctx.method](err, result, ctx, config)
+                end
 
                 -- See `:help vim.lsp.*` for documentation on any of the below functions
                 vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
                 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
                 vim.keymap.set('n', 'gv', function()
-				    vim.lsp.buf_request(
-				        0,
-				        'textDocument/definition',
-				        vim.lsp.util.make_position_params(),
-						inPrevWindowHandler
-				    )
-				end, opts)
+                    vim.lsp.buf_request(
+                        0,
+                        'textDocument/definition',
+                        vim.lsp.util.make_position_params(),
+                        inPrevWindowHandler
+                    )
+                end, opts)
                 vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
                 vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
                 vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
@@ -169,7 +169,7 @@ return require('packer').startup(function()
             for _, lsp in ipairs(servers) do
                 nvim_lsp[lsp].setup {
                     on_attach = on_attach,
-					capabilities = lsp_status.capabilities,
+                    capabilities = lsp_status.capabilities,
                     flags = {
                         debounce_text_changes = 150,
                     }
@@ -280,14 +280,16 @@ return require('packer').startup(function()
         end,
     }
 
-	use {
-		'phaazon/hop.nvim',
-		branch = 'v1', -- optional but strongly recommended
-		config = function()
-			-- you can configure Hop the way you like here; see :h hop-config
-			require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-		end
-	}
+    use {
+        'phaazon/hop.nvim',
+        branch = 'v1', -- optional but strongly recommended
+        config = function()
+            -- you can configure Hop the way you like here; see :h hop-config
+            require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+        end
+    }
+
+    -- use 'ray-x/go.nvim' -- TODO: разобраться и начать использовать
 
     -- -- Simple plugins can be specified as strings
     -- use '9mm/vim-closer'
