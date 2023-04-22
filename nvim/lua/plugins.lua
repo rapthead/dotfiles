@@ -17,6 +17,18 @@ return require('packer').startup(function()
     use 'nvim-treesitter/nvim-treesitter'
     use 'nanotee/zoxide.vim'
     use {
+        'takac/vim-hardtime',
+        config = function()
+            -- vim.g.hardtime_default_on = 1
+        end
+    }
+    use {
+        'ggandor/leap.nvim',
+        config = function()
+            require('leap').add_default_mappings()
+        end
+    }
+    use {
         'nvim-telescope/telescope.nvim',
         requires = {
             {'nvim-lua/plenary.nvim'},
@@ -79,17 +91,17 @@ return require('packer').startup(function()
     }
 
     use {
-		'nvim-lualine/lualine.nvim',
-		requires = {'kyazdani42/nvim-web-devicons', opt = true},
-		config = function()
-			local section_separators, component_separators
-			if true then
-				section_separators = {left = '', right = ''}
-				component_separators = {left = '', right = ''}
-			else
-				section_separators = {left = '', right = ''}
-				component_separators = {left = '', right = ''}
-			end
+        'nvim-lualine/lualine.nvim',
+        requires = {'kyazdani42/nvim-web-devicons', opt = true},
+        config = function()
+            local section_separators, component_separators
+            if true then
+                section_separators = {left = '', right = ''}
+                component_separators = {left = '', right = ''}
+            else
+                section_separators = {left = '', right = ''}
+                component_separators = {left = '', right = ''}
+            end
             require('lualine').setup {
                 options = {
                     theme = 'gruvbox',
@@ -106,100 +118,91 @@ return require('packer').startup(function()
                     },
                 },
             }
-		end
+        end
     }
 
     use {
         'neovim/nvim-lspconfig',
+        -- version = 'v0.1.3',
         requires = 'nvim-lua/lsp-status.nvim',
         config = function()
-            local nvim_lsp = require('lspconfig')
-			local lsp_status = require('lsp-status')
+            -- local nvim_lsp = require('lspconfig')
+            -- local lsp_status = require('lsp-status')
 
-			-- vim.lsp.handlers['textDocument/publishDiagnostics'] = local function location_handler(_, result, ctx, _)
+            -- -- vim.lsp.handlers['textDocument/publishDiagnostics'] = local function location_handler(_, result, ctx, _)
 
 
-            -- Use an on_attach function to only map the following keys
-            -- after the language server attaches to the current buffer
-            local on_attach = function(client, bufnr)
-				lsp_status.on_attach(client, bufnr)
+            -- -- Use an on_attach function to only map the following keys
+            -- -- after the language server attaches to the current buffer
+            -- local on_attach = function(client, bufnr)
+            --     lsp_status.on_attach(client, bufnr)
 
-                --Enable completion triggered by <c-x><c-o>
-				vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+            --     --Enable completion triggered by <c-x><c-o>
+            --     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+            -- end
 
-                -- Mappings.
-                local opts = { noremap=true, silent=true, buffer = bufnr }
+            -- -- Use a loop to conveniently call 'setup' on multiple servers and
+            -- -- map buffer local keybindings when the language server attaches
+            -- local servers = { 'gopls', 'tsserver' }
+            -- for _, lsp in ipairs(servers) do
+            --     nvim_lsp[lsp].setup {
+            --         on_attach = on_attach,
+            --         capabilities = lsp_status.capabilities,
+            --         flags = {
+            --             debounce_text_changes = 150,
+            --         }
+            --     }
+            -- end
 
-				local function inPrevWindowHandler(err, result, ctx, config)
-					vim.api.nvim_command('wincmd p')
-					vim.lsp.handlers[ctx.method](err, result, ctx, config)
-				end
+            -- -- following example solution from github issue:
+            -- --   https://github.com/neovim/nvim-lspconfig/issues/115
+            -- function goimports(wait_ms)
+            --     local params = vim.lsp.util.make_range_params()
+            --     params.context = {only = {'source.organizeImports'}}
+            --     local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, wait_ms)
+            --     for _, res in pairs(result or {}) do
+            --         for _, r in pairs(res.result or {}) do
+            --             if r.edit then
+            --                 -- note: text encoding param is required
+            --                 vim.lsp.util.apply_workspace_edit(r.edit, 'utf-16')
+            --             else
+            --                 vim.lsp.buf.execute_command(r.command)
+            --             end
+            --         end
+            --     end
+            -- end
 
-                -- See `:help vim.lsp.*` for documentation on any of the below functions
-                vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-                vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-                vim.keymap.set('n', 'gv', function()
-				    vim.lsp.buf_request(
-				        0,
-				        'textDocument/definition',
-				        vim.lsp.util.make_position_params(),
-						inPrevWindowHandler
-				    )
-				end, opts)
-                vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-                vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-                vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-                vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-                vim.keymap.set('n', '<space>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
-                vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-                vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-                vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, opts)
-                vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-                vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, opts)
-                vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, opts)
-                vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, opts)
-                -- vim.keymap.set('n', '<space>e', vim.lsp.diagnostic.show_line_diagnostics, opts)
-                -- vim.keymap.set('n', '<space>q', vim.lsp.diagnostic.set_loclist, opts)
-                -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-            end
+            lspconfig = require "lspconfig"
+            util = require "lspconfig/util"
 
-            -- Use a loop to conveniently call 'setup' on multiple servers and
-            -- map buffer local keybindings when the language server attaches
-            local servers = { 'gopls', 'tsserver' }
-            for _, lsp in ipairs(servers) do
-                nvim_lsp[lsp].setup {
-                    on_attach = on_attach,
-					capabilities = lsp_status.capabilities,
-                    flags = {
-                        debounce_text_changes = 150,
-                    }
-                }
-            end
+            lspconfig.gopls.setup {
+                cmd = {"gopls", "serve"},
+                filetypes = {"go", "gomod"},
+                root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+                settings = {
+                    gopls = {
+                        analyses = {
+                            unusedparams = true,
+                        },
+                        staticcheck = true,
+                    },
+                },
+            }
 
-            -- following example solution from github issue:
-            --   https://github.com/neovim/nvim-lspconfig/issues/115
-            function goimports(wait_ms)
-                local params = vim.lsp.util.make_range_params()
-                params.context = {only = {'source.organizeImports'}}
-                local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, wait_ms)
-                for _, res in pairs(result or {}) do
-                    for _, r in pairs(res.result or {}) do
-                        if r.edit then
-                            -- note: text encoding param is required
-                            vim.lsp.util.apply_workspace_edit(r.edit, 'utf-16')
-                        else
-                            vim.lsp.buf.execute_command(r.command)
-                        end
-                    end
-                end
-            end
-
-            vim.cmd [[
-                augroup GO_LSP
-                autocmd!
-                autocmd BufWritePre *.go :silent! lua vim.lsp.buf.formatting()
-                augroup END
-            ]]
+            local au_go_lsp_group = vim.api.nvim_create_augroup('GO_LSP', {
+                clear = false
+            })
+            vim.api.nvim_create_autocmd('BufWritePre', {
+                pattern = '*.go',
+                group = au_go_lsp_group,
+                callback = function()
+                    vim.lsp.buf.format({ async = false })
+                    -- vim.lsp.buf.code_action({
+                    --     context = { only = { 'source.organizeImports' } },
+                    --     apply = true,
+                    -- })
+                end,
+            })
         end
     }
 
@@ -280,14 +283,14 @@ return require('packer').startup(function()
         end,
     }
 
-	use {
-		'phaazon/hop.nvim',
-		branch = 'v1', -- optional but strongly recommended
-		config = function()
-			-- you can configure Hop the way you like here; see :h hop-config
-			require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-		end
-	}
+    use {
+        'phaazon/hop.nvim',
+        branch = 'v1', -- optional but strongly recommended
+        config = function()
+            -- you can configure Hop the way you like here; see :h hop-config
+            require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+        end
+    }
 
     -- -- Simple plugins can be specified as strings
     -- use '9mm/vim-closer'
