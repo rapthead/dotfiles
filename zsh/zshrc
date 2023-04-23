@@ -46,13 +46,17 @@ if [ -d $HOME/.dotfiles/zsh/plugins/zsh-auto-notify ]; then
     AUTO_NOTIFY_IGNORE+=("docker" "mpv" "ncmpcpp" "vifm")
 fi
 
-if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-    source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [ -d $HOME/.dotfiles/zsh/plugins/zsh-syntax-highlighting ]; then
+    source $HOME/.dotfiles/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 fi
 
 if [ -d $HOME/.dotfiles/zsh/plugins/zsh-autosuggestions ]; then
-    source $HOME/.dotfiles/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+    source $HOME/.dotfiles/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 fi
+
+# if [ -d $HOME/.dotfiles/zsh/plugins/zsh-vi-mode ]; then
+#     source $HOME/.dotfiles/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+# fi
 
 STARSHIP_INIT="$(starship init zsh --print-full-init 2>/dev/null)"
 if [ $? -eq 0 ]; then
