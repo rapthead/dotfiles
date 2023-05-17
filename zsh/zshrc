@@ -34,6 +34,7 @@ setopt share_history          # share command history data
 
 export ZSH_COMPDUMP=$ZSH/.cache/zcompdump-$HOST
 zstyle ':completion:*' menu select
+autoload -Uz compinit
 compinit
 
 # fzf
@@ -41,7 +42,7 @@ if [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
     source /usr/share/doc/fzf/examples/key-bindings.zsh
 fi
 
-if [ -d $HOME/.dotfiles/zsh/plugins/zsh-auto-notify ]; then
+if [ -d $HOME/.dotfiles/zsh/plugins/zsh-auto-notify ] && [ -x "$(command -v notify-send)" ]; then
     source $HOME/.dotfiles/zsh/plugins/zsh-auto-notify/auto-notify.plugin.zsh
     AUTO_NOTIFY_IGNORE+=("docker" "mpv" "ncmpcpp" "vifm")
 fi
