@@ -1,2 +1,20 @@
 #!/bin/bash
-mpv -profile=ml -playlist="`ls -t ~/downloads/*.m3u | head -1`" $*
+command=$1
+case $command in
+    "c" )
+        args=(--playlist=http://browse.rapthead.tk/m3u/clips/ --shuffle ${*:1})
+        ;;
+    "cr" )
+        args=(--playlist=http://browse.rapthead.tk/m3u/clips/resized/ --shuffle ${*:1})
+        ;;
+    "b" )
+        args=(--playlist=http://browse.rapthead.tk/m3u/clips/brass/ --shuffle ${*:1})
+        ;;
+    "br" )
+        args=(--playlist=http://browse.rapthead.tk/m3u/clips/resized/brass/ --shuffle ${*:1})
+        ;;
+    * )
+        args=("--playlist=`ls -t ~/downloads/*.m3u | head -1`" $*)
+        ;;
+esac
+mpv --profile=ml "${args[@]}"

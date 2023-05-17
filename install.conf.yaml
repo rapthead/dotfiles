@@ -46,9 +46,16 @@
     ~/.config/polybar/config:
       path: polybar/config.ini
       create: true
+    ~/.config/rofi/config.rasi:
+      path: rofi/config.rasi
+      create: true
 
-    ~/.config/fish:
-      path: fish
+    ~/.config/starship.toml:
+      path: starship/starship.toml
+      create: true
+    ~/.config/alacritty/alacritty.yml:
+      path: alacritty/alacritty.yml
+      create: true
     ~/.zshrc:
       path: zsh/zshrc
     ~/.profile:

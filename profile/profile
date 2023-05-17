@@ -26,14 +26,15 @@ if [ -d "$HOME/.cargo/bin/" ] ; then
 fi
 
 export XDG_CONFIG_HOME="$HOME/.config/"
-export TERMINAL=urxvtcd
+export TERMINAL=alacritty
 export EDITOR=nvim
 export PATH=$HOME/.local/bin:/usr/local/bin:$PATH
-export PROJECT_HOME=$HOME/doc/projects
+export PROJECT_HOME=$HOME/docs/projects
 export VDPAU_DRIVER=va_gl
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 export SSH_ASKPASS=""
 
-# # export LC_ALL=en_US.utf8
-# # export LANG=en_US.utf8
-# # export LANGUAGE=en
+export LC_ALL=en_US.utf8
+export LANG=en_US.utf8
+export LANGUAGE=en
+# . "$HOME/.cargo/env"

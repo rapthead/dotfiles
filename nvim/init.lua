@@ -30,9 +30,10 @@ vim.opt.listchars = {
 -- vim.opt.undodir =  os.getenv( "HOME" ) .. "/.cache/nvim/undos"
 vim.opt.laststatus = 3
 
+-- default for neovim >= 0.8
 -- https://gpanders.com/blog/whats-new-in-neovim-0-7#:~:text=Use%20only%20filetype.lua%20and%20do%20not%20load%20filetype.vim%20at%20all
-vim.g.do_filetype_lua = 1
-vim.g.did_load_filetypes = 0
+-- vim.g.do_filetype_lua = 1
+-- vim.g.did_load_filetypes = 0
 
 vim.g.netrw_browse_split = 4
 vim.g.netrw_liststyle = 3

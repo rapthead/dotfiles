@@ -9,6 +9,15 @@ vim.cmd([[
     autocmd BufWritePost plugins.lua source <afile> | PackerCompile
   augroup end
 ]])
+-- local packer_user_config_group = vim.api.nvim_create_augroup('packer_user_config', { clear = false })
+-- vim.api.nvim_create_autocmd(
+--   'BufWritePost',
+--   {
+--     group = packer_user_config_group,
+--     pattern = 'plugins.lua',
+--     command = 'source | PackerCompile'
+--   }
+-- )
 
 return require('packer').startup(function()
     -- Packer can manage itself
@@ -17,18 +26,51 @@ return require('packer').startup(function()
     use 'nvim-treesitter/nvim-treesitter'
     use 'nanotee/zoxide.vim'
     use {
+        'takac/vim-hardtime',
+        config = function()
+            -- vim.g.hardtime_default_on = 1
+        end
+    }
+    -- use {
+    --     'ggandor/leap.nvim',
+    --     config = function()
+    --         require('leap').add_default_mappings()
+    --     end
+    -- }
+    use {
         'nvim-telescope/telescope.nvim',
         requires = {
             {'nvim-lua/plenary.nvim'},
             {'BurntSushi/ripgrep'},
-            -- {'jvgrootveld/telescope-zoxide'},
-            {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
+            {'jvgrootveld/telescope-zoxide'},
+            {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
         },
         config = function()
-            require('telescope').setup()
+            local z_utils = require("telescope._extensions.zoxide.utils")
+            require('telescope').setup{
+                extensions = {
+                    zoxide = {
+                        prompt_title = "[ set the directory for the current tab ]",
+                        mappings = {
+                            default = {
+                                after_action = function(selection)
+                                    vim.cmd.tcd(selection.path)
+                                end
+                            },
+                            -- ["<C-s>"] = {
+                            --     before_action = function(selection) print("before C-s") end,
+                            --     action = function(selection)
+                            --         vim.cmd.edit(selection.path)
+                            --     end
+                            -- },
+                            -- ["<C-q>"] = { action = z_utils.create_basic_command("split") },
+                        },
+                    }
+                }
+            }
+            require("telescope").load_extension('zoxide')
             require('telescope').load_extension('fzf')
 
-            -- require('telescope').load_extension('zoxide')
             -- require('telescope._extensions.zoxide.config').setup({
             --     mappings = {
             --         default = {
@@ -39,18 +81,44 @@ return require('packer').startup(function()
             --     }
             -- })
 
-            -- vim.keymap.set('n', '<Leader>cd', function() require'telescope'.extensions.zoxide.list() end, { noremap = true, silent = true })
+            vim.keymap.set('n', '<Leader>cd', require("telescope").extensions.zoxide.list, { noremap = true, silent = false })
 
-            vim.keymap.set('n', '<C-P>', function() require('telescope.builtin').git_files() end, { noremap = true, silent = true })
-            vim.keymap.set('n', '<C-B>', function() require('telescope.builtin').buffers() end, { noremap = true, silent = true })
-            vim.keymap.set('n', '<Leader>h', function() require('telescope.builtin').command_history() end, { noremap = true, silent = true })
-            vim.keymap.set('n', '<Leader>d', function() require('telescope.builtin').lsp_definitions() end, { noremap = true, silent = true })
+            vim.keymap.set('n', '<C-P>', require('telescope.builtin').git_files, { noremap = true, silent = true })
+            vim.keymap.set('n', '<C-B>', require('telescope.builtin').buffers, { noremap = true, silent = true })
+            vim.keymap.set('n', '<Leader>h', require('telescope.builtin').command_history, { noremap = true, silent = true })
+            vim.keymap.set('n', '<Leader>d', require('telescope.builtin').lsp_definitions, { noremap = true, silent = true })
+        end
+    }
+
+    use {
+        'ahmedkhalf/project.nvim',
+        requires = {
+            {'nvim-telescope/telescope.nvim'},
+            {'nvim-tree/nvim-tree.lua'},
+        },
+        config = function()
+            require("nvim-tree").setup({
+                sync_root_with_cwd = true,
+                respect_buf_cwd = true,
+                update_focused_file = {
+                    enable = true,
+                    update_root = true
+                },
+            })
+            require("project_nvim").setup {
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+                scope_chdir = 'tab',
+            }
+            require('telescope').load_extension('projects')
+            vim.keymap.set('n', '<Leader>p', require("telescope").extensions.projects.projects, { noremap = true, silent = false })
         end
     }
 
     use 'wsdjeg/vim-fetch'
     use 'tpope/vim-abolish' -- cases modifications
-    use "lukas-reineke/indent-blankline.nvim"
+    -- use 'lukas-reineke/indent-blankline.nvim'
 
     use {
         'numToStr/Comment.nvim',
@@ -59,25 +127,18 @@ return require('packer').startup(function()
         end
     }
 
-    -- use {
-    --     "folke/tokyonight.nvim",
-    --     config = function()
-    --         vim.cmd[[colorscheme tokyonight]]
-    --     end
-    -- }
-
     use {
-        "ellisonleao/gruvbox.nvim",
+        'ellisonleao/gruvbox.nvim',
         config = function()
-            vim.cmd[[colorscheme gruvbox]]
+            vim.cmd.colorscheme('gruvbox')
         end
     }
 
     use {
-        "folke/trouble.nvim",
-        requires = "kyazdani42/nvim-web-devicons",
+        'folke/trouble.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
         config = function()
-            require("trouble").setup {
+            require('trouble').setup {
                 -- your configuration comes here
                 -- or leave it empty to use the default settings
                 -- refer to the configuration section below
@@ -86,17 +147,17 @@ return require('packer').startup(function()
     }
 
     use {
-		'nvim-lualine/lualine.nvim',
-		requires = {'kyazdani42/nvim-web-devicons', opt = true},
-		config = function()
-			local section_separators, component_separators
-			if true then
-				section_separators = {left = '', right = ''}
-				component_separators = {left = '', right = ''}
-			else
-				section_separators = {left = '', right = ''}
-				component_separators = {left = '', right = ''}
-			end
+        'nvim-lualine/lualine.nvim',
+        requires = {'kyazdani42/nvim-web-devicons', opt = true},
+        config = function()
+            local section_separators, component_separators
+            if false then
+                section_separators = {left = '', right = ''}
+                component_separators = {left = '', right = ''}
+            else
+                section_separators = {left = '', right = ''}
+                component_separators = {left = '', right = ''}
+            end
             require('lualine').setup {
                 options = {
                     theme = 'gruvbox',
@@ -109,104 +170,49 @@ return require('packer').startup(function()
                     lualine_c = {
                         {'filename', path = 1},
                         -- {lsp_status.status},
-                        -- {"require'lsp-status'.status()"},
+                        -- {'require'lsp-status'.status()'},
                     },
                 },
             }
-		end
+        end
     }
 
     use {
         'neovim/nvim-lspconfig',
+        -- version = 'v0.1.3',
         requires = 'nvim-lua/lsp-status.nvim',
         config = function()
-            local nvim_lsp = require('lspconfig')
-			local lsp_status = require('lsp-status')
+            lspconfig = require "lspconfig"
+            util = require "lspconfig/util"
 
-			-- vim.lsp.handlers["textDocument/publishDiagnostics"] = local function location_handler(_, result, ctx, _)
+            lspconfig.gopls.setup {
+                cmd = {"gopls", "serve"},
+                filetypes = {"go", "gomod"},
+                root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+                settings = {
+                    gopls = {
+                        analyses = {
+                            unusedparams = true,
+                        },
+                        staticcheck = true,
+                    },
+                },
+            }
 
-
-            -- Use an on_attach function to only map the following keys
-            -- after the language server attaches to the current buffer
-            local on_attach = function(client, bufnr)
-				lsp_status.on_attach(client, bufnr)
-
-                --Enable completion triggered by <c-x><c-o>
-				vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-                -- Mappings.
-                local opts = { noremap=true, silent=true, buffer = bufnr }
-
-				local function inPrevWindowHandler(err, result, ctx, config)
-					vim.api.nvim_command('wincmd p')
-					vim.lsp.handlers[ctx.method](err, result, ctx, config)
-				end
-
-                -- See `:help vim.lsp.*` for documentation on any of the below functions
-                vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-                vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-                vim.keymap.set('n', 'gv', function()
-				    vim.lsp.buf_request(
-				        0,
-				        'textDocument/definition',
-				        vim.lsp.util.make_position_params(),
-						inPrevWindowHandler
-				    )
-				end, opts)
-                vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-                vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-                vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-                vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-                vim.keymap.set('n', '<space>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
-                vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-                vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-                vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, opts)
-                vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-                vim.keymap.set('n', '<space>e', vim.lsp.diagnostic.show_line_diagnostics, opts)
-                vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, opts)
-                vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, opts)
-                vim.keymap.set('n', '<space>q', vim.lsp.diagnostic.set_loclist, opts)
-                vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, opts)
-                -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-            end
-
-            -- Use a loop to conveniently call 'setup' on multiple servers and
-            -- map buffer local keybindings when the language server attaches
-            local servers = { "gopls", "tsserver" }
-            for _, lsp in ipairs(servers) do
-                nvim_lsp[lsp].setup {
-                    on_attach = on_attach,
-					capabilities = lsp_status.capabilities,
-                    flags = {
-                        debounce_text_changes = 150,
-                    }
-                }
-            end
-
-            -- following example solution from github issue:
-            --   https://github.com/neovim/nvim-lspconfig/issues/115
-            function goimports(wait_ms)
-                local params = vim.lsp.util.make_range_params()
-                params.context = {only = {"source.organizeImports"}}
-                local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
-                for _, res in pairs(result or {}) do
-                    for _, r in pairs(res.result or {}) do
-                        if r.edit then
-                            -- note: text encoding param is required
-                            vim.lsp.util.apply_workspace_edit(r.edit, "utf-16")
-                        else
-                            vim.lsp.buf.execute_command(r.command)
-                        end
-                    end
-                end
-            end
-
-            vim.cmd [[
-                augroup GO_LSP
-                autocmd!
-                autocmd BufWritePre *.go :silent! lua vim.lsp.buf.formatting()
-                augroup END
-            ]]
+            local au_go_lsp_group = vim.api.nvim_create_augroup('GO_LSP', {
+                clear = false
+            })
+            vim.api.nvim_create_autocmd('BufWritePre', {
+                pattern = '*.go',
+                group = au_go_lsp_group,
+                callback = function()
+                    vim.lsp.buf.format({ async = false })
+                    -- vim.lsp.buf.code_action({
+                    --     context = { only = { 'source.organizeImports' } },
+                    --     apply = true,
+                    -- })
+                end,
+            })
         end
     }
 
@@ -230,10 +236,10 @@ return require('packer').startup(function()
                 snippet = {
                     -- REQUIRED - you must specify a snippet engine
                     expand = function(args)
-                        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+                        vim.fn['vsnip#anonymous'](args.body) -- For `vsnip` users.
                         -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
                         -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-                        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+                        -- vim.fn['UltiSnips#Anon'](args.body) -- For `ultisnips` users.
                     end,
                 },
                 window = {
@@ -287,78 +293,4 @@ return require('packer').startup(function()
         end,
     }
 
-	use {
-		'phaazon/hop.nvim',
-		branch = 'v1', -- optional but strongly recommended
-		config = function()
-			-- you can configure Hop the way you like here; see :h hop-config
-			require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-		end
-	}
-
-    -- -- Simple plugins can be specified as strings
-    -- use '9mm/vim-closer'
-
-    -- -- Lazy loading:
-    -- -- Load on specific commands
-    -- use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
-
-    -- -- Load on an autocommand event
-    -- use {'andymass/vim-matchup', event = 'VimEnter'}
-
-    -- -- Load on a combination of conditions: specific filetypes or commands
-    -- -- Also run code after load (see the "config" key)
-    -- use {
-    --   'w0rp/ale',
-    --   ft = {'sh', 'zsh', 'bash', 'c', 'cpp', 'cmake', 'html', 'markdown', 'racket', 'vim', 'tex'},
-    --   cmd = 'ALEEnable',
-    --   config = 'vim.cmd[[ALEEnable]]'
-    -- }
-
-    -- -- Plugins can have dependencies on other plugins
-    -- use {
-    --   'haorenW1025/completion-nvim',
-    --   opt = true,
-    --   requires = {{'hrsh7th/vim-vsnip', opt = true}, {'hrsh7th/vim-vsnip-integ', opt = true}}
-    -- }
-
-    -- -- Plugins can also depend on rocks from luarocks.org:
-    -- use {
-    --   'my/supercoolplugin',
-    --   rocks = {'lpeg', {'lua-cjson', version = '2.1.0'}}
-    -- }
-
-    -- -- You can specify rocks in isolation
-    -- use_rocks 'penlight'
-    -- use_rocks {'lua-resty-http', 'lpeg'}
-
-    -- -- Local plugins can be included
-    -- use '~/projects/personal/hover.nvim'
-
-    -- -- Plugins can have post-install/update hooks
-    -- use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
-
-    -- -- Post-install/update hook with neovim command
-    -- use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-
-    -- -- Post-install/update hook with call of vimscript function with argument
-    -- use { 'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
-
-    -- -- Use specific branch, dependency and run lua file after load
-    -- use {
-    --   'glepnir/galaxyline.nvim', branch = 'main', config = function() require'statusline' end,
-    --   requires = {'kyazdani42/nvim-web-devicons'}
-    -- }
-
-    -- -- Use dependency and run lua function after load
-    -- use {
-    --   'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' },
-    --   config = function() require('gitsigns').setup() end
-    -- }
-
-    -- -- You can specify multiple plugins in a single call
-    -- use {'tjdevries/colorbuddy.vim', {'nvim-treesitter/nvim-treesitter', opt = true}}
-
-    -- -- You can alias plugin names
-    -- use {'dracula/vim', as = 'dracula'}
 end)
