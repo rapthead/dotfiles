@@ -4,6 +4,8 @@ volume-max = 500
 no-ytdl
 no-audio-display
 profile = ml,tv
+script-opts=ytdl_hook-ytdl_path=yt-dlp
+vo=drm
 
 [raspberrypi]
 profile = rpi-hw
