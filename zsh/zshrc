@@ -1,3 +1,5 @@
+source $HOME/.profile
+
 export KEYTIMEOUT=1 # decrease entering normal mode delay https://www.johnhawthorn.com/2012/09/vi-escape-delays/
 bindkey -v
 
