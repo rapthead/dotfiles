@@ -37,8 +37,7 @@ if [ -z ${PROFILE_PROCESSED+x} ]; then
     export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
     export SSH_ASKPASS=""
 
-    export LC_ALL=en_US.utf8
-    export LANG=en_US.utf8
+    export LC_ALL=ru_RU.UTF-8
+    export LANG=ru_RU.UTF-8
     export LANGUAGE=en
-    # . "$HOME/.cargo/env"
 fi
