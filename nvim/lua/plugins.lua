@@ -17,6 +17,18 @@ return require('packer').startup(function()
     use 'nvim-treesitter/nvim-treesitter'
     use 'nanotee/zoxide.vim'
     use {
+        'takac/vim-hardtime',
+        config = function()
+            -- vim.g.hardtime_default_on = 1
+        end
+    }
+    use {
+        'ggandor/leap.nvim',
+        config = function()
+            require('leap').add_default_mappings()
+        end
+    }
+    use {
         'nvim-telescope/telescope.nvim',
         requires = {
             {'nvim-lua/plenary.nvim'},
@@ -111,6 +123,7 @@ return require('packer').startup(function()
 
     use {
         'neovim/nvim-lspconfig',
+        version = 'v0.1.3',
         requires = 'nvim-lua/lsp-status.nvim',
         config = function()
             local nvim_lsp = require('lspconfig')

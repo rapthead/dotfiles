@@ -6,3 +6,4 @@ Xft.dpi: 192
 rofi.dpi: 192
 rofi.font: mono 20
 polybar.dpi: 192
+XTerm*faceSize: 20
