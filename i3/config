@@ -238,7 +238,7 @@ bindsym $mod+g [instance="^google-chrome|chromium-browser$"] focus
 bindsym $mod+n [instance="^nvim-qt$"] focus
 bindsym $mod+t [instance="^Telegram$"] focus
 
-assign [instance="mpvTV"] "0:`"
+# assign [instance="mpvTV"] "0:`"
 for_window [instance="^google-chrome|chromium-browser$"] border none, background "<span foreground='red'>%title</span>"
 for_window [instance="^ncmpcpp|alsamixer|tty-clock$"] move scratchpad, scratchpad show
 
