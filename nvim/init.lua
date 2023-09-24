@@ -41,6 +41,10 @@ vim.g.netrw_winsize = 75
 vim.g.netrw_altv = 1
 vim.g.netrw_preview =1
 
+if vim.fn.has('termguicolors') then
+    vim.opt.termguicolors = true
+end
+
 require('plugins')
 require('disable-mouse')
 require('keymap')

@@ -1,49 +1,99 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
--- Only required if you have packer configured as `opt`
--- vim.cmd [[packadd packer.nvim]]
-
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-  augroup end
-]])
--- local packer_user_config_group = vim.api.nvim_create_augroup('packer_user_config', { clear = false })
--- vim.api.nvim_create_autocmd(
---   'BufWritePost',
---   {
---     group = packer_user_config_group,
---     pattern = 'plugins.lua',
---     command = 'source | PackerCompile'
---   }
--- )
-
-return require('packer').startup(function()
-    -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
-
-    use 'nvim-treesitter/nvim-treesitter'
-    use 'nanotee/zoxide.vim'
-    use {
-        'takac/vim-hardtime',
+require("lazy").setup({
+    {
+        'nvim-treesitter/nvim-treesitter',
         config = function()
-            -- vim.g.hardtime_default_on = 1
+            require'nvim-treesitter.configs'.setup {
+                -- A list of parser names, or "all" (the five listed parsers should always be installed)
+                ensure_installed = {
+                    "arduino",
+                    "bash",
+                    "c",
+                    "css",
+                    "csv",
+                    "dockerfile",
+                    "go",
+                    "html",
+                    "jq",
+                    "lua",
+                    "make",
+                    "markdown",
+                    "proto",
+                    "query",
+                    "regex",
+                    "sql",
+                    "textproto",
+                    "typescript",
+                    "vim",
+                    "vimdoc",
+                    "yaml",
+                },
+
+
+                -- Install parsers synchronously (only applied to `ensure_installed`)
+                sync_install = true,
+
+                -- Automatically install missing parsers when entering buffer
+                -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+                auto_install = false,
+
+                -- List of parsers to ignore installing (or "all")
+                -- ignore_install = { "javascript" },
+
+                ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+                -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+                highlight = {
+                    enable = true,
+
+                    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+                    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+                    -- the name of the parser)
+                    -- list of language that will be disabled
+                    -- disable = { "c", "rust" },
+
+                    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+                    disable = function(lang, buf)
+                        local max_filesize = 100 * 1024 -- 100 KB
+                        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+                        if ok and stats and stats.size > max_filesize then
+                            return true
+                        end
+                    end,
+
+                    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+                    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+                    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+                    -- Instead of true it can also be a list of languages
+                    additional_vim_regex_highlighting = false,
+                },
+            }
         end
-    }
-    -- use {
-    --     'ggandor/leap.nvim',
-    --     config = function()
-    --         require('leap').add_default_mappings()
-    --     end
-    -- }
-    use {
+    },
+    'nanotee/zoxide.vim',
+    {
+        'takac/vim-hardtime',
+        enabled = false,
+    },
+    {
         'nvim-telescope/telescope.nvim',
-        requires = {
+        dependencies = {
             {'nvim-lua/plenary.nvim'},
             {'BurntSushi/ripgrep'},
             {'jvgrootveld/telescope-zoxide'},
-            {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
+            {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'},
         },
         config = function()
             local z_utils = require("telescope._extensions.zoxide.utils")
@@ -88,11 +138,10 @@ return require('packer').startup(function()
             vim.keymap.set('n', '<Leader>h', require('telescope.builtin').command_history, { noremap = true, silent = true })
             vim.keymap.set('n', '<Leader>d', require('telescope.builtin').lsp_definitions, { noremap = true, silent = true })
         end
-    }
-
-    use {
+    },
+    {
         'ahmedkhalf/project.nvim',
-        requires = {
+        dependencies = {
             {'nvim-telescope/telescope.nvim'},
             {'nvim-tree/nvim-tree.lua'},
         },
@@ -106,49 +155,53 @@ return require('packer').startup(function()
                 },
             })
             require("project_nvim").setup {
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
                 scope_chdir = 'tab',
             }
             require('telescope').load_extension('projects')
             vim.keymap.set('n', '<Leader>p', require("telescope").extensions.projects.projects, { noremap = true, silent = false })
         end
-    }
-
-    use 'wsdjeg/vim-fetch'
-    use 'tpope/vim-abolish' -- cases modifications
-    -- use 'lukas-reineke/indent-blankline.nvim'
-
-    use {
+    },
+    'wsdjeg/vim-fetch',
+    'tpope/vim-abolish', -- cases modifications
+    -- 'lukas-reineke/indent-blankline.nvim',
+    {
         'numToStr/Comment.nvim',
         config = function()
             require('Comment').setup()
         end
-    }
-
-    use {
-        'ellisonleao/gruvbox.nvim',
+    },
+    -- {
+    --     'ellisonleao/gruvbox.nvim',
+    --     config = function()
+    --         vim.cmd.colorscheme('gruvbox')
+    --     end
+    -- },
+    {
+        'sainnhe/gruvbox-material',
         config = function()
-            vim.cmd.colorscheme('gruvbox')
+            vim.g.gruvbox_material_background = 'soft'
+            vim.g.gruvbox_material_better_performance = 1
+            vim.cmd.colorscheme('gruvbox-material')
         end
-    }
-
-    use {
+    },
+    -- {
+    --     'luisiacc/gruvbox-baby',
+    --     config = function()
+    --         vim.cmd.colorscheme('gruvbox-baby')
+    --     end
+    -- },
+    {
         'folke/trouble.nvim',
-        requires = 'kyazdani42/nvim-web-devicons',
+        dependencies = {
+            'kyazdani42/nvim-web-devicons',
+        },
         config = function()
-            require('trouble').setup {
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-            }
+            require('trouble').setup({})
         end
-    }
-
-    use {
+    },
+    {
         'nvim-lualine/lualine.nvim',
-        requires = {'kyazdani42/nvim-web-devicons', opt = true},
+        dependencies = {'kyazdani42/nvim-web-devicons', opt = true},
         config = function()
             local section_separators, component_separators
             if false then
@@ -175,17 +228,16 @@ return require('packer').startup(function()
                 },
             }
         end
-    }
-
-    use {
+    },
+    {
         'neovim/nvim-lspconfig',
         -- version = 'v0.1.3',
-        requires = 'nvim-lua/lsp-status.nvim',
+        dependencies = 'nvim-lua/lsp-status.nvim',
         config = function()
-            lspconfig = require "lspconfig"
-            util = require "lspconfig/util"
+            lspconfig = require("lspconfig")
+            util = require("lspconfig/util")
 
-            lspconfig.gopls.setup {
+            lspconfig.gopls.setup({
                 cmd = {"gopls", "serve"},
                 filetypes = {"go", "gomod"},
                 root_dir = util.root_pattern("go.work", "go.mod", ".git"),
@@ -195,9 +247,10 @@ return require('packer').startup(function()
                             unusedparams = true,
                         },
                         staticcheck = true,
+                        gofumpt = true,
                     },
                 },
-            }
+            })
 
             local au_go_lsp_group = vim.api.nvim_create_augroup('GO_LSP', {
                 clear = false
@@ -206,6 +259,22 @@ return require('packer').startup(function()
                 pattern = '*.go',
                 group = au_go_lsp_group,
                 callback = function()
+                    local params = vim.lsp.util.make_range_params()
+                    params.context = {only = {"source.organizeImports"}}
+                    -- buf_request_sync defaults to a 1000ms timeout. Depending on your
+                    -- machine and codebase, you may want longer. Add an additional
+                    -- argument after params if you find that you have to write the file
+                    -- twice for changes to be saved.
+                    -- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
+                    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
+                    for cid, res in pairs(result or {}) do
+                        for _, r in pairs(res.result or {}) do
+                            if r.edit then
+                                local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
+                                vim.lsp.util.apply_workspace_edit(r.edit, enc)
+                            end
+                        end
+                    end
                     vim.lsp.buf.format({ async = false })
                     -- vim.lsp.buf.code_action({
                     --     context = { only = { 'source.organizeImports' } },
@@ -214,11 +283,11 @@ return require('packer').startup(function()
                 end,
             })
         end
-    }
+    },
 
-    use {
+    {
         'hrsh7th/nvim-cmp',
-        requires = {
+        dependencies = {
             -- { 'neovim/nvim-lspconfig' },
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'hrsh7th/cmp-buffer' },
@@ -292,5 +361,4 @@ return require('packer').startup(function()
             })
         end,
     }
-
-end)
+})
