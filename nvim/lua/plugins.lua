@@ -161,7 +161,7 @@ require("lazy").setup({
             vim.keymap.set('n', '<Leader>p', require("telescope").extensions.projects.projects, { noremap = true, silent = false })
         end
     },
-    'wsdjeg/vim-fetch',
+    'wsdjeg/vim-fetch', -- открытие файла на определенной строке и колонке ex: `:e file.txt:54:43`
     'tpope/vim-abolish', -- cases modifications
     -- 'lukas-reineke/indent-blankline.nvim',
     {
@@ -170,26 +170,6 @@ require("lazy").setup({
             require('Comment').setup()
         end
     },
-    -- {
-    --     'ellisonleao/gruvbox.nvim',
-    --     config = function()
-    --         vim.cmd.colorscheme('gruvbox')
-    --     end
-    -- },
-    {
-        'sainnhe/gruvbox-material',
-        config = function()
-            vim.g.gruvbox_material_background = 'soft'
-            vim.g.gruvbox_material_better_performance = 1
-            vim.cmd.colorscheme('gruvbox-material')
-        end
-    },
-    -- {
-    --     'luisiacc/gruvbox-baby',
-    --     config = function()
-    --         vim.cmd.colorscheme('gruvbox-baby')
-    --     end
-    -- },
     {
         'folke/trouble.nvim',
         dependencies = {
@@ -232,7 +212,17 @@ require("lazy").setup({
     {
         'neovim/nvim-lspconfig',
         -- version = 'v0.1.3',
-        dependencies = 'nvim-lua/lsp-status.nvim',
+        dependencies = {
+            'nvim-lua/lsp-status.nvim',
+            {
+                "j-hui/fidget.nvim",
+                tag = "legacy",
+                event = "LspAttach",
+                opts = {
+                    -- options
+                },
+            }
+        },
         config = function()
             lspconfig = require("lspconfig")
             util = require("lspconfig/util")
@@ -360,5 +350,28 @@ require("lazy").setup({
                 })
             })
         end,
-    }
+    },
+
+
+    -- COLORSCHEMES
+    -- {
+    --     'ellisonleao/gruvbox.nvim',
+    --     config = function()
+    --         vim.cmd.colorscheme('gruvbox')
+    --     end
+    -- },
+    -- {
+    --     'luisiacc/gruvbox-baby',
+    --     config = function()
+    --         vim.cmd.colorscheme('gruvbox-baby')
+    --     end
+    -- },
+    {
+        'sainnhe/gruvbox-material',
+        config = function()
+            vim.g.gruvbox_material_background = 'soft'
+            vim.g.gruvbox_material_better_performance = 1
+            vim.cmd.colorscheme('gruvbox-material')
+        end
+    },
 })
