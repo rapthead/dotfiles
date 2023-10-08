@@ -1,17 +1,16 @@
 vim.g.mapleader = " "
 
--- for programming {
+-- programming
 vim.opt.number = true
 vim.opt.wrap = false
 vim.opt.signcolumn = 'number'
--- for programming }
 
 vim.opt.ignorecase = true -- игнорим кейс при поиске
 vim.opt.smartcase = true -- не игнорим кейс если в строке поиска есть апперкейс
 
 -- indent
 vim.opt.tabstop = 4
-vim.opt.expandtab = true
+vim.opt.expandtab = false
 vim.opt.smarttab = true -- установка вставки пробелов в начало строки вместо символа 'tabstop'
 vim.opt.shiftwidth = 4 -- установка размера таб-отступа
 vim.opt.shiftround = true
@@ -19,11 +18,11 @@ vim.opt.autoindent = true -- автоматическая табуляция. е
 
 vim.opt.list = true
 vim.opt.listchars = {
-    tab = "> ",
-    trail = "X",
-    extends = ">",
-    precedes = "<",
-    nbsp = "+"
+	tab = "│ ",
+	trail = "X",
+	extends = ">",
+	precedes = "<",
+	nbsp = "+"
 }
 
 -- vim.opt.dir = os.getenv( "HOME" ) .. "/.cache/nvim/swaps"
@@ -42,7 +41,7 @@ vim.g.netrw_altv = 1
 vim.g.netrw_preview =1
 
 if vim.fn.has('termguicolors') then
-    vim.opt.termguicolors = true
+	vim.opt.termguicolors = true
 end
 
 require('plugins')
