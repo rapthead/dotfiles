@@ -22,16 +22,16 @@
 	url = https://github.com/eendroroy/alien.git
 [submodule "spaceship-prompt"]
 	path = spaceship-prompt
-	url = git@github.com:spaceship-prompt/spaceship-prompt.git
+	url = https://github.com/spaceship-prompt/spaceship-prompt.git
 [submodule "zsh/plugins/zsh-auto-notify"]
 	path = zsh/plugins/zsh-auto-notify
 	url = https://github.com/MichaelAquilina/zsh-auto-notify.git
 [submodule "zsh/plugins/zsh-autosuggestions"]
 	path = zsh/plugins/zsh-autosuggestions
-	url = git@github.com:zsh-users/zsh-autosuggestions.git
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
 [submodule "zsh/plugins/zsh-vi-mode"]
 	path = zsh/plugins/zsh-vi-mode
-	url = git@github.com:jeffreytse/zsh-vi-mode.git
+	url = https://github.com/jeffreytse/zsh-vi-mode.git
 [submodule "zsh/plugins/zsh-syntax-highlighting"]
 	path = zsh/plugins/zsh-syntax-highlighting
-	url = git@github.com:zsh-users/zsh-syntax-highlighting.git
+	url = https://github.com/github.com:zsh-users/zsh-syntax-highlighting.git
