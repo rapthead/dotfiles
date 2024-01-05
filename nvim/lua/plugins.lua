@@ -136,7 +136,7 @@ require("lazy").setup({
 			-- })
 
 			vim.keymap.set('n', '<Leader>cd', require("telescope").extensions.zoxide.list, { noremap = true, silent = false })
-			vim.keymap.set('n', '<C-P>', require('telescope.builtin').git_files, { noremap = true, silent = true })
+			vim.keymap.set('n', '<C-P>', require('telescope.builtin').find_files, { noremap = true, silent = true })
 			vim.keymap.set('n', '<C-B>', require('telescope.builtin').buffers, { noremap = true, silent = true })
 			vim.keymap.set('n', '<Leader>h', require('telescope.builtin').command_history, { noremap = true, silent = true })
 			vim.keymap.set('n', '<Leader>d', require('telescope.builtin').lsp_definitions, { noremap = true, silent = true })
@@ -341,11 +341,13 @@ require("lazy").setup({
 				root_dir = util.root_pattern("go.work", "go.mod", ".git"),
 				settings = {
 					gopls = {
+						buildFlags =  {"-tags=integration"},
 						analyses = {
 							unusedparams = true,
 						},
 						staticcheck = true,
 						gofumpt = true,
+						["ui.verboseOutput"] = true,
 					},
 				},
 			})
