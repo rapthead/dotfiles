@@ -17,6 +17,9 @@
       create: true
       path: waybar/config
 
+    ~/.config/sway/config:
+      path: sway/config
+      create: true
     ~/.config/i3/config:
       if: 'which polybar'
       path: i3/config
