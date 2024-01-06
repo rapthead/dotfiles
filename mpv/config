@@ -3,40 +3,17 @@ cache = yes
 volume-max = 500
 no-ytdl
 no-audio-display
-profile = ml,tv
+profile=ml,tv,hw # ,gpu-hq
 script-opts=ytdl_hook-ytdl_path=yt-dlp
-vo=drm
-
-[raspberrypi]
-profile = rpi-hw
-ao = pulse
-
-[rpi-hw]
-vo=gpu
-gpu-context=drm
-# drm-connector=0.HDMI-A-1 # if hdmi port changed change this line!
-drm-connector=1.HDMI-A-1 # if hdmi port changed change this line!
-hwdec=v4l2m2m-copy
+interpolation
 
 [hw]
 hwdec = vaapi
 vo = gpu
 
-[pulse]
-af = format=format=s16:srate=44100:channels=2
-volume = 20
-autosync = 550
-
-[alsa]
-ao = alsa
-audio-device = 'alsa/plughw:CARD=Generic,DEV=3'
-
 [ml]
-hwdec = vaapi
-vo = gpu
 fs
 fs-screen = 1
-profile = tv
 
 [tv]
 x11-name = mpvTV
@@ -46,6 +23,3 @@ audio-device = 'alsa/hdmi:CARD=HDMI,DEV=0'
 
 [fiio]
 audio-device = 'alsa/default:CARD=Audio'
-
-[save]
-write-filename-in-watch-later-config = yes
