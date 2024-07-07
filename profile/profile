@@ -1,5 +1,6 @@
-if [ -z ${PROFILE_PROCESSED3+x} ]; then
-	export PROFILE_PROCESSED3=1
+if [ -z ${PROFILE_PROCESSED+x} ]; then
+	export PROFILE_PROCESSED=1
+	export $(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)
 
 	HOSTNAME=$(hostname)
 
