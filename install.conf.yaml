@@ -62,6 +62,9 @@
     ~/.config/alacritty/alacritty.yml:
       path: alacritty/alacritty.yml
       create: true
+    ~/.config/alacritty/alacritty.toml:
+      path: alacritty/alacritty.toml
+      create: true
     ~/.zshrc:
       path: zsh/zshrc
     ~/.profile:
