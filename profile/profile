@@ -1,44 +1,45 @@
 if [ -z ${PROFILE_PROCESSED+x} ]; then
-    export PROFILE_PROCESSED=1
+	export PROFILE_PROCESSED=1
+	export $(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)
 
-    HOSTNAME=$(hostname)
+	HOSTNAME=$(hostname)
 
-    if [ -f "$HOME/.dotfiles/profile/host/$HOSTNAME/profile" ]; then
-        . "$HOME/.dotfiles/profile/host/$HOSTNAME/profile"
-    fi
+	if [ -f "$HOME/.dotfiles/profile/host/$HOSTNAME/profile" ]; then
+		. "$HOME/.dotfiles/profile/host/$HOSTNAME/profile"
+	fi
 
-    if [ -f "$HOME/.secrets.sh" ]; then
-        . "$HOME/.secrets.sh"
-    fi
+	if [ -f "$HOME/.secrets.sh" ]; then
+		. "$HOME/.secrets.sh"
+	fi
 
-    . "$HOME/.dotfiles/profile/lang/go"
-    # . "$HOME/.dotfiles/profile/lang/node"
+	. "$HOME/.dotfiles/profile/lang/go"
+	# . "$HOME/.dotfiles/profile/lang/node"
 
-    PATH=$PATH:/usr/sbin:/sbin
-    # set PATH so it includes user's private bin if it exists
-    if [ -d "$HOME/bin" ] ; then
-        PATH="$HOME/bin:$PATH"
-    fi
+	PATH=$PATH:/usr/sbin:/sbin
+	# set PATH so it includes user's private bin if it exists
+	if [ -d "$HOME/bin" ] ; then
+		PATH="$HOME/bin:$PATH"
+	fi
 
-    if [ -d "$HOME/.local/opt/Telegram" ] ; then
-        PATH="$PATH:$HOME/.local/opt/Telegram"
-    fi
+	if [ -d "$HOME/.local/opt/Telegram" ] ; then
+		PATH="$PATH:$HOME/.local/opt/Telegram"
+	fi
 
-    if [ -d "$HOME/.cargo/bin/" ] ; then
-        PATH="$PATH:$HOME/.cargo/bin/"
-    fi
+	if [ -d "$HOME/.cargo/bin/" ] ; then
+		PATH="$PATH:$HOME/.cargo/bin/"
+	fi
 
-    export XDG_CONFIG_HOME="$HOME/.config/"
-    export TERMINAL=alacritty
-    export EDITOR=nvim
-    export PATH=$HOME/.local/bin:/usr/local/bin:$PATH
-    export PATH="$HOME/.npm-global/bin:$PATH"
-    export PROJECT_HOME=$HOME/docs/projects
-    export VDPAU_DRIVER=va_gl
-    export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
-    export SSH_ASKPASS=""
+	export XDG_CONFIG_HOME="$HOME/.config/"
+	export TERMINAL=alacritty
+	export EDITOR=nvim
+	export PATH=$HOME/.local/bin:/usr/local/bin:$PATH
+	export PATH="$HOME/.npm-global/bin:$PATH"
+	export PROJECT_HOME=$HOME/docs/projects
+	export VDPAU_DRIVER=va_gl
+	export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+	export SSH_ASKPASS=""
 
-    export LC_ALL=ru_RU.UTF-8
-    export LANG=ru_RU.UTF-8
-    export LANGUAGE=en
+	export LC_ALL=ru_RU.UTF-8
+	export LANG=ru_RU.UTF-8
+	export LANGUAGE=en
 fi

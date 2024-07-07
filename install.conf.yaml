@@ -9,6 +9,9 @@
   - cp user-dirs/dirs ~/.config/user-dirs.dirs
 
 - link:
+    ~/.config/pip/pip.conf:
+      create: true
+      path: pip/pip.conf
     # wayland
     ~/.config/foot/foot.ini:
       create: true

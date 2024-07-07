@@ -14,11 +14,10 @@ set $secondary_monitor HDMI-2
 set $launcher dmenu_path | fzf | xargs swaymsg exec
 
 set $term alacritty msg create-window -e zsh || alacritty -e zsh
-set $term_alt alacritty msg create-window || alacritty
+set $term_alt foot
 set $mod Mod4
 set $lock "dm-tool switch-to-greeter"
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
-# set $menu wofi --show run
+set $menu dmenu_path | wmenu | xargs swaymsg exec --
 
 include /etc/sway/config-vars.d/*
 
@@ -252,8 +251,14 @@ bindsym $mod+n [instance="^nvim-qt$"] focus
 bindsym $mod+t [instance="^Telegram$"] focus
 
 assign [instance="mpvTV"] "0:`"
-for_window [instance="^google-chrome|chromium-browser$"] border none, background "<span foreground='red'>%title</span>"
 for_window [instance="^ncmpcpp|alsamixer|tty-clock$"] move scratchpad, scratchpad show
+for_window [app_id="^google-chrome|chromium-browser$"] border none, background "<span foreground='red'>%title</span>"
+for_window [app_id=^nvim|vifm$] layout tabbed
+
+assign [app_id="^google-chrome|chromium-browser$"] workspace 1
+assign [app_id="^nvim$"] workspace 3
+assign [app_id="^vifm$"] workspace 3
+assign [app_id="^org.telegram.desktop"] workspace 4
 
 bindsym --release $mod+x exec --no-startup-id import /tmp/latest-screenshot.png
 
@@ -274,7 +279,7 @@ bindsym $mod+Shift+b border normal
 #CUSTOM#
 ########
 
-exec swayidle -w timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+exec swayidle -w timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' before-sleep $lock
 
 input * {
     xkb_layout us,ru
