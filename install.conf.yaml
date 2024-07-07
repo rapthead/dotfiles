@@ -17,8 +17,14 @@
       create: true
       path: waybar/config
 
+    ~/.config/electron25-flags.conf:
+      path: electron/electron25-flags.conf
+      create: true
     ~/.config/sway/config:
       path: sway/config
+      create: true
+    ~/.config/systemd/user/sway-session.target:
+      path: sway/sway-session.target
       create: true
     ~/.config/i3/config:
       if: 'which polybar'

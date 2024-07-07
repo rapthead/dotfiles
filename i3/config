@@ -261,3 +261,4 @@ bindsym $mod+minus scratchpad show
 bindsym $mod+Shift+b border normal
 
 exec_always --no-startup-id $HOME/.dotfiles/polybar/launch.sh
+# exec --no-startup-id picom
