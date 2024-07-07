@@ -9,6 +9,14 @@
   - cp user-dirs/dirs ~/.config/user-dirs.dirs
 
 - link:
+    ~/.config/autostart:
+      glob: true
+      create: true
+      path: autostart/*
+    ~/.config/environment.d:
+      glob: true
+      create: true
+      path: environment.d/*
     ~/.config/pip/pip.conf:
       create: true
       path: pip/pip.conf

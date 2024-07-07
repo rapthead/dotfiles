@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=nvim
+Exec=alacritty --class vifm -e vifm
+Terminal=false
+Type=Application
+StartupNotify=false

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Chrome
+Exec=google-chrome --profile-directory=Default
+Terminal=false
+Type=Application
+StartupNotify=false
