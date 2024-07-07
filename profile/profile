@@ -16,10 +16,6 @@ if [ -z ${PROFILE_PROCESSED+x} ]; then
 	# . "$HOME/.dotfiles/profile/lang/node"
 
 	PATH=$PATH:/usr/sbin:/sbin
-	# set PATH so it includes user's private bin if it exists
-	if [ -d "$HOME/bin" ] ; then
-		PATH="$HOME/bin:$PATH"
-	fi
 
 	if [ -d "$HOME/.local/opt/Telegram" ] ; then
 		PATH="$PATH:$HOME/.local/opt/Telegram"
@@ -42,4 +38,9 @@ if [ -z ${PROFILE_PROCESSED+x} ]; then
 	export LC_ALL=ru_RU.UTF-8
 	export LANG=ru_RU.UTF-8
 	export LANGUAGE=en
+
+	# set PATH so it includes user's private bin if it exists
+	if [ -d "$HOME/bin" ] ; then
+		PATH="$HOME/bin:$PATH"
+	fi
 fi
