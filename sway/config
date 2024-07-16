@@ -16,13 +16,14 @@ set $launcher dmenu_path | fzf | xargs swaymsg exec
 set $term alacritty msg create-window -e zsh || alacritty -e zsh
 set $term_alt foot
 set $mod Mod4
-set $lock "dm-tool switch-to-greeter"
+set $lock "swaylock -k -i ~/.wallpaper.jpg"
 set $menu dmenu_path | wmenu | xargs swaymsg exec --
 
 include /etc/sway/config-vars.d/*
 
 # output LVDS-1 scale 1.25
 output LVDS-1 scale 1
+seat seat0 xcursor_theme Adwaita
 
 ### Output configuration
 #
@@ -183,7 +184,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
-bindsym $mod+Control+l exec "dm-tool switch-to-greeter"
+bindcode $mod+Control+46 exec $lock
 
 bindsym --to-code $mod+r mode "resize"
 
@@ -288,6 +289,12 @@ input * {
     # xkb_options grp:caps_toggle,grp:switch,grp_led:caps,compose:ralt,lv5:ralt_switch,misc:typo
     # xkb_options grp:caps_toggle,grp:switch,grp_led:caps,compose:ralt,misc:typo
     xkb_options grp:caps_toggle,grp:switch,grp_led:caps,lv3:ralt_switch,misc:typo
+}
+
+input "2:7:SynPS/2_Synaptics_TouchPad" {
+	tap enabled
+	pointer_accel 0.5
+	dwt enabled
 }
 
 bar {
