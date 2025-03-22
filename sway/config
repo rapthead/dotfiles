@@ -16,7 +16,7 @@ set $launcher dmenu_path | fzf | xargs swaymsg exec
 set $term alacritty msg create-window -e zsh || alacritty -e zsh
 set $term_alt foot
 set $mod Mod4
-set $lock "swaylock -k -i ~/.wallpaper.jpg"
+set $lock "swaymsg input '*' xkb_switch_layout 0; swaylock -k -i $HOME/.dotfiles/wallpaper.jpg"
 set $menu dmenu_path | wmenu | xargs swaymsg exec --
 
 include /etc/sway/config-vars.d/*
@@ -256,6 +256,7 @@ for_window [instance="^ncmpcpp|alsamixer|tty-clock$"] move scratchpad, scratchpa
 for_window [app_id="^google-chrome|chromium-browser$"] border none, background "<span foreground='red'>%title</span>"
 for_window [app_id=^nvim|vifm$] layout tabbed
 
+assign [instance="^winbox64.exe$"] workspace 10
 assign [app_id="^google-chrome|chromium-browser$"] workspace 1
 assign [app_id="^nvim$"] workspace 3
 assign [app_id="^vifm$"] workspace 3
@@ -280,15 +281,17 @@ bindsym $mod+Shift+b border normal
 #CUSTOM#
 ########
 
-exec swayidle -w timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' before-sleep $lock
+exec swayidle timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' before-sleep $lock
 
 input * {
     xkb_layout us,ru
     xkb_model thinkpad60
+    xkb_variant ,ruchey_ru
     # xkb_options grp:caps_toggle,grp_led:caps,compose:ralt,misc:typo
     # xkb_options grp:caps_toggle,grp:switch,grp_led:caps,compose:ralt,lv5:ralt_switch,misc:typo
     # xkb_options grp:caps_toggle,grp:switch,grp_led:caps,compose:ralt,misc:typo
-    xkb_options grp:caps_toggle,grp:switch,grp_led:caps,lv3:ralt_switch,misc:typo
+    xkb_options grp:caps_toggle,grp_led:caps,lv3:ralt_switch
+    # ,misc:typo
 }
 
 input "2:7:SynPS/2_Synaptics_TouchPad" {

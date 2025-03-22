@@ -165,9 +165,19 @@ require("lazy").setup({
 			})
 			require("project_nvim").setup {
 				scope_chdir = 'tab',
+				silent_chdir = false,
 			}
 			require('telescope').load_extension('projects')
 			vim.keymap.set('n', '<Leader>p', require("telescope").extensions.projects.projects, { noremap = true, silent = false })
+		end
+	},
+	{
+		'akinsho/toggleterm.nvim',
+		version = "*",
+		config = function()
+			require("toggleterm").setup({
+				open_mapping = [[<leader>t]],
+			})
 		end
 	},
 	'wsdjeg/vim-fetch', -- открытие файла на определенной строке и колонке ex: `:e file.txt:54:43`
