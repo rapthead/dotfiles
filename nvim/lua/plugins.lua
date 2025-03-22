@@ -347,7 +347,7 @@ require("lazy").setup({
 				root_dir = util.root_pattern("go.work", "go.mod", ".git"),
 				settings = {
 					gopls = {
-						buildFlags =  {"-tags=integration"},
+						buildFlags =  {"-tags=integration,e2e,local"},
 						analyses = {
 							unusedparams = true,
 						},

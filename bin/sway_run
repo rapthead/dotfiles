@@ -1,0 +1,2 @@
+#!/bin/bash
+dmenu_path | fzf $fzf_args | ( nohup sh & )

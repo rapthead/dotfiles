@@ -20,6 +20,7 @@ set $lock "swaylock -k -i ~/.wallpaper.jpg"
 set $menu dmenu_path | wmenu | xargs swaymsg exec --
 
 include /etc/sway/config-vars.d/*
+include ./secret.conf
 
 # output LVDS-1 scale 1.25
 output LVDS-1 scale 1
@@ -29,6 +30,8 @@ seat seat0 xcursor_theme Adwaita
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg "$HOME/.dotfiles/wallpaper.jpg" fill
+output "Dell Inc. DELL U2723QE BYH1CP3" scale 1.5 position 0,0
+output "California Institute of Technology 0x1405 Unknown" scale 2
 #
 # Example configuration:
 #
@@ -60,7 +63,7 @@ font pango:Hack Nerd Font Mono 8
     # Despite the name, also works for non-floating windows.
     # Change normal to inverse to use left mouse button for resizing and right
     # mouse button for dragging.
-    floating_modifier $mod inverse
+    floating_modifier $mod normal
 
 #
 # Moving around:
@@ -267,14 +270,25 @@ bindsym XF86AudioMute exec --no-startup-id  amixer -q -D pulse sset Master toggl
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q -D pulse sset Master 5%-
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q -D pulse sset Master 5%+
 
-bindsym XF86AudioStop exec --no-startup-id mpc stop
-bindsym XF86AudioPlay exec --no-startup-id mpc toggle
-bindsym XF86AudioPrev exec --no-startup-id mpc prev
-bindsym XF86AudioNext exec --no-startup-id mpc next
-bindsym XF86ScreenSaver exec --no-startup-id $lock
-bindsym XF86Display exec --no-startup-id xset dpms force off
+bindsym {
+	XF86AudioStop exec --no-startup-id mpc stop
+	XF86AudioPlay exec --no-startup-id mpc toggle
+	XF86AudioPrev exec --no-startup-id mpc prev
+	XF86AudioNext exec --no-startup-id mpc next
+	XF86ScreenSaver exec --no-startup-id $lock
+}
+
+bindsym --locked {
+	XF86Display   output eDP-1 toggle
+	XF86Favorites output eDP-1 toggle
+}
 
 bindsym $mod+Shift+b border normal
+
+bindswitch --locked {
+	lid:on  output eDP-1 disable
+	lid:off output eDP-1 enable
+}
 
 ########
 #CUSTOM#
@@ -296,6 +310,11 @@ input "2:7:SynPS/2_Synaptics_TouchPad" {
 	pointer_accel 0.5
 	dwt enabled
 }
+
+input "9639:64035:Compx_2.4G_Receiver_Mouse" {
+	pointer_accel 0.8
+}
+
 
 bar {
     # swaybar_command waybar
