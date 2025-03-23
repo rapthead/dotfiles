@@ -98,6 +98,10 @@ require("lazy").setup({
 		enabled = false,
 	},
 	{
+		'nmac427/guess-indent.nvim',
+		config = function() require('guess-indent').setup {} end,
+	},
+	{
 		'nvim-telescope/telescope.nvim',
 		dependencies = {
 			{'nvim-lua/plenary.nvim'},
@@ -171,85 +175,12 @@ require("lazy").setup({
 			vim.keymap.set('n', '<Leader>p', require("telescope").extensions.projects.projects, { noremap = true, silent = false })
 		end
 	},
-	{
-		'akinsho/toggleterm.nvim',
-		version = "*",
-		config = function()
-			require("toggleterm").setup({
-				open_mapping = [[<leader>t]],
-			})
-		end
-	},
 	'wsdjeg/vim-fetch', -- открытие файла на определенной строке и колонке ex: `:e file.txt:54:43`
 	'tpope/vim-abolish', -- cases modifications
-	-- 'lukas-reineke/indent-blankline.nvim',
 	{
 		'numToStr/Comment.nvim',
 		config = function()
 			require('Comment').setup()
-		end
-	},
-	{
-		'folke/trouble.nvim',
-		dependencies = {
-			'kyazdani42/nvim-web-devicons',
-		},
-		config = function()
-			require('trouble').setup({})
-		end
-	},
-	{
-		'nvim-lualine/lualine.nvim',
-		dependencies = {'kyazdani42/nvim-web-devicons', opt = true},
-		config = function()
-			local section_separators, component_separators
-			if false then
-				section_separators = {left = '', right = ''}
-				component_separators = {left = '', right = ''}
-			else
-				section_separators = {left = '', right = ''}
-				component_separators = {left = '', right = ''}
-			end
-			require('lualine').setup {
-				options = {
-					theme = 'gruvbox',
-					section_separators = section_separators,
-					component_separators = component_separators,
-					globalstatus = true,
-				},
-				extensions = {'quickfix'},
-				sections = {
-					lualine_c = {
-						{'filename', path = 1},
-						-- {lsp_status.status},
-						-- {'require'lsp-status'.status()'},
-					},
-				},
-			}
-		end
-	},
-	{
-		'neovim/nvim-lspconfig',
-		-- version = 'v0.1.3',
-		dependencies = {
-			'nvim-lua/lsp-status.nvim',
-			{
-				"j-hui/fidget.nvim",
-				tag = "legacy",
-				event = "LspAttach",
-				opts = {
-					-- options
-				},
-			}
-		},
-		config = function()
-			lspconfig = require("lspconfig")
-			util = require("lspconfig/util")
-
-			vim.keymap.set('n', '<C-P>', require('telescope.builtin').git_files, { noremap = true, silent = true })
-			vim.keymap.set('n', '<C-B>', require('telescope.builtin').buffers, { noremap = true, silent = true })
-			vim.keymap.set('n', '<Leader>h', require('telescope.builtin').command_history, { noremap = true, silent = true })
-			vim.keymap.set('n', '<Leader>d', require('telescope.builtin').lsp_definitions, { noremap = true, silent = true })
 		end
 	},
 	{
@@ -274,36 +205,6 @@ require("lazy").setup({
 			vim.keymap.set('n', '<Leader>p', require("telescope").extensions.projects.projects, { noremap = true, silent = false })
 		end
 	},
-	'wsdjeg/vim-fetch',
-	'tpope/vim-abolish', -- cases modifications
-	-- 'lukas-reineke/indent-blankline.nvim',
-	{
-		'numToStr/Comment.nvim',
-		config = function()
-			require('Comment').setup()
-		end
-	},
-	-- {
-	--     'ellisonleao/gruvbox.nvim',
-	--     config = function()
-	--         vim.cmd.colorscheme('gruvbox')
-	--     end
-	-- },
-	{
-		'sainnhe/gruvbox-material',
-		config = function()
-			vim.g.gruvbox_material_background = 'soft'
-			vim.g.gruvbox_material_better_performance = 1
-			require('lualine').setup({options = {theme = 'gruvbox-material'}})
-			vim.cmd.colorscheme('gruvbox-material')
-		end
-	},
-	-- {
-	--     'luisiacc/gruvbox-baby',
-	--     config = function()
-	--         vim.cmd.colorscheme('gruvbox-baby')
-	--     end
-	-- },
 	{
 		'folke/trouble.nvim',
 		dependencies = {
@@ -350,6 +251,11 @@ require("lazy").setup({
 		config = function()
 			lspconfig = require("lspconfig")
 			util = require("lspconfig/util")
+
+			vim.keymap.set('n', '<C-P>', require('telescope.builtin').git_files, { noremap = true, silent = true })
+			vim.keymap.set('n', '<C-B>', require('telescope.builtin').buffers, { noremap = true, silent = true })
+			vim.keymap.set('n', '<Leader>h', require('telescope.builtin').command_history, { noremap = true, silent = true })
+			vim.keymap.set('n', '<Leader>d', require('telescope.builtin').lsp_definitions, { noremap = true, silent = true })
 
 			lspconfig.gopls.setup({
 				cmd = {"gopls", "serve"},
@@ -477,33 +383,18 @@ require("lazy").setup({
 				sources = cmp.config.sources({
 					{ name = 'path' }
 				}, {
-					{ name = 'cmdline' }
-				})
+						{ name = 'cmdline' }
+					})
 			})
 
 		end,
-    },
-
-
-    -- COLORSCHEMES
-    -- {
-    --     'ellisonleao/gruvbox.nvim',
-    --     config = function()
-    --         vim.cmd.colorscheme('gruvbox')
-    --     end
-    -- },
-    -- {
-    --     'luisiacc/gruvbox-baby',
-    --     config = function()
-    --         vim.cmd.colorscheme('gruvbox-baby')
-    --     end
-    -- },
-    {
-        'sainnhe/gruvbox-material',
-        config = function()
-            vim.g.gruvbox_material_background = 'soft'
-            vim.g.gruvbox_material_better_performance = 1
-            vim.cmd.colorscheme('gruvbox-material')
-        end
-    },
+	},
+	{
+		'sainnhe/gruvbox-material',
+		config = function()
+			vim.g.gruvbox_material_background = 'soft'
+			vim.g.gruvbox_material_better_performance = 1
+			vim.cmd.colorscheme('gruvbox-material')
+		end
+	},
 })

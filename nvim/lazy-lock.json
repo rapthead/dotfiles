@@ -7,6 +7,7 @@
   "cmp-vsnip": { "branch": "main", "commit": "989a8a73c44e926199bfd05fa7a516d51f2d2752" },
   "fidget.nvim": { "branch": "main", "commit": "0ba1e16d07627532b6cae915cc992ecac249fb97" },
   "gruvbox-material": { "branch": "master", "commit": "146f40fd42cbef30fed69b4ef51329aeeaceb909" },
+  "guess-indent.nvim": { "branch": "main", "commit": "6cd61f7a600bb756e558627cd2e740302c58e32d" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
   "lsp-status.nvim": { "branch": "master", "commit": "54f48eb5017632d81d0fd40112065f1d062d0629" },
   "lualine.nvim": { "branch": "master", "commit": "9fef261b53fbe3a2ef01ee9667f6fde064b1ed10" },

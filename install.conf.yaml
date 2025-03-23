@@ -28,9 +28,10 @@
     ~/.config/foot/foot.ini:
       create: true
       path: foot/foot.ini
-    ~/.config/waybar/config:
+    ~/.config/waybar:
       create: true
-      path: waybar/config
+      glob: true
+      path: waybar/*
 
     ~/.config/electron25-flags.conf:
       path: electron/electron25-flags.conf

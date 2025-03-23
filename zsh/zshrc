@@ -5,6 +5,8 @@ alias cal="ncal -bM"
 export KEYTIMEOUT=1 # decrease entering normal mode delay https://www.johnhawthorn.com/2012/09/vi-escape-delays/
 bindkey -v
 
+precmd () {print -Pn "\e]0;$PWD\a"}
+
 # magic insert
 zle -N bracketed-paste
 autoload -Uz bracketed-paste-magic url-quote-magic

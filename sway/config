@@ -263,7 +263,8 @@ assign [instance="^winbox64.exe$"] workspace 10
 assign [app_id="^google-chrome|chromium-browser$"] workspace 1
 assign [app_id="^nvim$"] workspace 3
 assign [app_id="^vifm$"] workspace 3
-assign [app_id="^org.telegram.desktop"] workspace 4
+assign [app_id="^org.telegram.desktop"] workspace 5
+for_window [app_id="^nterm "] move container to workspace 4, focus
 
 bindsym --release $mod+x exec --no-startup-id import /tmp/latest-screenshot.png
 
