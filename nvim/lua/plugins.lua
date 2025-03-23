@@ -12,6 +12,21 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+	-- {
+	-- 	"ray-x/go.nvim",
+	-- 	dependencies = {  -- optional packages
+	-- 		"ray-x/guihua.lua",
+	-- 		"neovim/nvim-lspconfig",
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 	},
+	-- 	config = function()
+	-- 		require("go").setup()
+	-- 	end,
+	-- 	event = {"CmdlineEnter"},
+	-- 	ft = {"go", 'gomod'},
+	-- 	build = function() require("go.install").update_all_sync() end
+	-- },
+
 	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -111,7 +126,9 @@ require("lazy").setup({
 		},
 		config = function()
 			local z_utils = require("telescope._extensions.zoxide.utils")
-			require('telescope').setup{
+			local m = require('telescope')
+			local mb = require('telescope.builtin')
+			m.setup{
 				extensions = {
 					zoxide = {
 						prompt_title = "[ set the directory for the current tab ]",
@@ -132,8 +149,8 @@ require("lazy").setup({
 					}
 				}
 			}
-			require("telescope").load_extension('zoxide')
-			require('telescope').load_extension('fzf')
+			m.load_extension('zoxide')
+			m.load_extension('fzf')
 
 			-- require('telescope._extensions.zoxide.config').setup({
 			--     mappings = {
@@ -145,11 +162,13 @@ require("lazy").setup({
 			--     }
 			-- })
 
-			vim.keymap.set('n', '<Leader>cd', require("telescope").extensions.zoxide.list, { noremap = true, silent = false })
-			vim.keymap.set('n', '<C-P>', require('telescope.builtin').find_files, { noremap = true, silent = true })
-			vim.keymap.set('n', '<C-B>', require('telescope.builtin').buffers, { noremap = true, silent = true })
-			vim.keymap.set('n', '<Leader>h', require('telescope.builtin').command_history, { noremap = true, silent = true })
-			vim.keymap.set('n', '<Leader>d', require('telescope.builtin').lsp_definitions, { noremap = true, silent = true })
+			vim.keymap.set('n', '<Leader>cd', m.extensions.zoxide.list, { noremap = true, silent = false })
+			vim.keymap.set('n', '<C-P>',     mb.find_files, { noremap = true, silent = true })
+			vim.keymap.set('n', '<C-B>',     mb.buffers, { noremap = true, silent = true })
+			vim.keymap.set('n', '<Leader>h', mb.command_history, { noremap = true, silent = true })
+			vim.keymap.set('n', '<Leader>b', mb.diagnostics, { noremap = true, silent = true })
+			vim.keymap.set('n', '<Leader>d', mb.lsp_definitions, { noremap = true, silent = true })
+			vim.keymap.set('n', '<Leader>s', mb.lsp_dynamic_workspace_symbols, { noremap = true, silent = true })
 		end
 	},
 	{
@@ -173,6 +192,15 @@ require("lazy").setup({
 			}
 			require('telescope').load_extension('projects')
 			vim.keymap.set('n', '<Leader>p', require("telescope").extensions.projects.projects, { noremap = true, silent = false })
+		end
+	},
+	{
+		'akinsho/toggleterm.nvim',
+		version = "*",
+		config = function()
+			require("toggleterm").setup({
+				-- open_mapping = [[<leader>t]],
+			})
 		end
 	},
 	'wsdjeg/vim-fetch', -- открытие файла на определенной строке и колонке ex: `:e file.txt:54:43`
