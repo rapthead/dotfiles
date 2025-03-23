@@ -320,23 +320,24 @@ input "9639:64035:Compx_2.4G_Receiver_Mouse" {
 
 
 bar {
-    # swaybar_command waybar
-    position bottom
-    colors {
-      # Whole color settings
-      background $color_normal_gray
-      separator  $color_bright_gray
-      statusline $color_bright_white
+    swaybar_command waybar
 
-      # Type             border                 background              font
-      focused_workspace  $color_bright_gray     $color_bright_gray      $color_bright_white
-      active_workspace   $color_normal_gray     $color_normal_gray      $color_normal_white
-      inactive_workspace $color_normal_gray     $color_normal_gray      $color_normal_white
-      urgent_workspace   $color_bright_yellow   $color_bright_yellow    $color_normal_black
-    }
-    font Hack 11
-    status_command i3blocks
-    tray_output *
+    # position bottom
+    # colors {
+    #   # Whole color settings
+    #   background $color_normal_gray
+    #   separator  $color_bright_gray
+    #   statusline $color_bright_white
+
+    #   # Type             border                 background              font
+    #   focused_workspace  $color_bright_gray     $color_bright_gray      $color_bright_white
+    #   active_workspace   $color_normal_gray     $color_normal_gray      $color_normal_white
+    #   inactive_workspace $color_normal_gray     $color_normal_gray      $color_normal_white
+    #   urgent_workspace   $color_bright_yellow   $color_bright_yellow    $color_normal_black
+    # }
+    # font Hack 11
+    # status_command i3blocks
+    # tray_output *
 }
 
 include /etc/sway/config.d/*
