@@ -9,6 +9,8 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+exec systemctl --user import-environment MPD_HOST XDG_CURRENT_DESKTOP PATH
+
 set $primary_monitor LVDS-1
 set $secondary_monitor HDMI-2
 set $launcher dmenu_path | fzf | xargs swaymsg exec
@@ -16,7 +18,7 @@ set $launcher dmenu_path | fzf | xargs swaymsg exec
 set $term alacritty msg create-window -e zsh || alacritty -e zsh
 set $term_alt foot
 set $mod Mod4
-set $lock "swaymsg input '*' xkb_switch_layout 0; swaylock -k -i $HOME/.dotfiles/wallpaper.jpg"
+set $lock "swaymsg input '*' xkb_switch_layout 0; mpc pause; swaylock -k -i $HOME/.dotfiles/wallpaper.jpg"
 set $menu dmenu_path | wmenu | xargs swaymsg exec --
 
 include /etc/sway/config-vars.d/*
@@ -24,13 +26,14 @@ include ./secret.conf
 
 # output LVDS-1 scale 1.25
 output LVDS-1 scale 1
-seat seat0 xcursor_theme Adwaita
+# seat seat0 xcursor_theme Adwaita
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg "$HOME/.dotfiles/wallpaper.jpg" fill
 output "Dell Inc. DELL U2723QE BYH1CP3" scale 1.5 position 0,0
+output "Philips Consumer Electronics Company PHL 279P1 UK82245001170" scale 1.5 position 0,0
 output "California Institute of Technology 0x1405 Unknown" scale 2
 #
 # Example configuration:
@@ -187,6 +190,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+# 46 = l/д
 bindcode $mod+Control+46 exec $lock
 
 bindsym --to-code $mod+r mode "resize"
@@ -315,11 +319,6 @@ input "2:7:SynPS/2_Synaptics_TouchPad" {
 	dwt enabled
 }
 
-input "9639:64035:Compx_2.4G_Receiver_Mouse" {
-	pointer_accel 0.8
-}
-
-
 bar {
     swaybar_command waybar
 
@@ -342,4 +341,5 @@ bar {
 }
 
 include /etc/sway/config.d/*
+exec dbus-update-activation-environment --systemd DESKTOP_SESSION I3SOCK WAYLAND_DISPLAY XCURSOR_SIZE XDG_CURRENT_DESKTOP XDG_RUNTIME_DIR XDG_SEAT XDG_SEAT_PATH XDG_SESSION_CLASS XDG_SESSION_DESKTOP XDG_SESSION_ID XDG_SESSION_PATH XDG_SESSION_TYPE XDG_VTNR
 exec_always systemctl --user start sway-session.target

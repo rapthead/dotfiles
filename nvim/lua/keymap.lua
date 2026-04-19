@@ -43,9 +43,9 @@ local function lspAttach(args)
 	vim.keymap.set('n', 'grD', vim.lsp.buf.declaration, opts)
 	vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
 	vim.keymap.set('n', 'gv', function()
-		vim.lsp.buf_request(
+		vim.lsp.buf_request_all(
 			0,
-			'textDocument/definition',
+			'textDocument/typeDefinition',
 			vim.lsp.util.make_position_params(),
 			inPrevWindowHandler
 		)

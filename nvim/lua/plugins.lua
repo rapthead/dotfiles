@@ -12,6 +12,23 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+	{
+		"rmagatti/goto-preview",
+		dependencies = { "rmagatti/logger.nvim" },
+		event = "BufEnter",
+		config = true, -- necessary as per https://github.com/rmagatti/goto-preview/issues/88
+		config = function()
+			require('goto-preview').setup {
+				default_mappings = true, -- Bind default mappings
+			}
+			-- nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>
+			-- nnoremap gpt <cmd>lua require('goto-preview').goto_preview_type_definition()<CR>
+			-- nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>
+			-- nnoremap gpD <cmd>lua require('goto-preview').goto_preview_declaration()<CR>
+			-- nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>
+			-- nnoremap gpr <cmd>lua require('goto-preview').goto_preview_references()<CR>
+		end
+	},
 	-- {
 	-- 	"ray-x/go.nvim",
 	-- 	dependencies = {  -- optional packages
@@ -172,7 +189,7 @@ require("lazy").setup({
 		end
 	},
 	{
-		'ahmedkhalf/project.nvim',
+		'DrKJeff16/project.nvim',
 		dependencies = {
 			{'nvim-telescope/telescope.nvim'},
 			{'nvim-tree/nvim-tree.lua'},
@@ -186,9 +203,9 @@ require("lazy").setup({
 					update_root = true
 				},
 			})
-			require("project_nvim").setup {
+			require("project").setup {
 				scope_chdir = 'tab',
-				silent_chdir = false,
+				silent_chdir = true,
 			}
 			require('telescope').load_extension('projects')
 			vim.keymap.set('n', '<Leader>p', require("telescope").extensions.projects.projects, { noremap = true, silent = false })
@@ -209,28 +226,6 @@ require("lazy").setup({
 		'numToStr/Comment.nvim',
 		config = function()
 			require('Comment').setup()
-		end
-	},
-	{
-		'ahmedkhalf/project.nvim',
-		dependencies = {
-			{'nvim-telescope/telescope.nvim'},
-			{'nvim-tree/nvim-tree.lua'},
-		},
-		config = function()
-			require("nvim-tree").setup({
-				sync_root_with_cwd = true,
-				respect_buf_cwd = true,
-				update_focused_file = {
-					enable = true,
-					update_root = true
-				},
-			})
-			require("project_nvim").setup {
-				scope_chdir = 'tab',
-			}
-			require('telescope').load_extension('projects')
-			vim.keymap.set('n', '<Leader>p', require("telescope").extensions.projects.projects, { noremap = true, silent = false })
 		end
 	},
 	{
@@ -277,30 +272,12 @@ require("lazy").setup({
 		-- version = 'v0.1.3',
 		dependencies = 'nvim-lua/lsp-status.nvim',
 		config = function()
-			lspconfig = require("lspconfig")
-			util = require("lspconfig/util")
+			vim.lsp.enable('gopls')
 
 			vim.keymap.set('n', '<C-P>', require('telescope.builtin').git_files, { noremap = true, silent = true })
 			vim.keymap.set('n', '<C-B>', require('telescope.builtin').buffers, { noremap = true, silent = true })
 			vim.keymap.set('n', '<Leader>h', require('telescope.builtin').command_history, { noremap = true, silent = true })
 			vim.keymap.set('n', '<Leader>d', require('telescope.builtin').lsp_definitions, { noremap = true, silent = true })
-
-			lspconfig.gopls.setup({
-				cmd = {"gopls", "serve"},
-				filetypes = {"go", "gomod"},
-				root_dir = util.root_pattern("go.work", "go.mod", ".git"),
-				settings = {
-					gopls = {
-						buildFlags =  {"-tags=integration,e2e,local"},
-						analyses = {
-							unusedparams = true,
-						},
-						staticcheck = true,
-						gofumpt = true,
-						["ui.verboseOutput"] = true,
-					},
-				},
-			})
 
 			local au_go_lsp_group = vim.api.nvim_create_augroup('GO_LSP', {
 				clear = false
@@ -333,6 +310,21 @@ require("lazy").setup({
 				end,
 			})
 
+			vim.lsp.config('gopls', {
+				-- Server-specific settings. See `:help lsp-quickstart`
+				settings = {
+					gopls = {
+						buildFlags =  {"-tags=integration,e2e,local"},
+						analyses = {
+							unusedparams = true,
+						},
+						staticcheck = true,
+						gofumpt = true,
+						["ui.verboseOutput"] = true,
+					},
+				},
+			})
+
 			vim.lsp.handlers["textDocument/diagnostic"] = vim.lsp.with(
 				vim.lsp.diagnostic.on_diagnostic, {
 					update_in_insert = true,
@@ -340,6 +332,74 @@ require("lazy").setup({
 			)
 		end
 	},
+	-- {
+	-- 	'neovim/nvim-lspconfig',
+	-- 	-- version = 'v0.1.3',
+	-- 	dependencies = 'nvim-lua/lsp-status.nvim',
+	-- 	config = function()
+	-- 		lspconfig = require("lspconfig")
+	-- 		util = require("lspconfig/util")
+
+	-- 		vim.keymap.set('n', '<C-P>', require('telescope.builtin').git_files, { noremap = true, silent = true })
+	-- 		vim.keymap.set('n', '<C-B>', require('telescope.builtin').buffers, { noremap = true, silent = true })
+	-- 		vim.keymap.set('n', '<Leader>h', require('telescope.builtin').command_history, { noremap = true, silent = true })
+	-- 		vim.keymap.set('n', '<Leader>d', require('telescope.builtin').lsp_definitions, { noremap = true, silent = true })
+
+	-- 		lspconfig.gopls.setup({
+	-- 			cmd = {"gopls", "serve"},
+	-- 			filetypes = {"go", "gomod"},
+	-- 			root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+	-- 			settings = {
+	-- 				gopls = {
+	-- 					buildFlags =  {"-tags=integration,e2e,local"},
+	-- 					analyses = {
+	-- 						unusedparams = true,
+	-- 					},
+	-- 					staticcheck = true,
+	-- 					gofumpt = true,
+	-- 					["ui.verboseOutput"] = true,
+	-- 				},
+	-- 			},
+	-- 		})
+
+	-- 		local au_go_lsp_group = vim.api.nvim_create_augroup('GO_LSP', {
+	-- 			clear = false
+	-- 		})
+	-- 		vim.api.nvim_create_autocmd('BufWritePre', {
+	-- 			pattern = '*.go',
+	-- 			group = au_go_lsp_group,
+	-- 			callback = function()
+	-- 				local params = vim.lsp.util.make_range_params()
+	-- 				params.context = {only = {"source.organizeImports"}}
+	-- 				-- buf_request_sync defaults to a 1000ms timeout. Depending on your
+	-- 				-- machine and codebase, you may want longer. Add an additional
+	-- 				-- argument after params if you find that you have to write the file
+	-- 				-- twice for changes to be saved.
+	-- 				-- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
+	-- 				local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
+	-- 				for cid, res in pairs(result or {}) do
+	-- 					for _, r in pairs(res.result or {}) do
+	-- 						if r.edit then
+	-- 							local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
+	-- 							vim.lsp.util.apply_workspace_edit(r.edit, enc)
+	-- 						end
+	-- 					end
+	-- 				end
+	-- 				vim.lsp.buf.format({ async = false })
+	-- 				-- vim.lsp.buf.code_action({
+	-- 				--     context = { only = { 'source.organizeImports' } },
+	-- 				--     apply = true,
+	-- 				-- })
+	-- 			end,
+	-- 		})
+
+	-- 		vim.lsp.handlers["textDocument/diagnostic"] = vim.lsp.with(
+	-- 			vim.lsp.diagnostic.on_diagnostic, {
+	-- 				update_in_insert = true,
+	-- 			}
+	-- 		)
+	-- 	end
+	-- },
 
 	{
 		'hrsh7th/nvim-cmp',
